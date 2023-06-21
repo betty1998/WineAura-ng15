@@ -44,29 +44,23 @@ export class CartComponent implements OnInit{
     this.productService.checkStock(cartProduct.product.id).subscribe(res=>{
       if (res.success) {
         cartProduct.product.stockQty = res.data;
+        cartProduct.qty = Math.min(cartProduct.qty, cartProduct.product.stockQty);
+        this.updateCart();
       } else {
         console.log(res);
       }
     });
-    return cartProduct.product.stockQty;
   }
 
   addOne(cartProduct: CartProduct, event: Event) {
     event.stopPropagation();
-    const stock = this.checkStock(cartProduct);
-    if(cartProduct.qty < stock){
-      cartProduct.qty ++;
-      this.updateCart();
-    }else{
-      cartProduct.qty = stock;
-    }
+    cartProduct.qty ++;
   }
 
   minusOne(cartProduct: CartProduct, event: Event) {
     event.stopPropagation();
     if (cartProduct.qty>1){
       cartProduct.qty --;
-      this.updateCart();
     }
   }
 
