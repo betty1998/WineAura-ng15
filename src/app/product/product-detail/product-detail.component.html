@@ -1,0 +1,91 @@
+<section class="product-detail-info mb-3">
+  <div class="product-detail-image">
+    <img src="{{product.image}}" alt="{{product.name}}" style="width: 480px;">
+  </div>
+  <div class="product-detail-text">
+    <h1>{{product.name}}</h1>
+    <p>{{product.capacity}}</p>
+    <h2 class="mt-4 mb-3">{{product.price | currency}}</h2>
+    <section class="quantity-cart row mb-3">
+      <div class="quantity-container col-3">
+          <span class="">Quantity</span>
+          <input type="number" min="1"[(ngModel)]="qty" placeholder="1">
+      </div>
+      <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
+      <button class="col-1" mat-mini-fab color="primary"><mat-icon>favorite</mat-icon></button>
+    </section>
+    <section class="description-container">
+      <h3 class="pt-2"> Product Description</h3>
+      <p>{{product.description}}</p>
+    </section>
+
+    <section class="detail-container mb-3">
+      <h3 class="pt-2"> Product Details</h3>
+      <div class="detail-grid">
+        <div class="row mb-2">
+          <div class="col-2">Country/State</div>
+          <div class="col-5">{{product.region}}</div>
+          <div class="col-1">Brand</div>
+          <div class="col">{{product.brand}}</div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-2">Wine Type</div>
+          <div class="col-5">{{product.category}}</div>
+          <div class="col-1">Style</div>
+<!--          <div class="col">{{product.style}}</div>-->
+          <div class="col">Elegant</div>
+        </div>
+        <div class="row">
+          <div class="col-2">Taste</div>
+<!--          <div class="col">{{product.taste}}</div>-->
+          <div class="col-5">Blackberry, Cherry</div>
+          <div class="col-1">ABV</div>
+          <div class="col">14.6%</div>
+<!--          <div class="col">{{product.abv}}</div>-->
+        </div>
+      </div>
+
+    </section>
+
+
+  </div>
+</section>
+<section class="product-review">
+  <div class="product-review ms-1 me-1">
+    <h2 class="pt-3">REVIEWS</h2>
+    <div *ngFor="let review of product.reviews">
+      <div class="row align-items-start">
+        <div class="col-2">
+          <h4 class="text-capitalize">{{review.user.username}}</h4>
+          <p>{{review.reviewDate}}</p>
+          <!--TODO
+             can add location or profile image here
+          -->
+        </div>
+        <div class="col-8">
+          <div>
+            <mat-icon color="accent" *ngFor="let star of stars">{{star <= review.rating ? 'star' : 'star_border'}}</mat-icon>
+            <mat-icon color="accent" *ngIf="review.rating % 1 > 0 && review.rating === Math.floor(review.rating)">star_half</mat-icon>
+            <p class="mt-1 ms-1">{{review.comment}}</p>
+          </div>
+          <div>
+            <span>Helpful?</span>
+            <button mat-icon-button (click)="thumbUp(review.id)">
+              <mat-icon>thumb_up</mat-icon>
+            </button>
+            <button mat-icon-button (click)="thumbDown(review.id)">
+              <mat-icon>thumb_down</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+  </div>
+
+</section>
+
+
+

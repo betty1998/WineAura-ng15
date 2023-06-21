@@ -1,0 +1,38 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button fxHide.gt-sm="true" mat-icon-button class="example-icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title">{{title}}</span>
+    <div fxHide.lt-sm="true">
+      <a mat-button routerLink="/home">Home</a>
+      <a mat-button routerLink="/products">Wine</a>
+      <a mat-button routerLink="/red-wine">Red Wine</a>
+      <a mat-button routerLink="/white-wine">White Wine</a>
+      <a mat-button routerLink="/accessory">Accessories</a>
+    </div>
+    <span class="example-spacer"></span>
+    <button mat-icon-button routerLink="/favorite" >
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="['/cart',auth.user?.id]">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button mat-icon-button routerLink="/profile" >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span style="font-size: 14px">Search</span>
+    <button mat-icon-button class="example-icon">
+    <mat-icon>search</mat-icon>
+    </button>
+    <span class="example-spacer"></span>
+    <div>
+      <button *ngIf="!auth.user" mat-stroked-button routerLink="/login">Sign In</button>
+      <button *ngIf="!!auth.user" mat-stroked-button (click)="auth.logout()">Sign Out</button>
+      <button *ngIf="!auth.user" mat-button routerLink="/register">Create Account </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+

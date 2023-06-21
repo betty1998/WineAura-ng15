@@ -1,0 +1,65 @@
+
+<main class="product-container" fxFlex fxLayout="row" fxLayout.xs="column">
+  <section id="filter-section" fxHide.xs="true" fxFlex="200px" fxFlex.xs="auto" fxLayout="column" fxLayoutGap="20px">
+    <!--TODO
+      group all checkbox
+      clear all the checkboxes when the "Go" button is clicked
+    -->
+    <div id="price-range"  fxLayout="column">
+        <h3>Price Range</h3>
+        <div id="min-max" fxFlex fxFlexAlign="center center">
+          <label>
+            <input class="filter-input" [(ngModel)]="min" placeholder="0$">
+          </label>
+          <span class="ms-1 me-1"> -- </span>
+          <label class="me-2">
+            <input class="filter-input" [(ngModel)]="max" placeholder="0$">
+          </label>
+          <a mat-raised-button class="go-btn"fxFlex="40px">Go</a>
+        </div>
+
+        <label>
+          <input type="checkbox" name="checkbox" />Up to $20
+        </label>
+        <label>
+          <input type="checkbox" name="checkbox" />$20 to $40
+        </label>
+        <label>
+          <input type="checkbox" name="checkbox" />$40 to $60
+        </label>
+        <label>
+          <input type="checkbox" name="checkbox" />$60 and Above
+        </label>
+    </div>
+
+    <div>
+      <h3>Category</h3>
+      <div *ngFor="let category of categories">
+        <label>
+          <input type="checkbox" name="checkbox" />{{category}}
+        </label>
+      </div>
+    </div>
+    <div>
+      <h3>Country/State</h3>
+      <div *ngFor="let region of regions">
+        <label>
+          <input type="checkbox" name="checkbox" />{{region}}
+        </label>
+      </div>
+    </div>
+    <div>
+      <h3>Brand</h3>
+      <div *ngFor="let brand of brands">
+        <label>
+          <input type="checkbox" name="checkbox" />{{brand}}
+        </label>
+      </div>
+    </div>
+  </section>
+  <section class="products-list-section" fxFlex="90%" fxLayout="row wrap" fxFlexAlign="center start">
+    <app-product-overview [product]="p" *ngFor="let p of products" fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px" ></app-product-overview>
+  </section>
+
+
+</main>
