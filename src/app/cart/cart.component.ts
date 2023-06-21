@@ -41,8 +41,10 @@ export class CartComponent implements OnInit{
 
   // ngOnChange on cartProduct.qty
   checkStock(cartProduct: CartProduct) {
+    console.log("checkStock");
     this.productService.checkStock(cartProduct.product.id).subscribe(res=>{
       if (res.success) {
+        console.log("onchange: ", res.data);
         cartProduct.product.stockQty = res.data;
         cartProduct.qty = Math.min(cartProduct.qty, cartProduct.product.stockQty);
         this.updateCart();
@@ -55,12 +57,14 @@ export class CartComponent implements OnInit{
   addOne(cartProduct: CartProduct, event: Event) {
     event.stopPropagation();
     cartProduct.qty ++;
+    this.checkStock(cartProduct);
   }
 
   minusOne(cartProduct: CartProduct, event: Event) {
     event.stopPropagation();
     if (cartProduct.qty>1){
       cartProduct.qty --;
+      this.checkStock(cartProduct);
     }
   }
 
@@ -123,8 +127,5 @@ export class CartComponent implements OnInit{
     });
     console.log('Leaving the page...');
   }
-
-
-
 
 }

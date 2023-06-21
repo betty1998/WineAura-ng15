@@ -1,5 +1,5 @@
-<main fxFlex fxLayout="row wrap" fxLayoutGap="3%" fxLayout.lt-sm="colomn wrap">
-  <section fxFlex="60%" fxFlex.lt-sm="100" class="cart-product-list">
+<main fxFlex fxLayout="row wrap" fxLayoutGap="5%" fxLayout.lt-sm="colomn wrap">
+  <section fxFlex="65%" fxFlex.lt-sm="100" class="cart-product-list">
     <h2>Your Shopping Cart</h2>
     <div class="d-flex justify-content-between">
       <span class="ms-3">Item</span>
@@ -45,8 +45,8 @@
     </div>
   </section>
 
-  <section fxFlex="36%" fxFlex.lt-sm="100" class="order-summary">
-    <h2>Order Summary</h2>
+  <section fxFlex="28%" fxFlex.lt-sm="95" class="order-summary">
+    <app-order-summary [cart]="cart"></app-order-summary>
   </section>
 
 </main>

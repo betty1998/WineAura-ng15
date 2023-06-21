@@ -22,6 +22,7 @@ import { CartComponent } from './cart/cart.component';
 import { AccountComponent } from './account/account.component';
 import { FavoriteComponent } from './account/favorite/favorite.component';
 import { ProfileComponent } from './account/profile/profile.component';
+import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProfileComponent } from './account/profile/profile.component';
     AccountComponent,
     FavoriteComponent,
     ProfileComponent,
+    OrderSummaryComponent,
 
   ],
   imports: [
