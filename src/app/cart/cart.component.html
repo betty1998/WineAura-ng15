@@ -17,9 +17,13 @@
           <p class="small">{{cp.product.price | currency}} / each</p>
         </div>
         <div class="mat-btns col">
-          <button mat-icon-button (click)="addToFavorite(cp,$event)">
+          <button *ngIf="ifLike(cp.product)" mat-icon-button (click)="removeFromFavorite(cp.product,$event)">
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button *ngIf="!ifLike(cp.product)" mat-icon-button (click)="addToFavorite(cp.product,$event)">
             <mat-icon>favorite_border</mat-icon>
           </button>
+
           <button mat-icon-button (click)="delete(cp,$event)">
             <mat-icon>delete_outline</mat-icon>
           </button>

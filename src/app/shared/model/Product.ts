@@ -2,7 +2,7 @@ import {ProductStatus} from "./ProductStatus";
 import {Review} from "./Review";
 
 export interface Product{
-  id?: number;
+  id: number;
   name: string;
   description: string;
   capacity: string;

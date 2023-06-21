@@ -7,6 +7,7 @@ import {DataResponse} from "../httpResponse/dataResponse";
 import {CartProduct} from "../model/CartProduct";
 import {Observable} from "rxjs";
 import {Data} from "@angular/router";
+import {Product} from "../model/Product";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,17 @@ export class UserInfoService {
   }
 
   deleteCartProduct(userInfoId: number, cartProductId: number | undefined):Observable<DataResponse<UserInfo>> {
-    return this.httpClient.delete<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/${cartProductId}`);
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/cartProduct/${cartProductId}`,null);
+  }
+
+  addToFavorite(userInfoId: number, productId: number):Observable<DataResponse<UserInfo>> {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/addToFavorite/${userInfoId}/product/${productId}`, null);
+  }
+
+  removeFromFavorite(userInfoId: number, productId: number):Observable<DataResponse<UserInfo>> {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null);
   }
 }

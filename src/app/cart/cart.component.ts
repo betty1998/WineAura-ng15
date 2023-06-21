@@ -1,13 +1,13 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CartProduct} from "../shared/model/CartProduct";
 import {UserInfoService} from "../shared/service/user-info.service";
 import {UserInfo} from "../shared/model/UserInfo";
-import {AuthService} from "../shared/service/auth.service";
-import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
-import {Subscription, switchMap} from "rxjs";
+
+import {ActivatedRoute,Router} from "@angular/router";
 import {ProductService} from "../shared/service/product.service";
-import {Product} from "../shared/model/Product";
 import {CartService} from "../shared/service/cart.service";
+import {switchMap} from "rxjs";
+import {Product} from "../shared/model/Product";
 
 @Component({
   selector: 'app-cart',
@@ -64,9 +64,35 @@ export class CartComponent implements OnInit{
     }
   }
 
-  addToFavorite(cartProduct: CartProduct, event: Event) {
-    event.stopPropagation();
+  // check if the product is in the favorite set of userInfo
+  ifLike(product:Product) {
+    return this.userInfo.favorites.some(p => p.id === product.id);
+  }
 
+  addToFavorite(product: Product, event: Event) {
+    event.stopPropagation();
+    this.userInfoService.addToFavorite(this.userInfo.id, product.id).subscribe(res=>{
+      if (res.success) {
+        this.userInfo = res.data;
+        this.cart = this.userInfo.cart;
+        this.userInfoService.userInfo = res.data;
+      } else {
+        console.log(res);
+      }
+    });
+  }
+
+  removeFromFavorite(product: Product, event: Event) {
+    event.stopPropagation();
+    this.userInfoService.removeFromFavorite(this.userInfo.id, product.id).subscribe(res=>{
+      if (res.success) {
+        this.userInfo = res.data;
+        this.cart = this.userInfo.cart;
+        this.userInfoService.userInfo = res.data;
+      } else {
+        console.log(res);
+      }
+    });
   }
 
   delete(cartProduct: CartProduct, event: Event) {
