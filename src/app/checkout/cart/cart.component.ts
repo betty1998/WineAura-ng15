@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CartProduct} from "../shared/model/CartProduct";
-import {UserInfoService} from "../shared/service/user-info.service";
-import {UserInfo} from "../shared/model/UserInfo";
+import {CartProduct} from "../../shared/model/CartProduct";
+import {UserInfoService} from "../../shared/service/user-info.service";
+import {UserInfo} from "../../shared/model/UserInfo";
 
 import {ActivatedRoute,Router} from "@angular/router";
-import {ProductService} from "../shared/service/product.service";
-import {CartService} from "../shared/service/cart.service";
+import {ProductService} from "../../shared/service/product.service";
+import {CartService} from "../../shared/service/cart.service";
 import {switchMap} from "rxjs";
-import {Product} from "../shared/model/Product";
+import {Product} from "../../shared/model/Product";
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +18,7 @@ export class CartComponent implements OnInit{
   userInfo!: UserInfo;
   userId: number | null | undefined;
   cart!: CartProduct[];
+  showCart= true;
 
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,

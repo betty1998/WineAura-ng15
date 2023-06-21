@@ -18,11 +18,12 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ErrorInterceptor} from "./shared/interceptor/error.interceptor";
 import {MatGridListModule} from "@angular/material/grid-list";
-import { CartComponent } from './cart/cart.component';
+import { CartComponent } from './checkout/cart/cart.component';
 import { AccountComponent } from './account/account.component';
 import { FavoriteComponent } from './account/favorite/favorite.component';
 import { ProfileComponent } from './account/profile/profile.component';
-import { OrderSummaryComponent } from './cart/order-summary/order-summary.component';
+import { OrderSummaryComponent } from './checkout/cart/order-summary/order-summary.component';
+import {CheckoutModule} from "./checkout/checkout.module";
 
 @NgModule({
   declarations: [
@@ -34,11 +35,9 @@ import { OrderSummaryComponent } from './cart/order-summary/order-summary.compon
     ProductComponent,
     ProductOverviewComponent,
     ProductDetailComponent,
-    CartComponent,
     AccountComponent,
     FavoriteComponent,
     ProfileComponent,
-    OrderSummaryComponent,
 
   ],
   imports: [
@@ -50,6 +49,7 @@ import { OrderSummaryComponent } from './cart/order-summary/order-summary.compon
     ReactiveFormsModule,
     HttpClientModule,
     MatGridListModule,
+    CheckoutModule
 
 
   ],

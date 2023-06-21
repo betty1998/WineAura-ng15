@@ -4,7 +4,9 @@ import {RegisterComponent} from "./auth/register/register.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductDetailComponent} from "./product/product-detail/product-detail.component";
-import {CartComponent} from "./cart/cart.component";
+import {CartComponent} from "./checkout/cart/cart.component";
+import {AuthGuard} from "./shared/guard/auth.guard";
+import {OrderDetailComponent} from "./checkout/cart/order-detail/order-detail.component";
 
 const routes: Routes = [
   {
@@ -25,7 +27,14 @@ const routes: Routes = [
   },
   {
     path:"cart/:id",
-    component: CartComponent
+    component: CartComponent,
+    children:[
+      {
+        path:"order-detail",
+        component: OrderDetailComponent}
+    ]
+    // loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
+    // canActivate:[AuthGuard]
   },
 
   {
