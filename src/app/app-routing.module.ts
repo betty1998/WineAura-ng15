@@ -25,7 +25,7 @@ const routes: Routes = [
     component:ProductDetailComponent
   },
   {
-    path:"cart/:id",
+    path:"checkout/:id",
     // component: CartComponent,
     // children:[
     //   {
