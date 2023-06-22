@@ -44,10 +44,15 @@
 
     </div>
   </section>
-  <section *ngIf="!showCart"fxFlex="65%" fxFlex.lt-sm="100">
+  <section *ngIf="!showCart" fxFlex="65%" fxFlex.lt-sm="100">
     <router-outlet></router-outlet>
   </section>
   <section fxFlex="28%" fxFlex.lt-sm="95" class="order-summary">
-    <app-order-summary [cart]="cart"></app-order-summary>
+    <app-order-summary [cart]="userInfo.cart" (checkout)="showCart=false"></app-order-summary>
+    <div *ngIf="!showCart" class="place-btn mt-3">
+      <button mat-raised-button color="accent" (click)="placeOrder($event)" disabled>
+        Place Order
+      </button>
+    </div>
   </section>
 </main>

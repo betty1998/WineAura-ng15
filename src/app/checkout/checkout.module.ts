@@ -11,6 +11,19 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 
 
+const routes:Routes =[
+  {
+    path:"",
+    component:CartComponent,
+    children:[
+      {
+        path:"order-detail",
+        component:OrderDetailComponent
+      }
+    ]
+  },
+]
+
 @NgModule({
   declarations: [
     OrderDetailComponent,
@@ -19,11 +32,11 @@ import {HttpClientModule} from "@angular/common/http";
   ],
   imports: [
     CommonModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CustomStyleModule
+    CustomStyleModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class CheckoutModule { }

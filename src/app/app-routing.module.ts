@@ -5,7 +5,6 @@ import {LoginComponent} from "./auth/login/login.component";
 import {ProductComponent} from "./product/product.component";
 import {ProductDetailComponent} from "./product/product-detail/product-detail.component";
 import {CartComponent} from "./checkout/cart/cart.component";
-import {AuthGuard} from "./shared/guard/auth.guard";
 import {OrderDetailComponent} from "./checkout/cart/order-detail/order-detail.component";
 
 const routes: Routes = [

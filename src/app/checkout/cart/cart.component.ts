@@ -17,7 +17,6 @@ import {Product} from "../../shared/model/Product";
 export class CartComponent implements OnInit{
   userInfo!: UserInfo;
   userId: number | null | undefined;
-  cart!: CartProduct[];
   showCart= true;
 
   constructor(public userInfoService:UserInfoService,
@@ -33,7 +32,6 @@ export class CartComponent implements OnInit{
     } )).subscribe(res =>{
       if (res.success) {
         this.userInfo = res.data;
-        this.cart = this.userInfo.cart;
       }else {
         console.log(res);
       }
@@ -50,6 +48,18 @@ export class CartComponent implements OnInit{
         cartProduct.qty = Math.min(cartProduct.qty, cartProduct.product.stockQty);
         this.updateCart();
       } else {
+        console.log(res);
+      }
+    });
+  }
+
+  updateCart(): void {
+    this.userInfoService.updateCart(this.userInfo.id,this.userInfo.cart).subscribe(res =>{
+      if(res.success){
+        this.userInfo = res.data;
+        this.userInfoService.userInfo = res.data;
+        console.log(res.data);
+      }else {
         console.log(res);
       }
     });
@@ -79,7 +89,6 @@ export class CartComponent implements OnInit{
     this.userInfoService.addToFavorite(this.userInfo.id, product.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
-        this.cart = this.userInfo.cart;
         this.userInfoService.userInfo = res.data;
       } else {
         console.log(res);
@@ -92,7 +101,6 @@ export class CartComponent implements OnInit{
     this.userInfoService.removeFromFavorite(this.userInfo.id, product.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
-        this.cart = this.userInfo.cart;
         this.userInfoService.userInfo = res.data;
       } else {
         console.log(res);
@@ -106,27 +114,14 @@ export class CartComponent implements OnInit{
     this.userInfoService.deleteCartProduct(this.userInfo.id, cartProduct.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
-        this.cart = this.userInfo.cart;
         this.userInfoService.userInfo = res.data;
       } else {
         console.log(res);
       }
     });
-
   }
 
-  updateCart(): void {
-    this.userInfoService.updateCart(this.userInfo.id,this.cart).subscribe(res =>{
-      if(res.success){
-        this.userInfo = res.data;
-        this.cart = this.userInfo.cart;
-        this.userInfoService.userInfo = res.data;
-        console.log(res.data);
-      }else {
-        console.log(res);
-      }
-    });
-    console.log('Leaving the page...');
-  }
+  placeOrder(event: Event) {
 
+  }
 }
