@@ -1,4 +1,4 @@
-<form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+<form [formGroup]="checkoutForm" >
 <mat-accordion>
   <mat-expansion-panel formGroupName="shippingDetails" class="shipping" [expanded]="step === 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
@@ -193,3 +193,9 @@
   </mat-expansion-panel>
 </mat-accordion>
 </form>
+
+<div class="place-btn mt-3">
+  <button mat-raised-button color="accent" (click)="placeOrder($event)" [disabled]="checkoutForm.invalid">
+    Place Order
+  </button>
+</div>

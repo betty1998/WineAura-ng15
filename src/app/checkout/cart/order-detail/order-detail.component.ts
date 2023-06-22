@@ -15,7 +15,6 @@ import {Purchase} from "../../../shared/model/Purchase";
 export class OrderDetailComponent implements OnInit{
   checkoutForm!: FormGroup;
   step = 0;
-  @Input()
   userInfo!: UserInfo;
   order!:Order
 
@@ -23,8 +22,13 @@ export class OrderDetailComponent implements OnInit{
               private userInfoService: UserInfoService,
               private auth:AuthService) {
   }
-
   ngOnInit(): void {
+    this.userInfo = this.userInfoService.userInfo;
+    console.log(this.userInfo);
+    this.buildForm();
+  }
+
+  buildForm(){
     this.checkoutForm = this.fb.group({
       shippingDetails: this.fb.group({
         userInfo: this.fb.group({
@@ -80,8 +84,7 @@ export class OrderDetailComponent implements OnInit{
     }
   }
 
-  placeOrder() {
-    // order
+  placeOrder(event: Event) {
     this.order = this.checkoutForm.get('shippingDetails.shippingAddress')?.value;
     this.order.userId = this.auth.user?.id;
     this.order.paymentMethod = this.checkoutForm.get('paymentDetails.paymentMethod')?.value;
@@ -92,13 +95,15 @@ export class OrderDetailComponent implements OnInit{
         qty: cartProduct.qty
       };
     });
+    // purchase date should be generated in backend
     this.order.purchases = purchases;
     this.order.status = "Pending";
     const store = {name:"store1",manager:{managerCode:"first"}}
     this.order.store = store;
     console.log(this.order)
 
+
   }
-  // purchase date should be generated in backend
+
 
 }

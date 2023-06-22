@@ -124,15 +124,17 @@ export class CartComponent implements OnInit{
     });
   }
 
-  @ViewChild('childRef', { static: false })
-  childRef!: OrderDetailComponent;
+  @ViewChild('childRef')
+  childRef!: any;
 
 
   placeOrder(event: Event) {
-    this.childRef.placeOrder();
+    console.log(this.childRef)
+    // this.childRef.placeOrder();
   }
 
   checkout() {
     this.showCart = !this.showCart;
   }
+
 }

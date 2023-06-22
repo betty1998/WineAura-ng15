@@ -26,3 +26,13 @@
   margin-right: 0px;
   margin-left: 0px;
 }
+
+.place-btn{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  button {
+    padding: 0px 20px;
+
+  }
+}
