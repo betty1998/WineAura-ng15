@@ -1,3 +1,5 @@
+<!--TODO: make shoppingCart a component for routing
+-->
 <main fxFlex fxLayout="row wrap" fxLayoutGap="5%" fxLayout.lt-sm="colomn wrap">
   <section *ngIf="showCart" fxFlex="65%" fxFlex.lt-sm="100" class="cart-product-list">
     <h2>Your Shopping Cart</h2>
@@ -44,13 +46,14 @@
 
     </div>
   </section>
-  <section *ngIf="!showCart" fxFlex="65%" fxFlex.lt-sm="100">
+  <section *ngIf="showCart" fxFlex="65%" fxFlex.lt-sm="100">
+    <app-order-detail [userInfo]="userInfo" #childRef></app-order-detail>
     <router-outlet></router-outlet>
   </section>
   <section fxFlex="28%" fxFlex.lt-sm="95" class="order-summary">
-    <app-order-summary [cart]="userInfo.cart" (checkout)="showCart=false"></app-order-summary>
-    <div *ngIf="!showCart" class="place-btn mt-3">
-      <button mat-raised-button color="accent" (click)="placeOrder($event)" disabled>
+    <app-order-summary [cart]="userInfo.cart" (checkout)="checkout()"></app-order-summary>
+    <div *ngIf="showCart" class="place-btn mt-3">
+      <button mat-raised-button color="accent" (click)="placeOrder($event)">
         Place Order
       </button>
     </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CartProduct} from "../../shared/model/CartProduct";
 import {UserInfoService} from "../../shared/service/user-info.service";
 import {UserInfo} from "../../shared/model/UserInfo";
@@ -8,6 +8,8 @@ import {ProductService} from "../../shared/service/product.service";
 import {CartService} from "../../shared/service/cart.service";
 import {switchMap} from "rxjs";
 import {Product} from "../../shared/model/Product";
+import {OrderDetailComponent} from "./order-detail/order-detail.component";
+import {AuthService} from "../../shared/service/auth.service";
 
 @Component({
   selector: 'app-cart',
@@ -17,12 +19,13 @@ import {Product} from "../../shared/model/Product";
 export class CartComponent implements OnInit{
   userInfo!: UserInfo;
   userId: number | null | undefined;
-  showCart= true;
+  showCart=true;
 
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,
               private cartService: CartService,
-              private route:ActivatedRoute) {
+              private route:ActivatedRoute,
+              private auth: AuthService) {
   }
 
   ngOnInit(): void {
@@ -121,7 +124,15 @@ export class CartComponent implements OnInit{
     });
   }
 
-  placeOrder(event: Event) {
+  @ViewChild('childRef', { static: false })
+  childRef!: OrderDetailComponent;
 
+
+  placeOrder(event: Event) {
+    this.childRef.placeOrder();
+  }
+
+  checkout() {
+    this.showCart = !this.showCart;
   }
 }

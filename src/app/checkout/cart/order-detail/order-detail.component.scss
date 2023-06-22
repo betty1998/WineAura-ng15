@@ -1,0 +1,28 @@
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 70px;
+}
+
+.form-field-2 {
+  flex: 1 0 calc(50% - 16px);
+  margin: 0px 8px;
+}
+
+.form-field-3 {
+  flex: 1 0 calc(33% - 16px);
+  margin: 0px 8px;
+}
+.subtitle{
+  font-size: 14px;
+  padding: 0px 8px;
+}
+
+.row > div {
+  padding: 10px 0px;
+}
+.row{
+  margin-right: 0px;
+  margin-left: 0px;
+}

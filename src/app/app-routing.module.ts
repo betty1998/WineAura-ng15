@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path:"cart/:id",
-    component: CartComponent,
+    // component: CartComponent,
     // children:[
     //   {
     //     path:"order-detail",
