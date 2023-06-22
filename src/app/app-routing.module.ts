@@ -27,12 +27,12 @@ const routes: Routes = [
   {
     path:"cart/:id",
     component: CartComponent,
-    children:[
-      {
-        path:"order-detail",
-        component: OrderDetailComponent}
-    ]
-    // loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
+    // children:[
+    //   {
+    //     path:"order-detail",
+    //     component: OrderDetailComponent}
+    // ]
+    loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
     // canActivate:[AuthGuard]
   },
 
