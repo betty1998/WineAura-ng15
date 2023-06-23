@@ -1,1 +1,32 @@
-<p>account works!</p>
+<!--add shadow-->
+<div fxFlex>
+  <div class="header-list" fxFlex="240px">
+    <h1>Hi, {{userInfoService.userInfo.firstName}} {{userInfoService.userInfo.lastName}}</h1>
+    <mat-list>
+      <mat-list-item>
+        <a type="button"><mat-icon>home</mat-icon>Account Home</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a type="button"><mat-icon>person_outline</mat-icon>Profile</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a type="button"><mat-icon>library_books</mat-icon>Address Book</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a type="button"><mat-icon>shopping_cart</mat-icon>Order History</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a type="button"><mat-icon>favorite_outline</mat-icon>My Favorites</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+
+  <div fxFlex>
+  </div>
+</div>
+

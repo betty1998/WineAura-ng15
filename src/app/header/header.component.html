@@ -18,7 +18,7 @@
     <button mat-icon-button [routerLink]="['/checkout',auth.user?.id,'cart']">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button routerLink="/profile" >
+    <button mat-icon-button [routerLink]="['/account',auth.user?.id]" >
       <mat-icon>account_circle</mat-icon>
     </button>
   </mat-toolbar-row>

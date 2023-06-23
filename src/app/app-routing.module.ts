@@ -8,6 +8,7 @@ import {CartComponent} from "./checkout/cart/cart.component";
 import {OrderDetailComponent} from "./checkout/cart/order-detail/order-detail.component";
 import {AuthGuard} from "./shared/guard/auth.guard";
 import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
+import {AccountComponent} from "./account/account.component";
 
 const routes: Routes = [
   {
@@ -42,6 +43,12 @@ const routes: Routes = [
     path:"checkout-success/:orderId",
     component:CheckoutSuccessComponent
   },
+  {
+    path:"account/:id",
+    component: AccountComponent,
+    // canActivate:[AuthGuard]
+  },
+
 
   {
     path: "**",
