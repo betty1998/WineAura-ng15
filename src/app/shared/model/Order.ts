@@ -4,6 +4,10 @@ import {Store} from "./Store";
 export interface Order {
   id?: number;
   userId?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
   address: string;
   city: string;
   state: string;

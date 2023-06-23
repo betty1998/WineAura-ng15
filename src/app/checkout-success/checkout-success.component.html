@@ -7,34 +7,42 @@
       <mat-card-title>Shipping Details</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p>Address: {{order.address}}, {{order.city}}, {{order.state}}, {{order.zipcode}}</p>
-      <p>Contact Info:</p>
-    </mat-card-content>
-  </mat-card>
+      <div class="mt-2">{{order.firstName}} {{order.lastName}}</div>
+      <div class="mt-1">{{order.phone}}</div>
+      <div class="mt-1">{{order.email}}</div>
+      <div class="mt-1">{{order.address}}</div>
+      <div class="mt-1 mb-4">{{order.city}}, {{order.state}}, {{order.zipcode}}</div>
 
-  <mat-card>
-    <mat-card-header>
       <mat-card-title>Payment Details</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>Method: {{order.paymentMethod}}</p>
-      <p>Card Ending in {{order.paymentCardNumber.slice(-4)}}</p>
-    </mat-card-content>
-  </mat-card>
+      <div class="mt-3" class="text-capitalize">{{order.paymentMethod}} Card</div>
+      <div class="mt-1 mb-4">Card Ending in {{order.paymentCardNumber.slice(-4)}}</div>
 
-  <mat-card>
-    <mat-card-header>
       <mat-card-title>Order Details</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngFor="let purchase of order.purchases">
-        <p>Product Name: {{purchase.product.name}} <!-- replace with actual property for product name in Product model -->
-        <p>Quantity: {{purchase.qty}}</p>
+      <div class="list-container mt-2">
+        <mat-divider></mat-divider>
+        <div *ngFor="let purchase of order.purchases" class="row">
+          <div class="image col-2">
+            <img [src]="purchase.product.image" width="90" height="90">
+          </div>
+          <div class="info col-7">
+            <div>{{purchase.product.name}}</div>
+            <p class="small">{{purchase.product.capacity}}</p>
+            <p class="small">{{purchase.product.price | currency}} / each</p>
+          </div>
+          <div class="price col-3 text-center">
+            <p class="mt-3">{{purchase.product.price * purchase.qty | currency}}</p>
+            <p>Quantity: {{purchase.qty}}</p>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
 
-<!--  <p>We've sent a confirmation email to your registered email. Your items will be shipped within the next 2-3 business days.</p>-->
 
-  <a mat-stroked-button color="primary" routerLink="/">Continue Shopping</a>
+<!--  <p>We've sent a confirmation email to your registered email. Your items will be shipped within the next 2-3 business days.</p>-->
+  <div class="mt-3">
+    <a mat-raised-button color="primary" routerLink="/products">Continue Shopping</a>
+  </div>
+
 </div>

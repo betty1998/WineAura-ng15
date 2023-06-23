@@ -8,6 +8,7 @@ import {AuthService} from "../../../shared/service/auth.service";
 import {Purchase} from "../../../shared/model/Purchase";
 import {OrderService} from "../../../shared/service/order.service";
 import {Router} from "@angular/router";
+import {mergeMap, throwError} from "rxjs";
 
 @Component({
   selector: 'app-order-detail',
@@ -88,7 +89,8 @@ export class OrderDetailComponent implements OnInit{
   }
 
   placeOrder(event: Event) {
-    this.order = this.checkoutForm.get('shippingDetails.shippingAddress')?.value;
+    this.order = {...this.checkoutForm.get('shippingDetails.userInfo')?.value,
+                  ...this.checkoutForm.get('shippingDetails.shippingAddress')?.value}
     this.order.userId = this.auth.user?.id;
     this.order.paymentMethod = this.checkoutForm.get('paymentDetails.paymentMethod')?.value;
     this.order.paymentCardNumber = this.checkoutForm.get('paymentDetails.paymentCardNumber')?.value;
@@ -104,23 +106,26 @@ export class OrderDetailComponent implements OnInit{
     const store = {id:1,manager:{id:1}}
     this.order.store = store;
     console.log(this.order);
-    this.orderService.placeOrder(this.order).subscribe(res=>{
-      if (res.success) {
-        this.order = res.data;
-        this.orderService.order = res.data;
-        console.log(res);
-      }else {
-        console.log(res);
-      }
-    });
-    this.userInfoService.getUserInfo(this.auth.user?.id).subscribe(res=>{
+    this.orderService.placeOrder(this.order).pipe(
+      mergeMap((res) => {
+        console.log('place order...');
+        if (res.success) {
+          this.order = res.data;
+          this.orderService.order = res.data;
+          console.log(res);
+          return this.userInfoService.getUserInfo(this.auth.user?.id);
+        } else {
+          console.log(res);
+          return throwError('Failed to place order');
+        }
+      })
+    ).subscribe((res) => {
       if (res.success) {
         this.userInfoService.userInfo = res.data;
-        console.log("before navigate")
-        this.router.navigate(["/checkout-success",this.order.id]).catch();
+        console.log('before navigate', this.order);
+        this.router.navigate(['checkout-success', this.order.id]).catch();
       }
-
-    })
+    });
 
 
   }
