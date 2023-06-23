@@ -22,7 +22,7 @@ export class UserInfoService {
   }
 
 
-  public getUserInfo(userId: number):Observable<DataResponse<UserInfo>> {
+  public getUserInfo(userId: number|undefined):Observable<DataResponse<UserInfo>> {
     return this.httpClient.get<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/${userId}`);
   }

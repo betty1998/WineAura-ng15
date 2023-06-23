@@ -9,7 +9,7 @@ import {CustomStyleModule} from "../shared/modules/custom-style/custom-style.mod
 import {AppRoutingModule} from "../app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { CheckoutSuccessComponent } from '../checkout-success/checkout-success.component';
 
 
 const routes:Routes =[
@@ -30,7 +30,7 @@ const routes:Routes =[
     OrderDetailComponent,
     OrderSummaryComponent,
     CartComponent,
-    CheckoutSuccessComponent,
+
   ],
   imports: [
     CommonModule,

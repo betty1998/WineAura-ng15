@@ -24,6 +24,7 @@ import { FavoriteComponent } from './account/favorite/favorite.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { OrderSummaryComponent } from './checkout/cart/order-summary/order-summary.component';
 import {CheckoutModule} from "./checkout/checkout.module";
+import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {CheckoutModule} from "./checkout/checkout.module";
     AccountComponent,
     FavoriteComponent,
     ProfileComponent,
+    CheckoutSuccessComponent,
 
   ],
   imports: [
@@ -49,7 +51,7 @@ import {CheckoutModule} from "./checkout/checkout.module";
     ReactiveFormsModule,
     HttpClientModule,
     MatGridListModule,
-    CheckoutModule
+    CheckoutModule,
 
 
   ],

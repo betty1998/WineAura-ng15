@@ -29,6 +29,8 @@ export class OrderSummaryComponent implements OnChanges {
     this.tax = +(this.subTotal * this.taxRate).toFixed(2);
     if (this.subTotal < this.freeDelivery) {
       this.shipping = 8;
+    }else {
+      this.shipping = 0;
     }
     this.total = +(this.subTotal + this.shipping + this.tax).toFixed(2);
   }

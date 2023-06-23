@@ -5,7 +5,7 @@ import {UserInfo} from "../../shared/model/UserInfo";
 
 import {ActivatedRoute,Router} from "@angular/router";
 import {ProductService} from "../../shared/service/product.service";
-import {CartService} from "../../shared/service/cart.service";
+
 import {switchMap} from "rxjs";
 import {Product} from "../../shared/model/Product";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
@@ -23,7 +23,6 @@ export class CartComponent implements OnInit{
 
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,
-              private cartService: CartService,
               private route:ActivatedRoute,
               private auth: AuthService) {
   }

@@ -6,6 +6,8 @@ import {UserInfo} from "../../../shared/model/UserInfo";
 import {Order} from "../../../shared/model/Order";
 import {AuthService} from "../../../shared/service/auth.service";
 import {Purchase} from "../../../shared/model/Purchase";
+import {OrderService} from "../../../shared/service/order.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-order-detail',
@@ -20,7 +22,9 @@ export class OrderDetailComponent implements OnInit{
 
   constructor(private fb:FormBuilder,
               private userInfoService: UserInfoService,
-              private auth:AuthService) {
+              private auth:AuthService,
+              private orderService:OrderService,
+              private router:Router) {
   }
   ngOnInit(): void {
     this.userInfo = this.userInfoService.userInfo;
@@ -48,10 +52,10 @@ export class OrderDetailComponent implements OnInit{
       }),
       paymentDetails: this.fb.group({
         paymentMethod: ['', Validators.required],
-        paymentCardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-        cardHolderName: ['', Validators.required],
-        expirationDate: ['', Validators.required],
-        cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
+        paymentCardNumber: ['1111111111222222', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+        cardHolderName: ['Beibei', Validators.required],
+        expirationDate: ['04/27', Validators.required],
+        cvv: ['123', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
         billingAddress: this.fb.group({
           address: ['', Validators.required],
           city: ['', Validators.required],
@@ -76,7 +80,6 @@ export class OrderDetailComponent implements OnInit{
     this.step--;
   }
 
-  // TODO: split shippingDetails form group to name, address and info
   copyShippingAddress(event: MatCheckboxChange) {
     if (event.checked) {
       const shippingAddress = this.checkoutForm.get('shippingDetails.shippingAddress')?.value;
@@ -98,9 +101,26 @@ export class OrderDetailComponent implements OnInit{
     // purchase date should be generated in backend
     this.order.purchases = purchases;
     this.order.status = "Pending";
-    const store = {name:"store1",manager:{managerCode:"first"}}
+    const store = {id:1,manager:{id:1}}
     this.order.store = store;
-    console.log(this.order)
+    console.log(this.order);
+    this.orderService.placeOrder(this.order).subscribe(res=>{
+      if (res.success) {
+        this.order = res.data;
+        this.orderService.order = res.data;
+        console.log(res);
+      }else {
+        console.log(res);
+      }
+    });
+    this.userInfoService.getUserInfo(this.auth.user?.id).subscribe(res=>{
+      if (res.success) {
+        this.userInfoService.userInfo = res.data;
+        console.log("before navigate")
+        this.router.navigate(["/checkout-success",this.order.id]).catch();
+      }
+
+    })
 
 
   }

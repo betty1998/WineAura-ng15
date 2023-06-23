@@ -20,7 +20,7 @@ export class AuthService {
               private router: Router,
               private userInfoService:UserInfoService) {
     // everytime refresh the page will call checklogin()
-    this.checkLogin().pipe(
+    !this.user && this.checkLogin().pipe(
       switchMap(res => {
 
         if(res.success){

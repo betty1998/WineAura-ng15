@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {Product} from "../../shared/model/Product";
 import {CartProduct} from "../../shared/model/CartProduct";
 import {AuthService} from "../../shared/service/auth.service";
-import {CartService} from "../../shared/service/cart.service";
 import {UserInfoService} from "../../shared/service/user-info.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";

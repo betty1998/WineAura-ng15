@@ -6,6 +6,8 @@ import {ProductComponent} from "./product/product.component";
 import {ProductDetailComponent} from "./product/product-detail/product-detail.component";
 import {CartComponent} from "./checkout/cart/cart.component";
 import {OrderDetailComponent} from "./checkout/cart/order-detail/order-detail.component";
+import {AuthGuard} from "./shared/guard/auth.guard";
+import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
 
 const routes: Routes = [
   {
@@ -33,7 +35,12 @@ const routes: Routes = [
     //     component: OrderDetailComponent}
     // ]
     loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
-    // canActivate:[AuthGuard]
+    // canActivate:[AuthGuard],
+    canLoad:[AuthGuard]
+  },
+  {
+    path:"checkout-success/:orderId",
+    component:CheckoutSuccessComponent
   },
 
   {

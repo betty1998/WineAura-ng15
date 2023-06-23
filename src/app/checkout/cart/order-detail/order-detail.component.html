@@ -101,17 +101,17 @@
     <div class="form-row">
       <mat-form-field appearance="outline" class="form-field-3">
         <mat-label>Card Holder Name</mat-label>
-        <input matInput formControlName="cardHolderName">
+        <input matInput formControlName="cardHolderName" >
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field-3">
         <mat-label>Expiration Date</mat-label>
-        <input matInput formControlName="expirationDate" placeholder="mm/yy">
+        <input matInput formControlName="expirationDate" placeholder="mm/yy" value="07/26">
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field-3">
         <mat-label>CVV</mat-label>
-        <input matInput formControlName="cvv">
+        <input matInput formControlName="cvv" value="123">
         <mat-error *ngIf="checkoutForm.get('paymentDetails.cvv')?.hasError('pattern')">
           CVV must be exactly 3 digits.
         </mat-error>
@@ -158,7 +158,7 @@
     </div>
   </mat-expansion-panel>
   <!------------------------------------------------------------------------->
-  <mat-expansion-panel formGroupName="orderReview" [expanded]="step === 2" (opened)="setStep(2)" >
+  <mat-expansion-panel formGroupName="orderReview" [expanded]="step >= 2" (opened)="setStep(3)" >
     <mat-expansion-panel-header>
       <mat-panel-title>
         Review Order
@@ -185,7 +185,6 @@
 
     </div>
 
-    <!-- Add your order review elements here -->
     <div class="d-flex justify-content-end">
       <button mat-button color="warn" (click)="prevStep()">Previous</button>
     </div>
@@ -195,7 +194,7 @@
 </form>
 
 <div class="place-btn mt-3">
-  <button mat-raised-button color="accent" (click)="placeOrder($event)" [disabled]="checkoutForm.invalid">
+  <button mat-raised-button color="accent" (click)="placeOrder($event)" [disabled]="checkoutForm.invalid || step<3">
     Place Order
   </button>
 </div>
