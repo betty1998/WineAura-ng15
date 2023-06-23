@@ -1,1 +1,40 @@
-<p>checkout-success works!</p>
+<div class="checkout-success">
+  <h1>Thank you for your order!</h1>
+  <p>Your order number is <strong>#{{order.id}}</strong>.</p>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Shipping Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Address: {{order.address}}, {{order.city}}, {{order.state}}, {{order.zipcode}}</p>
+      <p>Contact Info:</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Payment Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Method: {{order.paymentMethod}}</p>
+      <p>Card Ending in {{order.paymentCardNumber.slice(-4)}}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Order Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngFor="let purchase of order.purchases">
+        <p>Product Name: {{purchase.product.name}} <!-- replace with actual property for product name in Product model -->
+        <p>Quantity: {{purchase.qty}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+<!--  <p>We've sent a confirmation email to your registered email. Your items will be shipped within the next 2-3 business days.</p>-->
+
+  <a mat-stroked-button color="primary" routerLink="/">Continue Shopping</a>
+</div>

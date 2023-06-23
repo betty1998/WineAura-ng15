@@ -18,10 +18,10 @@ export class OrderService {
   }
 
   getOrder(id: number) {
-    return this.http.get<DataResponse<Order>>(`${environment.api}/orders${id}`);
+    return this.http.get<DataResponse<Order>>(`${environment.api}/orders/${id}`);
   }
 
   getOrderByUserId(userId: number) {
-    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders${userId}`);
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/user/${userId}`);
   }
 }
