@@ -1,0 +1,27 @@
+.row > div {
+  padding: 10px 0px;
+  margin: auto;
+  text-align: center;
+
+}
+.row{
+  margin:0px 8px;
+}
+
+h1{
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.shadow{
+  box-shadow: 0 20px 20px 0 rgba(28,37,42,.05), 0 50px 50px 0 rgba(28,37,42,.15);
+}
+
+.address-container{
+  padding: 10px 30px;
+  margin: 30px 0px;
+  div{
+    margin-top: 22px;
+  }
+
+}
