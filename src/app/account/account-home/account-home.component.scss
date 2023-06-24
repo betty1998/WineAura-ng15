@@ -1,18 +1,16 @@
 .account-container{
-  display: flex;
   margin-top: 40px;
-
 
 }
 .header-list{
-  display: flex;
+  //display: flex;
   flex-direction: column;
-  flex-grow: 0;
   flex-shrink: 0;
-  margin-left: 20px;
+  margin-left: 30px;
+  margin-right: 50px;
   width: 260px;
   height: 50vh;
-  padding: 0px 20px;
+  padding: 20px 20px;
   background-color: white;
   box-shadow: 0 20px 20px 0 rgba(28,37,42,.05), 0 50px 50px 0 rgba(28,37,42,.15);
 
@@ -24,9 +22,23 @@
 
 }
 
-
 .content{
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
+  width:70%;
+  min-width: 700px;
 }
+mat-list-item.my-active, mat-list-item:hover{
+  a{
+    color: rebeccapurple;
+  }
+
+  border-left: rebeccapurple 4px solid;
+}
+
+a{
+  text-decoration: none;
+  color: darkslategrey;
+}
+
+
+
+

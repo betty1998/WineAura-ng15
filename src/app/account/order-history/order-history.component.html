@@ -1,0 +1,53 @@
+<h1>
+  <mat-icon>shopping_cart</mat-icon>&nbsp;Order History
+</h1>
+<div class="sort-container shadow d-flex gap-4 align-items-center">
+  <div class="sort-by">
+    <mat-form-field appearance="outline">
+      <mat-label>Sort By</mat-label>
+      <mat-select>
+        <mat-option>Most Recent</mat-option>
+        <mat-option>Least Recent</mat-option>
+        <mat-option>Order Status</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="order-within">
+    <mat-form-field appearance="outline">
+      <mat-label>Order Within</mat-label>
+      <mat-select>
+        <mat-option>Last 3 months</mat-option>
+        <mat-option>Last 6 months</mat-option>
+        <mat-option>Last 12 months</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="order-list shadow">
+
+  <div *ngFor="let order of orderList">
+    <div *ngIf="order.purchases.length>1" class="row">
+      <div class="image col-2">
+        <img [src]="order.purchases[0].product.image" width="120" height="120">
+      </div>
+      <div class="order-number col-1">
+        <div>#{{order.id}}</div>
+      </div>
+      <div class="date col-2 text-center">
+        <div>{{order.purchaseDate | date:'mediumDate'}}</div>
+      </div>
+      <div class="status col-2">
+        {{order.status}}
+      </div>
+      <div class="total col-2">
+        <p>{{order.purchases[0].product.price|currency}}</p>
+        ({{order.total}} Items)
+      </div>
+      <div class="col-3">
+        <button mat-stroked-button color="primary" (click)="openOrder(order)">View Details</button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+
+</div>

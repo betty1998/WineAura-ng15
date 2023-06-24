@@ -1,0 +1,35 @@
+.order-summary{
+  flex:60%;
+  margin-right: 20px;
+}
+
+.order-details {
+  flex: 30%;
+  margin-left: 10px;
+
+}
+
+mat-dialog-content{
+  width: 900px;
+  height: 700px;
+}
+
+h2{
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.row > div {
+  padding: 10px 0px;
+}
+.row{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+div.subtitle{
+  font-size: 16px;
+  color: black;
+  margin-top: 10px;
+}

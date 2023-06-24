@@ -8,7 +8,11 @@ import {CartComponent} from "./checkout/cart/cart.component";
 import {OrderDetailComponent} from "./checkout/cart/order-detail/order-detail.component";
 import {AuthGuard} from "./shared/guard/auth.guard";
 import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
-import {AccountComponent} from "./account/account.component";
+import {AccountHomeComponent} from "./account/account-home/account-home.component";
+import {ProfileComponent} from "./account/profile/profile.component";
+import {AddressBookComponent} from "./account/address-book/address-book.component";
+import {OrderHistoryComponent} from "./account/order-history/order-history.component";
+import {FavoriteComponent} from "./account/favorite/favorite.component";
 
 const routes: Routes = [
   {
@@ -45,9 +49,28 @@ const routes: Routes = [
   },
   {
     path:"account/:id",
-    component: AccountComponent,
-    // canActivate:[AuthGuard]
+    component: AccountHomeComponent,
+    // canActivate:[AuthGuard],
+    children:[
+      {
+        path:"profile",
+        component:ProfileComponent
+      },
+      {
+        path:"address-book",
+        component:AddressBookComponent
+      },
+      {
+        path:"order-history",
+        component: OrderHistoryComponent
+      },
+      {
+        path:"favorite",
+        component: FavoriteComponent
+      }
+    ]
   },
+
 
 
   {

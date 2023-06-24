@@ -14,6 +14,11 @@ export interface Order {
   zipcode: string;
   paymentMethod: string;
   paymentCardNumber: string;
+  total?:number;
+  subTotal?: number;
+  tax?: number;
+  shipping?:number;
+  itemAmount?:number;
   purchases: Purchase[];
   purchaseDate?: string;
   status: string;

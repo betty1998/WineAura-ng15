@@ -1,5 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {CartProduct} from "../../../shared/model/CartProduct";
+import {Order} from "../../../shared/model/Order";
+import {OrderService} from "../../../shared/service/order.service";
 
 @Component({
   selector: 'app-order-summary',
@@ -10,24 +12,23 @@ export class OrderSummaryComponent implements OnChanges {
   @Input()
   cart!: CartProduct[];
   subTotal!: number;
-  taxRate = 0.08;
   tax!: number;
   shipping = 0.00;
-  freeDelivery= 99;
   total!: number;
 
   @Output()
   checkout: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private er:ElementRef) {
+  constructor(private er:ElementRef,
+              private orderService:OrderService) {
   }
 
   ngOnChanges(): void {
     console.log("ngOnChange: ", this.cart);
     this.subTotal = this.cart.reduce((acc, cp) =>
       acc + cp.qty * cp.product.price, 0);
-    this.tax = +(this.subTotal * this.taxRate).toFixed(2);
-    if (this.subTotal < this.freeDelivery) {
+    this.tax = +(this.subTotal * this.orderService.taxRate).toFixed(2);
+    if (this.subTotal < this.orderService.freeDelivery) {
       this.shipping = 8;
     }else {
       this.shipping = 0;

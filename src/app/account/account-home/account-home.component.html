@@ -1,0 +1,31 @@
+<div class="d-flex account-container">
+  <div class="header-list">
+    <h1 class="text-center">Hello, {{auth.user?.username}}</h1>
+    <mat-list>
+      <mat-list-item routerLinkActive="my-active">
+        <a><mat-icon>home</mat-icon>Account Home</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="my-active">
+        <a routerLink="profile"><mat-icon>person_outline</mat-icon>My Profile</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="my-active">
+        <a routerLink="address-book"><mat-icon>library_books</mat-icon>Address Book</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="my-active">
+        <a routerLink="order-history"><mat-icon>shopping_cart</mat-icon>Order History</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item routerLinkActive="my-active">
+        <a routerLink="favorite"><mat-icon>favorite_outline</mat-icon>My Favorites</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

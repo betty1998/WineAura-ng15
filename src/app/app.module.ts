@@ -19,12 +19,15 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ErrorInterceptor} from "./shared/interceptor/error.interceptor";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { CartComponent } from './checkout/cart/cart.component';
-import { AccountComponent } from './account/account.component';
 import { FavoriteComponent } from './account/favorite/favorite.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { OrderSummaryComponent } from './checkout/cart/order-summary/order-summary.component';
 import {CheckoutModule} from "./checkout/checkout.module";
 import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
+import { AddressBookComponent } from './account/address-book/address-book.component';
+import { OrderHistoryComponent } from './account/order-history/order-history.component';
+import {AccountModule} from "./account/account.module";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -36,9 +39,6 @@ import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.comp
     ProductComponent,
     ProductOverviewComponent,
     ProductDetailComponent,
-    AccountComponent,
-    FavoriteComponent,
-    ProfileComponent,
     CheckoutSuccessComponent,
 
   ],
@@ -52,8 +52,7 @@ import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.comp
     HttpClientModule,
     MatGridListModule,
     CheckoutModule,
-
-
+    AccountModule
   ],
   providers: [
     {

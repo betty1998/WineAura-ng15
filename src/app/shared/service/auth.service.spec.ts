@@ -24,7 +24,7 @@ describe('AuthService', () => {
   });
 
   it("should return token",()=>{
-    const user: User = { username: 'testuser', password: 'testpassword' };
+    const user: User = {username: 'testuser', password: 'testpassword' };
     service.login(user).subscribe(res =>{
       expect(res).toBeTruthy();
       expect(typeof res).toBe("string")
