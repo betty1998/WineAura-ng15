@@ -15,6 +15,8 @@ import {Order} from "../../shared/model/Order";
 export class OrderHistoryComponent implements OnInit{
   id:number|undefined;
   orderList!: Order[];
+  selectedMonth = "3";
+  selectedSort=  "Most Recent";
 
   constructor(private dialog: MatDialog,
               public orderService:OrderService,
@@ -25,7 +27,7 @@ export class OrderHistoryComponent implements OnInit{
   ngOnInit(): void {
     // if orderList in orderService is undefined
     // then send request to get orderList
-    console.log("id:",this.route.snapshot.paramMap.get('id'))
+    console.log("id:",this.route.parent?.snapshot.paramMap.get('id'))
     if(!this.orderService.orderList){
       this.route.parent?.paramMap.pipe(switchMap(params=>{
         this.id = Number(params.get("id"));

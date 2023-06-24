@@ -5,33 +5,35 @@
   <div class="sort-by">
     <mat-form-field appearance="outline">
       <mat-label>Sort By</mat-label>
-      <mat-select>
-        <mat-option>Most Recent</mat-option>
-        <mat-option>Least Recent</mat-option>
-        <mat-option>Order Status</mat-option>
+      <mat-select [(value)] ="selectedSort">
+        <mat-option value="Most Recent">Most Recent</mat-option>
+        <mat-option value="Least Recent">Least Recent</mat-option>
+        <mat-option value="Order Status">Order Status</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <div class="order-within">
     <mat-form-field appearance="outline">
       <mat-label>Order Within</mat-label>
-      <mat-select>
-        <mat-option>Last 3 months</mat-option>
-        <mat-option>Last 6 months</mat-option>
-        <mat-option>Last 12 months</mat-option>
+      <mat-select [(value)]="selectedMonth">
+        <mat-option value="3">Last 3 months</mat-option>
+        <mat-option value="6">Last 6 months</mat-option>
+        <mat-option value="12">Last 12 months</mat-option>
+        <mat-option value="0">All time</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 </div>
 <div class="order-list shadow">
 
-  <div *ngFor="let order of orderList">
+  <div *ngFor="let order of orderList | orderFilter:+selectedMonth | orderSort: selectedSort">
     <div *ngIf="order.purchases.length>1" class="row">
       <div class="image col-2">
         <img [src]="order.purchases[0].product.image" width="120" height="120">
       </div>
-      <div class="order-number col-1">
-        <div>#{{order.id}}</div>
+      <div class="order-number col-2">
+        <p>#{{order.id}}</p>
+        ({{order.itemAmount}} Items)
       </div>
       <div class="date col-2 text-center">
         <div>{{order.purchaseDate | date:'mediumDate'}}</div>
@@ -40,10 +42,9 @@
         {{order.status}}
       </div>
       <div class="total col-2">
-        <p>{{order.purchases[0].product.price|currency}}</p>
-        ({{order.total}} Items)
+        {{order.total|currency}}
       </div>
-      <div class="col-3">
+      <div class="col-2">
         <button mat-stroked-button color="primary" (click)="openOrder(order)">View Details</button>
       </div>
     </div>

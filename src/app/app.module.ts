@@ -15,19 +15,13 @@ import {AuthInterceptor} from "./shared/interceptor/auth.interceptor";
 import { ProductComponent } from './product/product.component';
 import { ProductOverviewComponent } from './product/product-overview/product-overview.component';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ErrorInterceptor} from "./shared/interceptor/error.interceptor";
 import {MatGridListModule} from "@angular/material/grid-list";
-import { CartComponent } from './checkout/cart/cart.component';
-import { FavoriteComponent } from './account/favorite/favorite.component';
-import { ProfileComponent } from './account/profile/profile.component';
-import { OrderSummaryComponent } from './checkout/cart/order-summary/order-summary.component';
 import {CheckoutModule} from "./checkout/checkout.module";
 import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.component";
-import { AddressBookComponent } from './account/address-book/address-book.component';
-import { OrderHistoryComponent } from './account/order-history/order-history.component';
 import {AccountModule} from "./account/account.module";
-import {MatListModule} from "@angular/material/list";
+import {OrderSortPipe} from "./shared/pipe/order-sort.pipe";
+import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
 
 @NgModule({
   declarations: [
@@ -40,6 +34,8 @@ import {MatListModule} from "@angular/material/list";
     ProductOverviewComponent,
     ProductDetailComponent,
     CheckoutSuccessComponent,
+    OrderSortPipe,
+    OrderFilterPipe
 
   ],
   imports: [
@@ -52,7 +48,7 @@ import {MatListModule} from "@angular/material/list";
     HttpClientModule,
     MatGridListModule,
     CheckoutModule,
-    AccountModule
+    // AccountModule
   ],
   providers: [
     {
@@ -60,9 +56,15 @@ import {MatListModule} from "@angular/material/list";
       useClass: AuthInterceptor,
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
-      multi: true }
+      multi: true
+    }
+  ],
+  exports: [
+    OrderFilterPipe,
+    OrderSortPipe
   ],
   bootstrap: [AppComponent]
 })

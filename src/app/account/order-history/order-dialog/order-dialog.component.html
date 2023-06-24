@@ -54,7 +54,7 @@
       </div>
       <div>
         <div class="subtitle">Order Date</div>
-        <div>{{order.purchaseDate}}</div>
+        <div>{{order.purchaseDate | date:"medium"}}</div>
       </div>
       <div>
         <div class="subtitle">Contact</div>
@@ -70,7 +70,7 @@
       <div>
         <div class="subtitle">Payment</div>
         <div class="text-capitalize">{{order.paymentMethod}} card</div>
-        <div>{{order.paymentCardNumber.slice(-4)}}</div>
+        <div>************{{order.paymentCardNumber.slice(-4)}}</div>
       </div>
     </div>
   </div>

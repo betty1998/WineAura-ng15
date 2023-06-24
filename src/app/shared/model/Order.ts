@@ -20,7 +20,7 @@ export interface Order {
   shipping?:number;
   itemAmount?:number;
   purchases: Purchase[];
-  purchaseDate?: string;
+  purchaseDate: string;
   status: string;
   trackingNumber?: string;
   store?: Store;

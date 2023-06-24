@@ -12,6 +12,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatDividerModule} from "@angular/material/divider";
 import { AccountHomeComponent } from './account-home/account-home.component';
 import { OrderDialogComponent } from './order-history/order-dialog/order-dialog.component';
+import {AppModule} from "../app.module";
 
 const routes:Routes=[
   // {
@@ -53,7 +54,8 @@ const routes:Routes=[
     CustomStyleModule,
     MatDividerModule,
     MatListModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AppModule
   ]
 })
 export class AccountModule { }
