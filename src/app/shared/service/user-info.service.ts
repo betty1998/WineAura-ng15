@@ -55,7 +55,29 @@ export class UserInfoService {
       `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null);
   }
 
-  addAddress(userInfoId: number, address: AddressBook) {
-    return this.httpClient.put(`${environment.api}/userinfos/addAddress/${userInfoId}`, address);
+  addAddress(userInfoId: number, address: AddressBook):Observable<DataResponse<UserInfo>>  {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/addAddress/${userInfoId}`, address);
+  }
+
+  editAddress(userInfoId: number, address: AddressBook) {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/editAddress/${userInfoId}`, address);
+  }
+
+  deleteAddress(userInfoId: number, address:AddressBook) {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/deleteAddress/${userInfoId}`, address);
+  }
+
+  updateProfile(userInfoId: number, userInfo: UserInfo) {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/updateProfile/${userInfoId}`, userInfo);
+  }
+
+  /*TODO: post method not found*/
+  createProfile(userId: number | undefined, userInfo: UserInfo) {
+    return this.httpClient.post<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/createProfile/${userId}`, userInfo);
   }
 }

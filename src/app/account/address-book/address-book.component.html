@@ -1,17 +1,22 @@
 <h1>
   <mat-icon>library_books</mat-icon>&nbsp;Address Book
 </h1>
-<div class="address-container shadow">
-  <div class="address row" *ngFor="let addr of userInfoService.userInfo.addresses">
-    <div class="info col-6">
-      <div>{{addr.address}}</div>
-      <div>{{addr.city}}</div>
-      <div>{{addr.state}}</div>
-      <div>{{addr.zipcode}}</div>
+<div class="address-container">
+  <div class="address row shadow" *ngFor="let addr of userInfoService.userInfo.addresses">
+    <div class="info col-4">
+      <div>{{addr.firstName}}, {{addr.lastName}}</div>
+      <div>{{addr.address1}}, {{addr.address2}}</div>
+      <div>{{addr.city}}, {{addr.state}}, {{addr.zipcode}}</div>
+      <div>{{addr.country}}</div>
+      <div></div>
     </div>
-    <div class="operation col-3">
-      <button mat-icon-button (click)="editAddress(addr)"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button (click)="deleteAddress(addr)"><mat-icon>delete</mat-icon></button>
+    <div class="operation col-4">
+      <a type="button" (click)="editAddress(addr)">
+        <mat-icon>edit</mat-icon>Edit
+      </a>
+      <a type="button" (click)="deleteAddress(addr)">
+         <mat-icon>delete</mat-icon>Delete
+      </a>
     </div>
   </div>
   <div>

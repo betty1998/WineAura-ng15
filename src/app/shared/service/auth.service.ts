@@ -62,7 +62,11 @@ export class AuthService {
     this.user = null;
   }
 
-  updatePassword(user:User):Observable<Response>  {
-    return this.httpClient.post<Response>(`${environment.api}/auth/updatepassword`, user);
+  updatePassword(user:User):Observable<DataResponse<User>>  {
+    return this.httpClient.put<DataResponse<User>>(`${environment.api}/auth/updatePassword`, user);
+  }
+
+  updateUsername(user: User) {
+    return this.httpClient.put<LoginResponse>(`${environment.api}/auth/updateUsername`, user);
   }
 }

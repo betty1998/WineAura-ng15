@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import {ProfileComponent} from "./profile/profile.component";
 import {RouterModule, Routes} from "@angular/router";
 import {FavoriteComponent} from "./favorite/favorite.component";
-import {CheckoutSuccessComponent} from "../checkout-success/checkout-success.component";
 import {AddressBookComponent} from "./address-book/address-book.component";
 import {OrderHistoryComponent} from "./order-history/order-history.component";
 import {CustomStyleModule} from "../shared/modules/custom-style/custom-style.module";
@@ -15,30 +14,10 @@ import { OrderDialogComponent } from './order-history/order-dialog/order-dialog.
 import {AppModule} from "../app.module";
 import { AddressDialogComponent } from './address-book/address-dialog/address-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { UpdatePasswordDialogComponent } from './profile/update-password-dialog/update-password-dialog.component';
+import {ProfileEditDialogComponent} from "./profile/profile-edit-dialog/profile-edit-dialog.component";
 
 const routes:Routes=[
-  // {
-  //   path:"",
-  //   component:AccountHomeComponent,
-  //   children:[
-  //     {
-  //       path:"profile",
-  //       component:ProfileComponent
-  //     },
-  //     {
-  //       path:"address-book",
-  //       component:AddressBookComponent
-  //     },
-  //     {
-  //       path:"order-history",
-  //       component: OrderHistoryComponent
-  //     },
-  //     {
-  //       path:"favorite",
-  //       component: FavoriteComponent
-  //     }
-  //   ]
-  // },
 
 ]
 
@@ -51,6 +30,8 @@ const routes:Routes=[
     AccountHomeComponent,
     OrderDialogComponent,
     AddressDialogComponent,
+    ProfileEditDialogComponent,
+    UpdatePasswordDialogComponent,
   ],
   imports: [
     CommonModule,

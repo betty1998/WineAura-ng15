@@ -36,20 +36,22 @@ export class OrderDetailComponent implements OnInit{
   buildForm(){
     this.checkoutForm = this.fb.group({
       shippingDetails: this.fb.group({
-        userInfo: this.fb.group({
+        shippingAddress: this.fb.group({
           firstName: [this.userInfo.firstName, Validators.required],
           lastName: [this.userInfo.lastName, Validators.required],
-          email:[this.userInfo.email,[Validators.required,Validators.email]],
-          phone: [this.userInfo.phone, [Validators.required,
-            // Validators.pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}')]]
-          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
-        }),
-        shippingAddress: this.fb.group({
-          address: ['', Validators.required],
+          address1: ['', Validators.required],
+          address2: '',
           city: ['', Validators.required],
           state: ['', Validators.required],
+          country: ['', Validators.required],
           zipcode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
         })
+      }),
+      contactInfo: this.fb.group({
+        email:[this.userInfo.email,[Validators.required,Validators.email]],
+        phone: [this.userInfo.phone, [Validators.required,
+          // Validators.pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}')]]
+          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
       }),
       paymentDetails: this.fb.group({
         paymentMethod: ['', Validators.required],

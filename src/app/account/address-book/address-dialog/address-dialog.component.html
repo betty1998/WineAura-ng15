@@ -13,8 +13,13 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="address">
+        <mat-label>Address1</mat-label>
+        <input matInput formControlName="address1">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Address2</mat-label>
+        <input matInput formControlName="address2">
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field">
@@ -37,11 +42,16 @@
           Zip Code must be exactly 5 characters long.
         </mat-error>
       </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country">
+      </mat-form-field>
     </div>
   </form>
   <div class="buttons">
-    <button mat-stroked-button>Cancel</button>
-    <button mat-raised-button color="primary">Save</button>
+    <button mat-stroked-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
   </div>
 
 </mat-dialog-content>

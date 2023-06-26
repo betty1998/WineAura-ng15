@@ -14,7 +14,6 @@ import {AddressBook} from "../../shared/model/AddressBook";
   styleUrls: ['./address-book.component.scss']
 })
 export class AddressBookComponent {
-  userInfo!: UserInfo;
   constructor(public userInfoService: UserInfoService,
               private route:ActivatedRoute,
               private dialog: MatDialog) {
@@ -30,7 +29,7 @@ export class AddressBookComponent {
     })
   }
   /*TODO
-  * - update address properties
+  *
   * - send request in dialog
   * */
 
@@ -45,10 +44,6 @@ export class AddressBookComponent {
   }
 
 
-  deleteAddress(addressBook:AddressBook) {
-
-  }
-
   addAddress() {
     this.dialog.open(AddressDialogComponent, {
       data: {
@@ -56,5 +51,15 @@ export class AddressBookComponent {
         dialogTitle: 'New Address',
       },
     });
+  }
+
+  deleteAddress(address: AddressBook) {
+    this.userInfoService.deleteAddress(this.userInfoService.userInfo.id, address).subscribe(res=>{
+      if (res.success) {
+        this.userInfoService.userInfo = res.data;
+      } else {
+        console.log(res);
+      }
+    })
   }
 }

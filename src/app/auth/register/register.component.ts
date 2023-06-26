@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../shared/model/User";
 import {AuthRequest} from "../../shared/model/AuthRequest";
 import {ActivatedRoute, Router} from "@angular/router";
+import {of, switchMap, throwError} from "rxjs";
+import {UserInfoService} from "../../shared/service/user-info.service";
+import {UserInfo} from "../../shared/model/UserInfo";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +20,8 @@ export class RegisterComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     public auth: AuthService,
-    private router: Router) {
+    private router: Router,
+    private infoService:UserInfoService) {
   }
   ngOnInit(): void {
     this.registerFormGroup = this.fb.group({
@@ -26,8 +30,14 @@ export class RegisterComponent implements OnInit{
       passwordGroup: this.fb.group({
         password: ["",[Validators.required, Validators.pattern(this.passwordPattern)]],
         confirmPassword: ""
-      }, {validators:[RegisterComponent.passwordValidator]})
-
+      }, {validators:[RegisterComponent.passwordValidator]}),
+      infoGroup:this.fb.group({
+        firstName: ["", Validators.required],
+        lastName: ["", Validators.required],
+        email:["",[Validators.required,Validators.email]],
+        phone: ["", [Validators.required,
+          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
+      })
     });
   }
   static passwordValidator({value: {password, confirmPassword}}: FormGroup):null|{passwordNotMatch: string} {
@@ -38,13 +48,28 @@ export class RegisterComponent implements OnInit{
   register() {
     console.log(this.registerFormGroup.value);
     const formValue = this.registerFormGroup.value;
-    const user:{username:string,password:string} = {
-      username:formValue.username,
-      password:formValue.passwordGroup.password}
-    this.auth.register(user).subscribe(res=>{
-      console.log(res);
+    const user: { username: string, password: string; } = {
+      username: formValue.username,
+      password: formValue.passwordGroup.password
+    };
+    const userInfo:UserInfo = this.registerFormGroup.get("infoGroup")?.value;
+    console.log(userInfo);
+    this.auth.register(user).pipe(switchMap(res=>{
       if (res.success) {
         this.showMessage = true;
+        console.log(res);
+        this.auth.user = res.data;
+        return this.infoService.createProfile(res.data.id, userInfo);
+      } else {
+        console.log(res);
+        return throwError(res.message);
+      }
+    })).subscribe(res=>{
+      if (res.success) {
+        console.log(res);
+        this.infoService.userInfo = res.data;
+      } else {
+        console.log(res);
       }
     });
   }

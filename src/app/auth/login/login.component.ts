@@ -3,7 +3,7 @@ import {NgForm} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/service/auth.service";
 import {UserInfoService} from "../../shared/service/user-info.service";
-import {of, switchMap} from "rxjs";
+import {of, switchMap, throwError} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,7 @@ export class LoginComponent {
   //       }
   //     )
   // }
-
+/*Todo: deal with second subscribe*/
   login({value}: NgForm) {
     console.log("user:", value);
     this.auth.login(value).pipe(
@@ -45,16 +45,18 @@ export class LoginComponent {
           return this.userInfoService.getUserInfo(this.auth.user.id);
         } else {
           // If login is not successful, an empty observable is returned
-          return of(null);
+          return throwError(res.message)
         }
       })
     ).subscribe(res => {
-      if (res && res.success) {
+      if (res.success) {
         console.log("user info: ", res.data);
         this.userInfoService.userInfo = res.data;
 
         // navigate to products after getting user info
         this.router.navigate(["/products"]).catch();
+      } else {
+        console.log(res);
       }
     });
   }
