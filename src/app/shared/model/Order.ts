@@ -8,9 +8,11 @@ export interface Order {
   lastName: string;
   email: string;
   phone: string;
-  address: string;
+  address1: string;
+  address2: string;
   city: string;
   state: string;
+  country: string;
   zipcode: string;
   paymentMethod: string;
   paymentCardNumber: string;

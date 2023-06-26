@@ -13,6 +13,8 @@ import {MatDividerModule} from "@angular/material/divider";
 import { AccountHomeComponent } from './account-home/account-home.component';
 import { OrderDialogComponent } from './order-history/order-dialog/order-dialog.component';
 import {AppModule} from "../app.module";
+import { AddressDialogComponent } from './address-book/address-dialog/address-dialog.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const routes:Routes=[
   // {
@@ -48,6 +50,7 @@ const routes:Routes=[
     OrderHistoryComponent,
     AccountHomeComponent,
     OrderDialogComponent,
+    AddressDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +58,8 @@ const routes:Routes=[
     MatDividerModule,
     MatListModule,
     RouterModule.forChild(routes),
-    AppModule
+    AppModule,
+    ReactiveFormsModule
   ]
 })
 export class AccountModule { }

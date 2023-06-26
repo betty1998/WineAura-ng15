@@ -1,0 +1,23 @@
+.form-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  //height: 70px;
+}
+
+.form-field {
+  flex: 1 0 calc(100% - 16px);
+}
+
+mat-dialog-content{
+  width: 500px;
+  height: 600px;
+  margin: 30px;
+}
+
+.buttons{
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+}

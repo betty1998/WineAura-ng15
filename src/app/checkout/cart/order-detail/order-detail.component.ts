@@ -53,10 +53,10 @@ export class OrderDetailComponent implements OnInit{
       }),
       paymentDetails: this.fb.group({
         paymentMethod: ['', Validators.required],
-        paymentCardNumber: ['1111111111222222', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+        paymentCardNumber: ['1111111122222233', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
         cardHolderName: ['Beibei', Validators.required],
-        expirationDate: ['04/27', Validators.required],
-        cvv: ['123', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
+        expirationDate: ['05/28', Validators.required],
+        cvv: ['253', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
         billingAddress: this.fb.group({
           address: ['', Validators.required],
           city: ['', Validators.required],

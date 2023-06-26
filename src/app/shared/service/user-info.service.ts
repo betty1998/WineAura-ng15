@@ -8,6 +8,7 @@ import {CartProduct} from "../model/CartProduct";
 import {Observable} from "rxjs";
 import {Data} from "@angular/router";
 import {Product} from "../model/Product";
+import {AddressBook} from "../model/AddressBook";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,8 @@ export class UserInfoService {
   userInfo!:UserInfo;
   cart: CartProduct[]|undefined;
 
-
   constructor(private httpClient:HttpClient) {
-
   }
-
 
   public getUserInfo(userId: number|undefined):Observable<DataResponse<UserInfo>> {
     return this.httpClient.get<DataResponse<UserInfo>>(
@@ -55,5 +53,9 @@ export class UserInfoService {
   removeFromFavorite(userInfoId: number, productId: number):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null);
+  }
+
+  addAddress(userInfoId: number, address: AddressBook) {
+    return this.httpClient.put(`${environment.api}/userinfos/addAddress/${userInfoId}`, address);
   }
 }

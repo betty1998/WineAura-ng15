@@ -3,6 +3,10 @@ import {UserInfoService} from "../../shared/service/user-info.service";
 import {UserInfo} from "../../shared/model/UserInfo";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
+import {DialogRef} from "@angular/cdk/dialog";
+import {AddressDialogComponent} from "./address-dialog/address-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {AddressBook} from "../../shared/model/AddressBook";
 
 @Component({
   selector: 'app-address-book',
@@ -11,9 +15,9 @@ import {switchMap} from "rxjs";
 })
 export class AddressBookComponent {
   userInfo!: UserInfo;
-
   constructor(public userInfoService: UserInfoService,
-              private route:ActivatedRoute) {
+              private route:ActivatedRoute,
+              private dialog: MatDialog) {
     userInfoService.userInfo && route.parent?.paramMap.pipe(switchMap(params =>{
       const id = Number(params.get("id"));
       return userInfoService.getUserInfo(id);
@@ -25,5 +29,32 @@ export class AddressBookComponent {
       }
     })
   }
+  /*TODO
+  * - update address properties
+  * - send request in dialog
+  * */
 
+  editAddress(addressBook:AddressBook) {
+    this.dialog.open(AddressDialogComponent, {
+      data: {
+        userInfoId: this.userInfoService.userInfo.id,
+        address: addressBook,
+        dialogTitle: 'Edit Address',
+      },
+    });
+  }
+
+
+  deleteAddress(addressBook:AddressBook) {
+
+  }
+
+  addAddress() {
+    this.dialog.open(AddressDialogComponent, {
+      data: {
+        userInfoId: this.userInfoService.userInfo.id,
+        dialogTitle: 'New Address',
+      },
+    });
+  }
 }
