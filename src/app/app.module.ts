@@ -24,6 +24,7 @@ import {OrderSortPipe} from "./shared/pipe/order-sort.pipe";
 import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
 import { SearchPipe } from './shared/pipe/search.pipe';
 import { PriceRangePipe } from './shared/pipe/price-range.pipe';
+import { FilterPipe } from './shared/pipe/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PriceRangePipe } from './shared/pipe/price-range.pipe';
     OrderSortPipe,
     OrderFilterPipe,
     SearchPipe,
-    PriceRangePipe
+    PriceRangePipe,
+    FilterPipe
 
   ],
   imports: [

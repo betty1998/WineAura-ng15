@@ -17,28 +17,20 @@
           </label>
           <a mat-raised-button class="go-btn"fxFlex="40px" (click)="filterPrice(input1.value, input2.value)">Go</a>
         </div>
-        <div fxLayout="column" class="filter-body">
+      <!-------------- Price Range Checkboxes --------------->
+        <div *ngFor="let price of priceRange" fxLayout="column" class="filter-body">
           <label>
-            <input #price type="checkbox" name="checkbox" />Up to $20
-          </label>
-          <label>
-            <input #price type="checkbox" name="checkbox" />$20 to $40
-          </label>
-          <label>
-            <input #price type="checkbox" name="checkbox" />$40 to $60
-          </label>
-          <label>
-            <input #price type="checkbox" name="checkbox" />$60 and Above
+            <input #price type="checkbox" (change)="toggleFilter($event,{ type: 'price', value: price }); clearInput(input1,input2);"/>{{price}}
           </label>
         </div>
-
     </div>
 
     <div>
       <h3>Category</h3>
+      <!-------------- Category Checkboxes --------------->
       <div *ngFor="let category of categories" class="filter-body">
         <label>
-          <input type="checkbox" name="checkbox" />{{category}}
+          <input type="checkbox" (change)="toggleFilter($event,{ type: 'category', value: category })"/>{{category}}
         </label>
       </div>
     </div>
@@ -46,7 +38,7 @@
       <h3>Country/State</h3>
       <div *ngFor="let region of regions" class="filter-body">
         <label>
-          <input type="checkbox" name="checkbox" />{{region}}
+          <input type="checkbox" (change)="toggleFilter($event,{ type: 'region', value: region })"/>{{region}}
         </label>
       </div>
     </div>
@@ -54,13 +46,17 @@
       <h3>Brand</h3>
       <div *ngFor="let brand of brands" class="filter-body">
         <label>
-          <input type="checkbox" name="checkbox" />{{brand}}
+          <input type="checkbox" (change)="toggleFilter($event,{ type: 'brand', value: brand })" />{{brand}}
         </label>
       </div>
     </div>
   </section>
   <section class="products-list-section" fxFlex="90%" fxLayout="row wrap" fxFlexAlign="center start">
-    <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px" [product]="p" *ngFor="let p of products | search: searchKey | priceRange:min:max">
+    <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
+                          [product]="p" *ngFor="let p of products
+                          | search: searchKey
+                          | priceRange:min:max
+                          | filter:(filterService.filters | async)">
     </app-product-overview>
   </section>
 

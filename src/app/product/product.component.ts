@@ -3,6 +3,8 @@ import {Product} from "../shared/model/Product";
 import {ProductService} from "../shared/service/product.service";
 import {SearchPipe} from "../shared/pipe/search.pipe";
 import {filter} from "rxjs";
+import {Filter} from "../shared/model/Filter";
+import {FilterService} from "../shared/service/filter.service";
 
 @Component({
   selector: 'app-product',
@@ -19,10 +21,12 @@ export class ProductComponent implements OnInit{
   searchKey: string = "";
   @ViewChildren('price')
   priceCheckboxes!: QueryList<ElementRef>;
+  priceRange = ["Up to $20", "$20 to $40", "$40 to $60", "$60 and Above"];
 
 
   constructor(private productService: ProductService,
-              private searchPipe:SearchPipe) {
+              private searchPipe:SearchPipe,
+              public filterService:FilterService) {
   }
 
   ngOnInit(): void {
@@ -52,5 +56,22 @@ export class ProductComponent implements OnInit{
     this.priceCheckboxes.forEach((checkbox) => {
       checkbox.nativeElement.checked = false;
     });
+  }
+
+  toggleFilter(event:Event,filter:Filter) {
+    if ((event.target as HTMLInputElement).checked) {
+      // If checkbox is checked, add the filter
+      this.filterService.addFilter(filter);
+    } else {
+      // If checkbox is unchecked, remove the filter
+      this.filterService.removeFilter(filter);
+    }
+  }
+
+  clearInput(input1: HTMLInputElement, input2: HTMLInputElement) {
+    input1.value = '';
+    input2.value = '';
+    this.min = undefined;
+    this.max = undefined;
   }
 }
