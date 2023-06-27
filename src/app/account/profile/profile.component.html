@@ -2,15 +2,15 @@
   <mat-icon>person_outline</mat-icon>&nbsp;My Profile
 </h1>
 <div class="profile-container shadow">
-  <div class="mb-3">
+  <div class="mb-4">
     <div class="text-secondary">Username</div>
     <div>{{auth.user?.username}}</div>
   </div>
-  <div class="mb-3">
+  <div class="mb-4">
     <div class="text-secondary">Name</div>
     <div>{{infoService.userInfo.firstName}} {{infoService.userInfo.lastName}} </div>
   </div>
-  <div class="mb-3">
+  <div class="mb-4">
     <div class="text-secondary">Email</div>
     <div>{{infoService.userInfo.email}}</div>
   </div>
@@ -18,10 +18,10 @@
     <div class="text-secondary">Phone Number</div>
     <div>{{infoService.userInfo.phone}}</div>
   </div>
-  <div class="mb-3">
+  <div class="mb-4">
     <button mat-raised-button color="accent" (click)="edit(auth.user)">Edit</button>
   </div>
 
-  <a class="mb-3" type="button" (click)="changePassword(auth.user)">Change Passsword</a>
+  <a class="mb-4" type="button" (click)="changePassword(auth.user)">Change Passsword</a>
 
 </div>

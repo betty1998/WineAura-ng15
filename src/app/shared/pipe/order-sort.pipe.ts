@@ -11,14 +11,14 @@ export class OrderSortPipe implements PipeTransform {
   transform(value: Order[], sortBy:string): any {
     if (sortBy == "Most Recent"){
       return value.sort((a,b) =>{
-        const aa = new Date(a.purchaseDate);
-        const bb = new Date(b.purchaseDate);
+        const aa = new Date(a.purchaseDate|| "0");
+        const bb = new Date(b.purchaseDate|| "0");
         return bb.getTime()-aa.getTime();
       })
     }else if (sortBy == "Least Recent"){
       return value.sort((a,b) =>{
-        const aa = new Date(a.purchaseDate);
-        const bb = new Date(b.purchaseDate);
+        const aa = new Date(a.purchaseDate|| "0");
+        const bb = new Date(b.purchaseDate|| "0");
         return aa.getTime()-bb.getTime();
       })
     }else {

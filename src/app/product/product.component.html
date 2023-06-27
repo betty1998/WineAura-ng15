@@ -9,32 +9,34 @@
         <h3>Price Range</h3>
         <div id="min-max" fxFlex fxFlexAlign="center center">
           <label>
-            <input class="filter-input" [(ngModel)]="min" placeholder="0$">
+            <input class="filter-input" #input1 placeholder="0$">
           </label>
           <span class="ms-1 me-1"> -- </span>
           <label class="me-2">
-            <input class="filter-input" [(ngModel)]="max" placeholder="0$">
+            <input class="filter-input" #input2 placeholder="0$">
           </label>
-          <a mat-raised-button class="go-btn"fxFlex="40px">Go</a>
+          <a mat-raised-button class="go-btn"fxFlex="40px" (click)="filterPrice(input1.value, input2.value)">Go</a>
+        </div>
+        <div fxLayout="column" class="filter-body">
+          <label>
+            <input #price type="checkbox" name="checkbox" />Up to $20
+          </label>
+          <label>
+            <input #price type="checkbox" name="checkbox" />$20 to $40
+          </label>
+          <label>
+            <input #price type="checkbox" name="checkbox" />$40 to $60
+          </label>
+          <label>
+            <input #price type="checkbox" name="checkbox" />$60 and Above
+          </label>
         </div>
 
-        <label>
-          <input type="checkbox" name="checkbox" />Up to $20
-        </label>
-        <label>
-          <input type="checkbox" name="checkbox" />$20 to $40
-        </label>
-        <label>
-          <input type="checkbox" name="checkbox" />$40 to $60
-        </label>
-        <label>
-          <input type="checkbox" name="checkbox" />$60 and Above
-        </label>
     </div>
 
     <div>
       <h3>Category</h3>
-      <div *ngFor="let category of categories">
+      <div *ngFor="let category of categories" class="filter-body">
         <label>
           <input type="checkbox" name="checkbox" />{{category}}
         </label>
@@ -42,7 +44,7 @@
     </div>
     <div>
       <h3>Country/State</h3>
-      <div *ngFor="let region of regions">
+      <div *ngFor="let region of regions" class="filter-body">
         <label>
           <input type="checkbox" name="checkbox" />{{region}}
         </label>
@@ -50,7 +52,7 @@
     </div>
     <div>
       <h3>Brand</h3>
-      <div *ngFor="let brand of brands">
+      <div *ngFor="let brand of brands" class="filter-body">
         <label>
           <input type="checkbox" name="checkbox" />{{brand}}
         </label>
@@ -58,7 +60,8 @@
     </div>
   </section>
   <section class="products-list-section" fxFlex="90%" fxLayout="row wrap" fxFlexAlign="center start">
-    <app-product-overview [product]="p" *ngFor="let p of products" fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px" ></app-product-overview>
+    <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px" [product]="p" *ngFor="let p of products | search: searchKey | priceRange:min:max">
+    </app-product-overview>
   </section>
 
 

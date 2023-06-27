@@ -45,13 +45,13 @@ export class OrderDetailComponent implements OnInit{
           state: ['', Validators.required],
           country: ['', Validators.required],
           zipcode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
-        })
-      }),
-      contactInfo: this.fb.group({
-        email:[this.userInfo.email,[Validators.required,Validators.email]],
-        phone: [this.userInfo.phone, [Validators.required,
-          // Validators.pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}')]]
-          Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
+        }),
+        contactInfo: this.fb.group({
+          email:[this.userInfo.email,[Validators.required,Validators.email]],
+          phone: [this.userInfo.phone, [Validators.required,
+            // Validators.pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}')]]
+            Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
+        }),
       }),
       paymentDetails: this.fb.group({
         paymentMethod: ['', Validators.required],
@@ -60,9 +60,11 @@ export class OrderDetailComponent implements OnInit{
         expirationDate: ['05/28', Validators.required],
         cvv: ['253', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
         billingAddress: this.fb.group({
-          address: ['', Validators.required],
+          address1: ['', Validators.required],
+          address2: '',
           city: ['', Validators.required],
           state: ['', Validators.required],
+          country: ['', Validators.required],
           zipcode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]]
         })
       }),
@@ -86,12 +88,18 @@ export class OrderDetailComponent implements OnInit{
   copyShippingAddress(event: MatCheckboxChange) {
     if (event.checked) {
       const shippingAddress = this.checkoutForm.get('shippingDetails.shippingAddress')?.value;
-      this.checkoutForm.get('paymentDetails.billingAddress')?.setValue(shippingAddress);
+      this.checkoutForm.get('paymentDetails.billingAddress.address1')?.setValue(shippingAddress.address1);
+      this.checkoutForm.get('paymentDetails.billingAddress.address2')?.setValue(shippingAddress.address2);
+      this.checkoutForm.get('paymentDetails.billingAddress.city')?.setValue(shippingAddress.city);
+      this.checkoutForm.get('paymentDetails.billingAddress.state')?.setValue(shippingAddress.state);
+      this.checkoutForm.get('paymentDetails.billingAddress.country')?.setValue(shippingAddress.country);
+      this.checkoutForm.get('paymentDetails.billingAddress.zipcode')?.setValue(shippingAddress.zipcode);
+
     }
   }
 
   placeOrder(event: Event) {
-    this.order = {...this.checkoutForm.get('shippingDetails.userInfo')?.value,
+    this.order = {...this.checkoutForm.get('shippingDetails.contactInfo')?.value,
                   ...this.checkoutForm.get('shippingDetails.shippingAddress')?.value}
     this.order.userId = this.auth.user?.id;
     this.order.paymentMethod = this.checkoutForm.get('paymentDetails.paymentMethod')?.value;
@@ -105,7 +113,6 @@ export class OrderDetailComponent implements OnInit{
     // purchase date should be generated in backend
     this.order.purchases = purchases;
     this.order.status = "Pending";
-    this.order.purchaseDate = "0";
     const store = {id:1,manager:{id:1}}
     this.order.store = store;
     console.log(this.order);

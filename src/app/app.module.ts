@@ -22,6 +22,8 @@ import {CheckoutSuccessComponent} from "./checkout-success/checkout-success.comp
 import {AccountModule} from "./account/account.module";
 import {OrderSortPipe} from "./shared/pipe/order-sort.pipe";
 import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
+import { SearchPipe } from './shared/pipe/search.pipe';
+import { PriceRangePipe } from './shared/pipe/price-range.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
     ProductDetailComponent,
     CheckoutSuccessComponent,
     OrderSortPipe,
-    OrderFilterPipe
+    OrderFilterPipe,
+    SearchPipe,
+    PriceRangePipe
 
   ],
   imports: [
@@ -60,7 +64,8 @@ import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
-    }
+    },
+    SearchPipe
   ],
   exports: [
     OrderFilterPipe,

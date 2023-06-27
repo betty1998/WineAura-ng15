@@ -75,7 +75,6 @@ export class UserInfoService {
       `${environment.api}/userinfos/updateProfile/${userInfoId}`, userInfo);
   }
 
-  /*TODO: post method not found*/
   createProfile(userId: number | undefined, userInfo: UserInfo) {
     return this.httpClient.post<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/createProfile/${userId}`, userInfo);

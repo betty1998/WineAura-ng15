@@ -1,0 +1,36 @@
+.row > div {
+  padding: 10px 0px;
+  margin: auto;
+
+}
+.row{
+  margin:0px 8px;
+}
+
+h1{
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.shadow{
+  box-shadow: 0 20px 20px 0 rgba(28,37,42,.05), 0 50px 50px 0 rgba(28,37,42,.15);
+}
+
+a{
+  text-decoration: underline;
+  padding-top: 10px;
+}
+.buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.favorite-container{
+  padding: 10px 30px;
+  margin: 30px 0px;
+  min-height: 60vh;
+
+}

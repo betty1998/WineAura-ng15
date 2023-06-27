@@ -18,7 +18,7 @@
     <button mat-icon-button [routerLink]="['/checkout',auth.user?.id,'cart']">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button [routerLink]="['/account',auth.user?.id]" >
+    <button mat-icon-button [routerLink]="['/account',auth.user?.id,'profile']" >
       <mat-icon>account_circle</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -26,6 +26,7 @@
     <span style="font-size: 14px">Search</span>
     <button mat-icon-button class="example-icon">
     <mat-icon>search</mat-icon>
+      <input type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search">
     </button>
     <span class="example-spacer"></span>
     <div>

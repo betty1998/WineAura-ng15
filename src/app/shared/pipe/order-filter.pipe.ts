@@ -11,7 +11,7 @@ export class OrderFilterPipe implements PipeTransform{
     if (month){
       const startDate = new Date();
       startDate.setMonth(startDate.getMonth() - month);
-      return value.filter(o => (new Date(o.purchaseDate)).getTime() >= startDate.getTime());
+      return value.filter(o => (new Date(o.purchaseDate || "0")).getTime() >= startDate.getTime());
     }
     return value;
   }

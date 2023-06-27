@@ -22,17 +22,14 @@ export class OrderHistoryComponent implements OnInit{
               public orderService:OrderService,
               private auth:AuthService,
               private route:ActivatedRoute) {
-  }
-
-  ngOnInit(): void {
+    console.log("id:",this.route.parent?.snapshot.paramMap.get('id'))
     // if orderList in orderService is undefined
     // then send request to get orderList
-    console.log("id:",this.route.parent?.snapshot.paramMap.get('id'))
-    if(!this.orderService.orderList){
-      this.route.parent?.paramMap.pipe(switchMap(params=>{
+    if(!orderService.orderList){
+      route.parent?.paramMap.pipe(switchMap(params=>{
         this.id = Number(params.get("id"));
         // console.log(params);
-        return this.orderService.getOrderByUserId(this.id);
+        return orderService.getOrderByUserId(this.id);
       })).subscribe(res=>{
         if (res.success) {
           this.orderList = res.data;
@@ -43,6 +40,11 @@ export class OrderHistoryComponent implements OnInit{
         }
       })
     }
+  }
+
+  ngOnInit(): void {
+
+
 
   }
 

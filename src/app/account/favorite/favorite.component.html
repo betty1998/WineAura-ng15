@@ -1,1 +1,22 @@
-<p>favorite works!</p>
+<h1>
+  <mat-icon>favorite_outline</mat-icon>&nbsp;My Favorites
+</h1>
+
+<div class="favorite-container shadow">
+  <div *ngFor="let product of infoService.userInfo.favorites" class="row">
+    <div class="image col-2" [routerLink]="['/product-detail',product.id]">
+      <img [src]="product.image" width="120" height="120">
+    </div>
+    <div class="info col-7">
+      <div>{{product.name}}</div>
+      <p class="small">{{product.capacity}}</p>
+      <p>{{product.price | currency}}</p>
+    </div>
+    <div class="buttons col-3">
+      <button mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
+      <a mat-button (click)="remove(product)">remove</a>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+
+</div>

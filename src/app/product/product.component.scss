@@ -6,14 +6,15 @@
 
 #filter-section{
   border-right: 1px solid lightgrey;
+  font-size: 16px;
 }
 #min-max{
-  margin: 0px 6px 8px 0px;
+  margin: 10px 6px 12px 0px;
 }
 
 .filter-input{
   width:45px;
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 8px;
   margin: auto;
 }
@@ -28,7 +29,24 @@
 h3{
   border-bottom: 1px solid lightgrey;
   font-weight: bold;
+  font-size: 20px;
+  margin: 10px 0px;
+  padding-bottom: 8px;
 }
 
+#price-range {
+
+}
+
+.filter-body label{
+  margin-bottom: 5px;
+  input{
+    margin-right: 5px;
+  }
+}
+
+.products-list-section{
+  //border-top: 1px solid lightgrey;
+}
 
 
