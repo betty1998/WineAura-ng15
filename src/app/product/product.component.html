@@ -1,19 +1,18 @@
 
 <main class="product-container" fxFlex fxLayout="row" fxLayout.xs="column">
-  <section id="filter-section" fxHide.xs="true" fxFlex="200px" fxFlex.xs="auto" fxLayout="column" fxLayoutGap="20px">
-    <!--TODO
-      group all checkbox
-      clear all the checkboxes when the "Go" button is clicked
-    -->
+  <section id="filter-section" fxHide.xs="true" fxFlex="200px" fxFlex.xs="auto" fxLayout="column">
+    <div class="result-found text-center">
+      {{total}} Results Found
+    </div>
     <div id="price-range"  fxLayout="column">
         <h3>Price Range</h3>
         <div id="min-max" fxFlex fxFlexAlign="center center">
           <label>
-            <input class="filter-input" #input1 placeholder="0$">
+            <input class="filter-input" #input1 placeholder="$0">
           </label>
           <span class="ms-1 me-1"> -- </span>
           <label class="me-2">
-            <input class="filter-input" #input2 placeholder="0$">
+            <input class="filter-input" #input2 placeholder="$0">
           </label>
           <a mat-raised-button class="go-btn"fxFlex="40px" (click)="filterPrice(input1.value, input2.value)">Go</a>
         </div>
@@ -24,8 +23,7 @@
           </label>
         </div>
     </div>
-
-    <div>
+    <div id="category">
       <h3>Category</h3>
       <!-------------- Category Checkboxes --------------->
       <div *ngFor="let category of categories" class="filter-body">
@@ -34,7 +32,7 @@
         </label>
       </div>
     </div>
-    <div>
+    <div id="region">
       <h3>Country/State</h3>
       <div *ngFor="let region of regions" class="filter-body">
         <label>
@@ -42,7 +40,7 @@
         </label>
       </div>
     </div>
-    <div>
+    <div id="brand">
       <h3>Brand</h3>
       <div *ngFor="let brand of brands" class="filter-body">
         <label>
@@ -51,18 +49,39 @@
       </div>
     </div>
   </section>
-  <section class="products-list-section" fxFlex="90%" fxLayout="row wrap" fxFlexAlign="center start">
-    <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
-                          [product]="p" *ngFor="let p of products
-                        | search: searchKey
-                        | priceRange:min:max
-                        | filter:(filterService.filters | async)
-                        | paginate:{ itemsPerPage: 6, currentPage: p}">
-    </app-product-overview>
+  <section class="products-list-section" fxFlex="90%" fxLayout="column" fxFlexAlign="end center">
+    <div class="sort-container">
+      <span fxFlex="62"></span>
+      <mat-form-field appearance="outline" fxFlex="18%">
+        <mat-label>Items per Page</mat-label>
+        <mat-select [(ngModel)]="itemPerPage">
+          <mat-option value="12">12 Items</mat-option>
+          <mat-option value="24">24 Items</mat-option>
+          <mat-option value="36">36 Items</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="18%">
+        <mat-label>Sort by</mat-label>
+        <mat-select (selectionChange)="sort($event.value)" value="default" placeholder="default">
+          <mat-option value="default">Default</mat-option>
+          <mat-option value="price1">Price Low to High</mat-option>
+          <mat-option value="price2">Price High to Low</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="products-list" fxFlex="90" fxLayout="row wrap" fxFlexAlign="start start">
+      <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
+                            [product]="p" [amount] = "l" *ngFor="let p of products
+                          | search: searchKey
+                          | priceRange:min:max
+                          | filter:(filterService.filters | async)
+                          | paginate:{ itemsPerPage: 5, currentPage: page}; let l = count">
+      </app-product-overview>
+    </div>
     <div fxFlex=100 fxLayout="row" class="pagination">
-      <div fxFlex="70"></div>
-      <div fxFlex="30" fxFlexAlign="end" class="pagination">
-        <pagination-controls (pageChange)="p = $event" previousLabel="Prev"></pagination-controls>
+      <div fxFlex="60"></div>
+      <div fxFlex="40" fxFlexAlign="end" class="pagination">
+        <pagination-controls (pageChange)="page = $event" previousLabel="Prev"></pagination-controls>
       </div>
 
     </div>

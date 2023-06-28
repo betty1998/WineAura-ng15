@@ -18,6 +18,8 @@ export class ProductOverviewComponent {
   product!:Product;
   cart: CartProduct[] | undefined;
   qty= 1;
+  @Input()
+  amount!: number;
 
   constructor(private authService:AuthService,
               private userInfoService:UserInfoService,
