@@ -1,3 +1,13 @@
+.title{
+  font-size: 26px;
+  margin: 0px 20px;
+}
+
+.subtitle a{
+  font-size: 20px;
+  margin: 0px 10px;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
@@ -7,4 +17,29 @@ mat-toolbar{
   border-bottom: 1px solid lightslategrey;
 }
 
+.logo{
+  height: 70px;
+}
+.search-icon{
+  margin: 0px 10px 0px 30px;
+}
+.search-input{
+  margin-left: 5px;
+  width: 260px;
 
+}
+
+a.my-active{
+  color: rgba(90, 2, 128);
+  background-color: lightgoldenrodyellow;
+
+}
+
+.pagination{
+  height: max-content;
+}
+
+
+.products-list-section{
+  height: 90vh;
+}

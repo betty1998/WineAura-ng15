@@ -1,15 +1,16 @@
-<mat-toolbar>
+<mat-toolbar class="pt-2">
   <mat-toolbar-row>
     <button fxHide.gt-sm="true" mat-icon-button class="example-icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="title">{{title}}</span>
-    <div fxHide.lt-sm="true">
-      <a mat-button routerLink="/home">Home</a>
-      <a mat-button routerLink="/products">Wine</a>
-      <a mat-button routerLink="/red-wine">Red Wine</a>
-      <a mat-button routerLink="/white-wine">White Wine</a>
-      <a mat-button routerLink="/accessory">Accessories</a>
+    <span class="title"><img src="/assets/Wine%20Aura-1.png" class="logo"></span>
+
+    <div fxHide.lt-sm="true" class="subtitle">
+      <a mat-button routerLink="/home" routerLinkActive="my-active">Home</a>
+      <a mat-button routerLink="/products" routerLinkActive="my-active">Wine</a>
+      <a mat-button routerLink="/red-wine" routerLinkActive="my-active">Red Wine</a>
+      <a mat-button routerLink="/white-wine" routerLinkActive="my-active">White Wine</a>
+      <a mat-button routerLink="/accessory" routerLinkActive="my-active">Accessories</a>
     </div>
     <span class="example-spacer"></span>
     <button mat-icon-button routerLink="/favorite" >
@@ -22,12 +23,10 @@
       <mat-icon>account_circle</mat-icon>
     </button>
   </mat-toolbar-row>
+
   <mat-toolbar-row>
-    <span style="font-size: 14px">Search</span>
-    <button mat-icon-button class="example-icon">
-    <mat-icon>search</mat-icon>
-      <input type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search">
-    </button>
+    <mat-icon class="search-icon">search</mat-icon>
+    <input class="search-input" type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
     <span class="example-spacer"></span>
     <div>
       <button *ngIf="!auth.user" mat-stroked-button routerLink="/login">Sign In</button>

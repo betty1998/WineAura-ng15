@@ -25,6 +25,7 @@ import {OrderFilterPipe} from "./shared/pipe/order-filter.pipe";
 import { SearchPipe } from './shared/pipe/search.pipe';
 import { PriceRangePipe } from './shared/pipe/price-range.pipe';
 import { FilterPipe } from './shared/pipe/filter.pipe';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { FilterPipe } from './shared/pipe/filter.pipe';
     HttpClientModule,
     MatGridListModule,
     CheckoutModule,
-    // AccountModule
+    NgxPaginationModule
   ],
   providers: [
     {

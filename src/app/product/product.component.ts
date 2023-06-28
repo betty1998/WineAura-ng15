@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit{
   @ViewChildren('price')
   priceCheckboxes!: QueryList<ElementRef>;
   priceRange = ["Up to $20", "$20 to $40", "$40 to $60", "$60 and Above"];
+  p: number = 1;
 
 
   constructor(private productService: ProductService,

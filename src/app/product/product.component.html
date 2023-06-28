@@ -54,10 +54,18 @@
   <section class="products-list-section" fxFlex="90%" fxLayout="row wrap" fxFlexAlign="center start">
     <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
                           [product]="p" *ngFor="let p of products
-                          | search: searchKey
-                          | priceRange:min:max
-                          | filter:(filterService.filters | async)">
+                        | search: searchKey
+                        | priceRange:min:max
+                        | filter:(filterService.filters | async)
+                        | paginate:{ itemsPerPage: 6, currentPage: p}">
     </app-product-overview>
+    <div fxFlex=100 fxLayout="row" class="pagination">
+      <div fxFlex="70"></div>
+      <div fxFlex="30" fxFlexAlign="end" class="pagination">
+        <pagination-controls (pageChange)="p = $event" previousLabel="Prev"></pagination-controls>
+      </div>
+
+    </div>
   </section>
 
 
