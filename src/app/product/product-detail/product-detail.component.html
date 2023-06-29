@@ -11,7 +11,7 @@
           <span class="">Quantity</span>
           <input type="number" min="1"[(ngModel)]="qty" placeholder="1">
       </div>
-      <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
+      <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product,$event)">Add to Cart</button>
       <button class="col-1" mat-mini-fab color="primary"><mat-icon>favorite</mat-icon></button>
     </section>
     <section class="description-container mb-4">
@@ -54,21 +54,22 @@
   <div class="product-review ms-1 me-1">
     <h2 class="pt-3">REVIEWS</h2>
     <div *ngFor="let review of product.reviews">
-      <div class="row align-items-start">
+      <div class="review-row row align-items-start">
         <div class="col-2">
-          <h4 class="text-capitalize">{{review.user?.username}}</h4>
+          <h4 class="text-capitalize">{{review.nickname}}</h4>
           <p>{{review.reviewDate}}</p>
           <!--TODO
              can add location or profile image here
           -->
         </div>
         <div class="col-8">
-          <div>
+          <div class="stars">
             <mat-icon color="accent" *ngFor="let star of stars">{{star <= review.rating ? 'star' : 'star_border'}}</mat-icon>
             <mat-icon color="accent" *ngIf="review.rating % 1 > 0 && review.rating === Math.floor(review.rating)">star_half</mat-icon>
-            <p class="mt-1 ms-1">{{review.comment}}</p>
+            <div class="review-title">{{review.title}}</div>
+            <div class="mt-2">{{review.comment}}</div>
           </div>
-          <div>
+          <div class="helpful d-flex justify-content-end align-items-center">
             <span>Helpful?</span>
             <button mat-icon-button (click)="thumbUp(review.id)">
               <mat-icon>thumb_up</mat-icon>
@@ -77,7 +78,6 @@
               <mat-icon>thumb_down</mat-icon>
             </button>
           </div>
-
         </div>
       </div>
       <mat-divider></mat-divider>

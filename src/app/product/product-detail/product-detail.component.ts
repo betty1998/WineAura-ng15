@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Product} from "../../shared/model/Product";
 import {ProductService} from "../../shared/service/product.service";
-import {ActivatedRoute, Routes} from "@angular/router";
+import {ActivatedRoute, Router, Routes} from "@angular/router";
 import {switchMap} from "rxjs";
+import {CartProduct} from "../../shared/model/CartProduct";
+import {AuthService} from "../../shared/service/auth.service";
+import {UserInfoService} from "../../shared/service/user-info.service";
 
 @Component({
   selector: 'app-product-detail',
@@ -16,7 +19,10 @@ export class ProductDetailComponent implements OnInit{
   stars = [1, 2, 3, 4, 5];
   Math = Math;
   constructor(private productService: ProductService,
-              private route:ActivatedRoute) {
+              private auth:AuthService,
+              private userInfoService:UserInfoService,
+              private route:ActivatedRoute,
+              private router:Router) {
   }
 
   ngOnInit(): void {
@@ -36,8 +42,28 @@ export class ProductDetailComponent implements OnInit{
   }
 
 
-  addToCart(product: Product) {
-
+  addToCart(product: Product, event: Event) {
+    event.stopPropagation();
+    // check user first
+    // if login
+    if (this.auth.user){
+      const cartProduct:CartProduct = {
+        product: product,
+        qty: 1,
+        userInfo:this.userInfoService.userInfo};
+      this.userInfoService.addToCart(this.userInfoService.userInfo.id,cartProduct).subscribe(res =>{
+        if (res.success) {
+          this.userInfoService.userInfo = res.data;
+        } else {
+          console.log(res);
+        }
+      });
+    }else{
+      // if not login
+      // TODO: open a dialog
+      // navigate to login page
+      this.router.navigate(["/login"]).catch();
+    }
   }
 
 
