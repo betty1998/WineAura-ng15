@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Product} from "../shared/model/Product";
 import {ProductService} from "../shared/service/product.service";
 import {SearchPipe} from "../shared/pipe/search.pipe";
-import {filter} from "rxjs";
+import {BehaviorSubject, filter} from "rxjs";
 import {Filter} from "../shared/model/Filter";
 import {FilterService} from "../shared/service/filter.service";
 import {ProductOverviewComponent} from "./product-overview/product-overview.component";
@@ -30,17 +30,10 @@ export class ProductComponent implements OnInit,AfterViewInit{
   pipedProducts!: QueryList<ProductOverviewComponent>;
   total!: number;
 
-  ngAfterViewInit() {
-    this.pipedProducts.changes.subscribe((comps: QueryList<ProductOverviewComponent>) => {
-      this.total = comps.length;
-    });
-
-    // console.log("length of pipedProducts: ",this.pipedProducts.toArray().length);
-  }
-
-  constructor(private productService: ProductService,
+  constructor(public productService: ProductService,
               private searchPipe:SearchPipe,
-              public filterService:FilterService) {
+              public filterService:FilterService,
+              private cdr:ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -62,8 +55,14 @@ export class ProductComponent implements OnInit,AfterViewInit{
       this.categories = this.productService.getCategories(searched);
       this.regions = this.productService.getRegions(searched);
       this.brands = this.productService.getBrands(searched);
-    })
+    });
+
   }
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
+  }
+
 
   filterPrice(value1: string, value2: string) {
     this.min = value1 ? Number(value1): Number.MIN_VALUE;
@@ -104,4 +103,6 @@ export class ProductComponent implements OnInit,AfterViewInit{
     }
   }
 
+
 }
+

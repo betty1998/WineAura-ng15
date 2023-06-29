@@ -3,14 +3,14 @@
 </h1>
 <div class="address-container">
   <div class="address row shadow" *ngFor="let addr of userInfoService.userInfo.addresses">
-    <div class="info col-4">
+    <div class="info col-6">
       <div>{{addr.firstName}}, {{addr.lastName}}</div>
       <div>{{addr.address1}}, {{addr.address2}}</div>
       <div>{{addr.city}}, {{addr.state}}, {{addr.zipcode}}</div>
       <div>{{addr.country}}</div>
       <div></div>
     </div>
-    <div class="operation col-4">
+    <div class="operation col-5">
       <a type="button" (click)="editAddress(addr)">
         <mat-icon>edit</mat-icon>Edit
       </a>

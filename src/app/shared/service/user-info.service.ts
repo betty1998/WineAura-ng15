@@ -9,6 +9,7 @@ import {Observable} from "rxjs";
 import {Data} from "@angular/router";
 import {Product} from "../model/Product";
 import {AddressBook} from "../model/AddressBook";
+import {OrderService} from "./order.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,16 @@ export class UserInfoService {
   cart: CartProduct[]|undefined;
 
   constructor(private httpClient:HttpClient) {
+  }
+
+  public updateUserInfo(userId: number | undefined){
+    this.getUserInfo(userId).subscribe(res=>{
+      if (res.success) {
+        this.userInfo = res.data;
+      } else {
+        console.log(res);
+      }
+    })
   }
 
   public getUserInfo(userId: number|undefined):Observable<DataResponse<UserInfo>> {

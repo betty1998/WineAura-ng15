@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {Product} from "../model/Product";
 import {Filter} from "../model/Filter";
+import {ProductService} from "../service/product.service";
 
 const map = new Map();
 map.set("Up to $20", [0, 20]);
@@ -13,9 +14,17 @@ map.set("$60 and Above", [60, Number.MAX_VALUE]);
 })
 export class FilterPipe implements PipeTransform {
 
+  constructor(private prodService:ProductService) {
+  }
+
   transform(items: Product[], filters: Filter[]|null): Product[] {
+    if (!items || !filters) {
+      return [];
+    }
     console.log("filters: ", filters);
     if (!items || !filters || filters.length === 0) {
+      setTimeout(() => this.prodService.total$.next(items.length), 0);
+      // this.prodService.total$.next(items.length);
       return items;
     }
 
@@ -43,7 +52,8 @@ export class FilterPipe implements PipeTransform {
           break;
       }
     }
-
+    // this.prodService.total$.next(filteredItems.length);
+    setTimeout(() => this.prodService.total$.next(filteredItems.length), 0);
     return filteredItems;
   }
 

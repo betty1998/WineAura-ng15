@@ -4,6 +4,7 @@ import {environment} from "../../../environments/environment.development";
 import {BehaviorSubject, Observable} from "rxjs";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {Product} from "../model/Product";
+import {B} from "@angular/cdk/keycodes";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Product} from "../model/Product";
 export class ProductService {
   products: Product[]|undefined;
   search = new BehaviorSubject<string>("");
+  total$ = new BehaviorSubject<number>(0);
 
   constructor(private httpClient:HttpClient) { }
 
@@ -24,16 +26,16 @@ export class ProductService {
   }
 
   getCategories(products:Product[]): string[]{
-    let categories = products.map(product => product.category);
+    let categories = products?.map(product => product.category);
     return Array.from(new Set(categories));
   }
 
   getBrands(products:Product[]) {
-    let brands = products.map(product => product.brand);
+    let brands = products?.map(product => product.brand);
     return Array.from(new Set(brands));
   }
   getRegions(products:Product[]) {
-    let regions = products.map(product => product.region);
+    let regions = products?.map(product => product.region);
     return Array.from(new Set(regions));
   }
 

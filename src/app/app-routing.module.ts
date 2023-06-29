@@ -13,6 +13,7 @@ import {ProfileComponent} from "./account/profile/profile.component";
 import {AddressBookComponent} from "./account/address-book/address-book.component";
 import {OrderHistoryComponent} from "./account/order-history/order-history.component";
 import {FavoriteComponent} from "./account/favorite/favorite.component";
+import {ReviewComponent} from "./review/review.component";
 
 const routes: Routes = [
   {
@@ -70,8 +71,10 @@ const routes: Routes = [
       }
     ]
   },
-
-
+  {
+    path:"review/:productId/purchase/:purchaseId",
+    component: ReviewComponent
+  },
 
   {
     path: "**",

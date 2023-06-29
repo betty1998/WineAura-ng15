@@ -5,6 +5,7 @@ import {environment} from "../../../environments/environment.development";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
+import {Purchase} from "../model/Purchase";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class OrderService {
   orderList!: Order[];
   taxRate = 0.08;
   freeDelivery= 99;
+  statusMap: Map<string, number> = new Map([["Pending",0],["Shipped",1],["Delivered",2],["Reviewed",3]]);
 
   constructor(private http:HttpClient,
               private auth:AuthService) {
@@ -29,6 +31,16 @@ export class OrderService {
     }
   }
 
+  public updateOrder(userId: number | undefined){
+    this.getOrderByUserId(userId).subscribe(res=>{
+      if (res.success) {
+        this.orderList = res.data;
+      } else {
+        console.log(res);
+      }
+    })
+  }
+
   placeOrder(order:Order):Observable<DataResponse<Order>>{
     return this.http.post<DataResponse<Order>>(`${environment.api}/orders`, order);
   }
@@ -40,4 +52,5 @@ export class OrderService {
   getOrderByUserId(userId: number | undefined) {
     return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/user/${userId}`);
   }
+
 }

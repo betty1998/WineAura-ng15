@@ -1,0 +1,61 @@
+main{
+  width: 70%;
+  margin-left:auto;
+  margin-right: auto;
+  padding: 20px;
+}
+
+img{
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+form{
+  width: 80%;
+}
+
+.product-review{
+  text-align: center;
+  .name{
+    font-size: 20px;
+    margin: 20px;
+  }
+  .capacity{
+    font-size: 16px;
+    color: grey;
+  }
+  margin: 30px;
+}
+
+mat-card{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 5%;
+
+}
+
+.rating-head{
+  font-size: 18px;
+  text-align: center;
+}
+
+.stars{
+  row-gap: 8px;
+  margin-bottom: 20px;
+  mat-icon{
+    font-size: 30px;
+    width: fit-content;
+    height: fit-content;
+  }
+
+}
+
+textarea{
+  height: 120px!important;
+}
+
+

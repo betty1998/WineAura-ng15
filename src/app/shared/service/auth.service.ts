@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {User} from "../model/User";
-import {Observable, of, switchMap} from "rxjs";
+import {BehaviorSubject, Observable, of, switchMap} from "rxjs";
 import {Response} from "../httpResponse/response";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {LoginResponse} from "../httpResponse/loginResponse";
@@ -15,6 +15,7 @@ import {UserInfo} from "../model/UserInfo";
 })
 export class AuthService {
   user: User|null = null;
+  user$= new BehaviorSubject<User|null>(null);
 
   constructor(private httpClient:HttpClient,
               private router: Router,
@@ -27,6 +28,7 @@ export class AuthService {
           this.user = res.data;
           console.log("checklogin response: ", res);
           console.log(this.user);
+          this.user$.next(res.data);
           // If checkLogin is successful, getUserInfo will be called
           return this.userInfoService.getUserInfo(this.user.id);
         } else {

@@ -107,7 +107,8 @@ export class OrderDetailComponent implements OnInit{
     const purchases: Purchase[] = this.userInfo.cart.map(cartProduct => {
       return {
         product: cartProduct.product,
-        qty: cartProduct.qty
+        qty: cartProduct.qty,
+        status:"Pending"
       };
     });
     // purchase date should be generated in backend

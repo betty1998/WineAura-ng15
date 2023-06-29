@@ -4,7 +4,7 @@ import {OrderDialogComponent} from "./order-dialog/order-dialog.component";
 import {OrderService} from "../../shared/service/order.service";
 import {AuthService} from "../../shared/service/auth.service";
 import {ActivatedRoute} from "@angular/router";
-import {switchMap} from "rxjs";
+import {BehaviorSubject, switchMap} from "rxjs";
 import {Order} from "../../shared/model/Order";
 
 @Component({
@@ -14,7 +14,8 @@ import {Order} from "../../shared/model/Order";
 })
 export class OrderHistoryComponent implements OnInit{
   id:number|undefined;
-  orderList!: Order[];
+  orderList : Order[] =[];
+  orderList$ = new BehaviorSubject<Order[]>([]);
   selectedMonth = "3";
   selectedSort=  "Most Recent";
 
@@ -25,32 +26,32 @@ export class OrderHistoryComponent implements OnInit{
     console.log("id:",this.route.parent?.snapshot.paramMap.get('id'))
     // if orderList in orderService is undefined
     // then send request to get orderList
-    if(!orderService.orderList){
-      route.parent?.paramMap.pipe(switchMap(params=>{
+    if (!orderService.orderList) {
+      route.parent?.paramMap.pipe(switchMap(params => {
         this.id = Number(params.get("id"));
         // console.log(params);
         return orderService.getOrderByUserId(this.id);
-      })).subscribe(res=>{
+      })).subscribe(res => {
         if (res.success) {
           this.orderList = res.data;
+          this.orderList$.next(this.orderList);
           this.orderList.forEach(order => this.calculate(order));
           console.log(res);
         } else {
           console.log(res);
         }
-      })
+      });
+    } else {
+      this.orderList$.next(orderService.orderList);
     }
   }
 
   ngOnInit(): void {
-
-
-
   }
 
   openOrder(order: Order) {
     this.dialog.open(OrderDialogComponent, {
-      data:order,
+      data:{order: order,userId:this.id},
     });
   }
 

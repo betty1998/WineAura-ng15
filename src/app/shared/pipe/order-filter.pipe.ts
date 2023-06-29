@@ -7,7 +7,10 @@ import {Order} from "../model/Order";
   }
 )
 export class OrderFilterPipe implements PipeTransform{
-  transform(value: Order[], month:number): any {
+  transform(value: Order[]|null, month:number): any {
+    if(!value){
+      return [];
+    }
     if (month){
       const startDate = new Date();
       startDate.setMonth(startDate.getMonth() - month);

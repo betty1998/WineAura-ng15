@@ -17,11 +17,13 @@ h1{
 }
 
 .address-container{
-  padding: 10px 30px;
-  margin: 30px 0px;
+  //margin: 30px 0px;
+  font-size: 18px;
   min-height: 60vh;
 }
 .address{
+  margin: 0px 0px;
+  padding: 10px 50px;
   font-size: 16px;
   height: 150px;
 
@@ -37,5 +39,6 @@ h1{
 
 .operation a{
   font-size: 16px;
-  margin: 20px;
+  margin: 20px 40px;
 }
+

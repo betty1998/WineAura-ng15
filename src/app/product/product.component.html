@@ -2,7 +2,7 @@
 <main class="product-container" fxFlex fxLayout="row" fxLayout.xs="column">
   <section id="filter-section" fxHide.xs="true" fxFlex="200px" fxFlex.xs="auto" fxLayout="column">
     <div class="result-found text-center">
-      {{total}} Results Found
+      {{productService.total$|async}} Results Found
     </div>
     <div id="price-range"  fxLayout="column">
         <h3>Price Range</h3>
@@ -75,7 +75,7 @@
                           | search: searchKey
                           | priceRange:min:max
                           | filter:(filterService.filters | async)
-                          | paginate:{ itemsPerPage: 5, currentPage: page}; let l = count">
+                          | paginate:{ itemsPerPage: itemPerPage, currentPage: page}; let l = count">
       </app-product-overview>
     </div>
     <div fxFlex=100 fxLayout="row" class="pagination">

@@ -11,7 +11,7 @@ export class PriceRangePipe implements PipeTransform {
             max:number|undefined = Number.MAX_VALUE):Product[] {
     min = min || Number.MIN_VALUE;
     max = max || Number.MIN_VALUE;
-    return value.filter(p => p.price<=max && p.price>=min);
+    return value?.filter(p => p.price<=max && p.price>=min);
   }
 
 }

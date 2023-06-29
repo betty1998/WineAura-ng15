@@ -6,4 +6,5 @@ export interface Purchase {
   order?: Order;
   product: Product;
   qty: number;
+  status: string;
 }

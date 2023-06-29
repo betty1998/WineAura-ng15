@@ -1,4 +1,4 @@
-<section class="product-detail-info mb-3">
+<section class="product-detail-info mb-3 mt-3">
   <div class="product-detail-image">
     <img src="{{product.image}}" alt="{{product.name}}" style="width: 480px;">
   </div>
@@ -6,7 +6,7 @@
     <h1>{{product.name}}</h1>
     <p>{{product.capacity}}</p>
     <h2 class="mt-4 mb-3">{{product.price | currency}}</h2>
-    <section class="quantity-cart row mb-3">
+    <section class="quantity-cart row mb-4">
       <div class="quantity-container col-3">
           <span class="">Quantity</span>
           <input type="number" min="1"[(ngModel)]="qty" placeholder="1">
@@ -14,13 +14,13 @@
       <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
       <button class="col-1" mat-mini-fab color="primary"><mat-icon>favorite</mat-icon></button>
     </section>
-    <section class="description-container">
-      <h3 class="pt-2"> Product Description</h3>
+    <section class="description-container mb-4">
+      <h3 class="pt-3"> Product Description</h3>
       <p>{{product.description}}</p>
     </section>
 
     <section class="detail-container mb-3">
-      <h3 class="pt-2"> Product Details</h3>
+      <h3 class="pt-3"> Product Details</h3>
       <div class="detail-grid">
         <div class="row mb-2">
           <div class="col-2">Country/State</div>
@@ -56,7 +56,7 @@
     <div *ngFor="let review of product.reviews">
       <div class="row align-items-start">
         <div class="col-2">
-          <h4 class="text-capitalize">{{review.user.username}}</h4>
+          <h4 class="text-capitalize">{{review.user?.username}}</h4>
           <p>{{review.reviewDate}}</p>
           <!--TODO
              can add location or profile image here

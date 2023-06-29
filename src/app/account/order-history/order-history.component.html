@@ -25,7 +25,7 @@
   </div>
 </div>
 <div class="order-list shadow">
-  <div *ngFor="let order of orderList | orderFilter:+selectedMonth | orderSort: selectedSort">
+  <div *ngFor="let order of ((orderList$ | async) | orderFilter:+selectedMonth | orderSort: selectedSort)">
     <div *ngIf="order.purchases.length>=1" class="row">
       <div class="image col-2">
         <img [src]="order.purchases[0].product.image" width="120" height="120">

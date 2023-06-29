@@ -1,0 +1,39 @@
+<main>
+  <div class="product-review d-flex flex-column justify-content-center">
+    <img [src]="(product|async)?.image" width="260" height="260">
+    <div class="name">{{(product|async)?.name}}</div>
+    <div class="capacity">{{(product|async)?.capacity}}</div>
+  </div>
+  <mat-card>
+    <mat-card-content class="review-form d-flex justify-content-center">
+      <form [formGroup]="reviewForm" class="d-flex flex-column justify-content-center">
+        <p class="rating-head">Select a Rating</p>
+        <div class="stars d-flex justify-content-center">
+          <mat-icon *ngFor="let star of stars"
+                    (click)="reviewForm.patchValue({rating: star})"
+                    [style.color]="star <= reviewForm.get('rating')?.value ? 'gold' : ''">
+            {{ star <= reviewForm.get('rating')?.value ? 'star' : 'star_border' }}
+          </mat-icon>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nickname</mat-label>
+          <input matInput formControlName="nickname" #nickname maxlength="20">
+          <mat-hint align="end">{{nickname.value.length}} / 20</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Add a title</mat-label>
+          <input matInput formControlName="title" maxlength="50" #title placeholder="How would you summarize your review?">
+          <mat-hint align="end">{{title.value.length}} / 50</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" >
+          <mat-label class="comment">Write down your comments!</mat-label>
+          <textarea matInput formControlName="comment" maxlength="1000" #comment placeholder="What would you like or dislike?"></textarea>
+          <mat-hint align="end">{{comment.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="OnReview()" class="mt-2 mb-2" [disabled]="reviewForm.invalid">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</main>
+

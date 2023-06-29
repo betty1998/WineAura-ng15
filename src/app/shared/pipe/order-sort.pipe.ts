@@ -8,7 +8,10 @@ const map = new Map([
   }
 )
 export class OrderSortPipe implements PipeTransform {
-  transform(value: Order[], sortBy:string): any {
+  transform(value: Order[]|null, sortBy:string): any {
+    if(!value){
+      return [];
+    }
     if (sortBy == "Most Recent"){
       return value.sort((a,b) =>{
         const aa = new Date(a.purchaseDate|| "0");
@@ -26,7 +29,6 @@ export class OrderSortPipe implements PipeTransform {
         return (map.get(a.status) || 0) - (map.get(b.status) || 0);
       })
     }
-    // return value;
 
   }
 

@@ -1,3 +1,7 @@
+*{
+  font-size: 16px;
+}
+
 .product-detail-info{
   display: flex;
   gap: 10px;
@@ -23,6 +27,7 @@
 
 h3{
   border-top: 1px solid lightgrey;
+  font-size: 20px;
 }
 
 .detail-grid{
@@ -45,6 +50,7 @@ div.product-review {
 section.product-review{
   border-top: 1px solid lightgrey;
 }
+
 
 
 
