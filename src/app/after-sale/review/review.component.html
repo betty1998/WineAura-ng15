@@ -31,7 +31,11 @@
           <textarea matInput formControlName="comment" maxlength="1000" #comment placeholder="What would you like or dislike?"></textarea>
           <mat-hint align="end">{{comment.value.length}} / 1000</mat-hint>
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="OnReview()" class="mt-2 mb-2" [disabled]="reviewForm.invalid">Submit</button>
+        <button mat-raised-button color="primary" (click)="OnReview()" class="mt-2 mb-3" [disabled]="reviewForm.invalid">Submit</button>
+        <div class="d-flex justify-content-center">
+          <a class="d-flex" type="button" (click)="cancel($event)">Cancel</a>
+        </div>
+
       </form>
     </mat-card-content>
   </mat-card>

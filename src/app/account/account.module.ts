@@ -9,13 +9,13 @@ import {OrderHistoryComponent} from "./order-history/order-history.component";
 import {CustomStyleModule} from "../shared/modules/custom-style/custom-style.module";
 import {MatListModule} from "@angular/material/list";
 import {MatDividerModule} from "@angular/material/divider";
-import { AccountHomeComponent } from './account-home/account-home.component';
 import { OrderDialogComponent } from './order-history/order-dialog/order-dialog.component';
 import {AppModule} from "../app.module";
 import { AddressDialogComponent } from './address-book/address-dialog/address-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UpdatePasswordDialogComponent } from './profile/update-password-dialog/update-password-dialog.component';
 import {ProfileEditDialogComponent} from "./profile/profile-edit-dialog/profile-edit-dialog.component";
+import { AccountComponent } from './account.component';
 
 const routes:Routes=[
 
@@ -27,11 +27,11 @@ const routes:Routes=[
     ProfileComponent,
     AddressBookComponent,
     OrderHistoryComponent,
-    AccountHomeComponent,
     OrderDialogComponent,
     AddressDialogComponent,
     ProfileEditDialogComponent,
     UpdatePasswordDialogComponent,
+    AccountComponent,
   ],
   imports: [
     CommonModule,

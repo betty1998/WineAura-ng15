@@ -26,7 +26,8 @@ import { SearchPipe } from './shared/pipe/search.pipe';
 import { PriceRangePipe } from './shared/pipe/price-range.pipe';
 import { FilterPipe } from './shared/pipe/filter.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
-import { ReviewComponent } from './review/review.component';
+import { ReviewComponent } from './after-sale/review/review.component';
+import { ReturnComponent } from './after-sale/return/return.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ReviewComponent } from './review/review.component';
     SearchPipe,
     PriceRangePipe,
     FilterPipe,
-    ReviewComponent
+    ReviewComponent,
+    ReturnComponent
 
   ],
   imports: [

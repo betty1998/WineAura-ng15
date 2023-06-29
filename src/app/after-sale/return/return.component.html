@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Return an Item</h1>
+
+  <form [formGroup]="returnForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="purchases">
+      <div *ngFor="let purchase of order.purchases; let i=index" [formGroupName]="i">
+        <mat-checkbox formControlName="return"> {{ purchase.product.name }} </mat-checkbox>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select a Reason</mat-label>
+          <mat-select formControlName="reason">
+            <mat-option *ngFor="let reason of returnReasons" [value]="reason">{{ reason }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!returnForm.valid">Submit</button>
+  </form>
+</div>

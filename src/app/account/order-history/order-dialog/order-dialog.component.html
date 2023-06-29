@@ -1,7 +1,12 @@
 <mat-dialog-content>
   <div class="d-flex p-3 gap-2">
     <div class="order-summary">
-      <h2>Order Summary</h2>
+      <div class="d-flex justify-content-between">
+        <h2>Order Summary</h2>
+        <button mat-flat-button color="accent"
+                (click)="close()" [routerLink]="['/return',order.id]">Start a Return </button>
+      </div>
+
       <div class="list-container mt-2">
         <div *ngFor="let purchase of order.purchases" class="row">
           <mat-divider></mat-divider>
@@ -17,7 +22,8 @@
             <p class="mt-3">{{purchase.product.price * purchase.qty | currency}}</p>
             <p>Qty: {{purchase.qty}}</p>
 <!--            <a *ngIf="statusMap?.get(purchase.status)<3 && purchase.id" type="button" (click)="close()" [routerLink]="['/review',purchase?.product?.id,'purchase',purchase.id]">Write a review</a>-->
-            <a *ngIf="(statusMap.get(purchase.status) || 0) < 3" type="button" (click)="close()" [routerLink]="['/review',purchase.product.id,'purchase',purchase.id]">Write a review</a>
+            <a *ngIf="(statusMap.get(purchase.status) || 0) < 3" type="button"
+               (click)="close()" [routerLink]="['/review',purchase.product.id,'purchase',purchase.id]">Write a review</a>
           </div>
         </div>
       </div>

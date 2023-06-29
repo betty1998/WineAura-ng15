@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from "../shared/model/Product";
-import {ProductService} from "../shared/service/product.service";
+import {Product} from "../../shared/model/Product";
+import {ProductService} from "../../shared/service/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {BehaviorSubject, switchMap} from "rxjs";
-import {AuthService} from "../shared/service/auth.service";
-import {User} from "../shared/model/User";
+import {AuthService} from "../../shared/service/auth.service";
+import {User} from "../../shared/model/User";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Review} from "../shared/model/Review";
-import {ReviewService} from "../shared/service/review.service";
+import {Review} from "../../shared/model/Review";
+import {ReviewService} from "../../shared/service/review.service";
 import {Location} from "@angular/common";
-import {PurchaseService} from "../shared/service/purchase.service";
-import {UserInfoService} from "../shared/service/user-info.service";
-import {OrderService} from "../shared/service/order.service";
+import {PurchaseService} from "../../shared/service/purchase.service";
+import {UserInfoService} from "../../shared/service/user-info.service";
+import {OrderService} from "../../shared/service/order.service";
 
 @Component({
   selector: 'app-review',
@@ -87,5 +87,10 @@ export class ReviewComponent implements OnInit{
       }
     })
 
+  }
+
+  cancel(event:Event) {
+    event.stopPropagation();
+    this.location.back();
   }
 }
