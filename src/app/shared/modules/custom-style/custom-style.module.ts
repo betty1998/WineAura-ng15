@@ -16,6 +16,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {OrderSortPipe} from "../../pipe/order-sort.pipe";
+import {OrderFilterPipe} from "../../pipe/order-filter.pipe";
 @NgModule({
   imports: [
     MatButtonModule,

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../shared/service/auth.service";
 import {UserInfoService} from "../../shared/service/user-info.service";
 import {of, switchMap, throwError} from "rxjs";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -13,25 +14,10 @@ import {of, switchMap, throwError} from "rxjs";
 export class LoginComponent {
   constructor(private auth:AuthService,
               private userInfoService: UserInfoService,
-              private router: Router) {
+              private router: Router,
+              private location:Location) {
   }
-  /*TODO
-  * redirect to previous page after login successfully
-  * */
-  // login({value}:  NgForm) {
-  //   console.log("user:",value);
-  //   this.auth.login(value)
-  //     .subscribe(res =>{
-  //       console.log("login response: ",res);
-  //       if(res.success){
-  //         this.auth.user = res.user;
-  //         localStorage.setItem("token", res.token); // store token in local storage
-  //         this.router.navigate(["/products"]).catch();
-  //       }
-  //       }
-  //     )
-  // }
-/*Todo: deal with second subscribe*/
+
   login({value}: NgForm) {
     console.log("user:", value);
     this.auth.login(value).pipe(
@@ -54,7 +40,8 @@ export class LoginComponent {
         this.userInfoService.userInfo = res.data;
 
         // navigate to products after getting user info
-        this.router.navigate(["/products"]).catch();
+        this.location.back();
+        // this.router.navigate(["/products"]).catch();
       } else {
         console.log(res);
       }

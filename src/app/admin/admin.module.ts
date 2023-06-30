@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NbCardModule, NbLayoutModule, NbMenuModule, NbThemeModule} from "@nebular/theme";
+import {NbCardModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbThemeModule} from "@nebular/theme";
 import { AdminComponent } from './admin.component';
 import {RouterModule, Routes} from "@angular/router";
 
@@ -20,7 +20,8 @@ const routes:Routes =[
     NbCardModule,
     RouterModule.forChild(routes),
     NbMenuModule.forRoot(),
-    NbLayoutModule
+    NbLayoutModule,
+    NbSidebarModule.forRoot()
   ],
 })
 export class AdminModule { }
