@@ -28,6 +28,7 @@ import { FilterPipe } from './shared/pipe/filter.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
 import { ReviewComponent } from './after-sale/review/review.component';
 import { ReturnComponent } from './after-sale/return/return.component';
+import {NbThemeModule} from "@nebular/theme";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { ReturnComponent } from './after-sale/return/return.component';
     HttpClientModule,
     MatGridListModule,
     CheckoutModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [
     {

@@ -29,6 +29,7 @@
     <input class="search-input" type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
     <span class="example-spacer"></span>
     <div>
+      <button mat-raised-button routerLink="/admin">Admin</button>
       <button *ngIf="!auth.user" mat-stroked-button routerLink="/login">Sign In</button>
       <button *ngIf="!!auth.user" mat-stroked-button (click)="auth.logout()">Sign Out</button>
       <button *ngIf="!auth.user" mat-button routerLink="/register">Create Account </button>

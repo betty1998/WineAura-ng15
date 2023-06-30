@@ -33,12 +33,6 @@ const routes: Routes = [
   },
   {
     path:"checkout/:id",
-    // component: CartComponent,
-    // children:[
-    //   {
-    //     path:"order-detail",
-    //     component: OrderDetailComponent}
-    // ]
     loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
     // canActivate:[AuthGuard],
     canLoad:[AuthGuard]
@@ -78,9 +72,10 @@ const routes: Routes = [
     path:"return/:orderId",
     component:ReturnComponent
   },
-  // {
-  //
-  // },
+  {
+    path:"admin",
+    loadChildren: ()=>import("./admin/admin.module").then(m=>m.AdminModule)
+  },
   {
     path: "**",
     redirectTo: "products",
