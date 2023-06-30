@@ -45,7 +45,7 @@ export class FilterPipe implements PipeTransform {
             }));
           break;
         case 'category':
-        case 'country':
+        case 'region':
         case 'brand':
           filteredItems = filteredItems.filter(p =>
             groupedFilters[filterType].some(filter => p[filterType as keyof Product] == filter.value));

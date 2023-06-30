@@ -9,7 +9,7 @@
     </div>
     <mat-divider></mat-divider>
     <div class="list-container">
-      <div *ngFor="let cp of userInfo.cart" class="row">
+      <div *ngFor="let cp of (cart$|async)" class="row">
         <div class="image col-2" [routerLink]="['/product-detail',cp.product.id]">
           <img [src]="cp.product.image" width="90" height="90">
         </div>
@@ -50,6 +50,6 @@
     <router-outlet></router-outlet>
   </section>
   <section fxFlex="28%" fxFlex.lt-sm="95" class="order-summary">
-    <app-order-summary [cart]="userInfo.cart" (checkout)="checkout()"></app-order-summary>
+    <app-order-summary [cart]="(userInfoService.userInfo$|async)?.cart" (checkout)="checkout()"></app-order-summary>
   </section>
 </main>

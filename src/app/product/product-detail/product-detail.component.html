@@ -1,11 +1,11 @@
 <section class="product-detail-info mb-3 mt-3">
   <div class="product-detail-image">
-    <img src="{{product.image}}" alt="{{product.name}}" style="width: 480px;">
+    <img src="{{(product$|async)?.image}}" alt="{{(product$|async)?.name}}" style="width: 480px;">
   </div>
   <div class="product-detail-text me-5">
-    <h1>{{product.name}}</h1>
-    <p>{{product.capacity}}</p>
-    <h2 class="mt-4 mb-3">{{product.price | currency}}</h2>
+    <h1>{{(product$|async)?.name}}</h1>
+    <p>{{(product$|async)?.capacity}}</p>
+    <h2 class="mt-4 mb-3">{{(product$|async)?.price | currency}}</h2>
     <section class="quantity-cart row mb-4">
       <div class="quantity-container col-3">
           <span class="">Quantity</span>
@@ -16,7 +16,7 @@
     </section>
     <section class="description-container mb-4">
       <h3 class="pt-3"> Product Description</h3>
-      <p>{{product.description}}</p>
+      <p>{{(product$|async)?.description}}</p>
     </section>
 
     <section class="detail-container mb-3">
@@ -24,24 +24,24 @@
       <div class="detail-grid">
         <div class="row mb-2">
           <div class="col-2">Country/State</div>
-          <div class="col-5">{{product.region}}</div>
+          <div class="col-5">{{(product$|async)?.region}}</div>
           <div class="col-1">Brand</div>
-          <div class="col">{{product.brand}}</div>
+          <div class="col">{{(product$|async)?.brand}}</div>
         </div>
         <div class="row mb-2">
           <div class="col-2">Wine Type</div>
-          <div class="col-5">{{product.category}}</div>
+          <div class="col-5">{{(product$|async)?.category}}</div>
           <div class="col-1">Style</div>
-<!--          <div class="col">{{product.style}}</div>-->
+<!--          <div class="col">{{(product$|async)?.style}}</div>-->
           <div class="col">Elegant</div>
         </div>
         <div class="row">
           <div class="col-2">Taste</div>
-<!--          <div class="col">{{product.taste}}</div>-->
+<!--          <div class="col">{{(product$|async)?.taste}}</div>-->
           <div class="col-5">Blackberry, Cherry</div>
           <div class="col-1">ABV</div>
           <div class="col">14.6%</div>
-<!--          <div class="col">{{product.abv}}</div>-->
+<!--          <div class="col">{{(product$|async)?.abv}}</div>-->
         </div>
       </div>
 
@@ -53,7 +53,7 @@
 <section class="product-review">
   <div class="product-review ms-1 me-1">
     <h2 class="pt-3">REVIEWS</h2>
-    <div *ngFor="let review of product.reviews">
+    <div *ngFor="let review of (product$|async)?.reviews">
       <div class="review-row row align-items-start">
         <div class="col-2">
           <h4 class="text-capitalize">{{review.nickname}}</h4>

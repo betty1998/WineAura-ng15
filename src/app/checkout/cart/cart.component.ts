@@ -6,7 +6,7 @@ import {UserInfo} from "../../shared/model/UserInfo";
 import {ActivatedRoute,Router} from "@angular/router";
 import {ProductService} from "../../shared/service/product.service";
 
-import {switchMap} from "rxjs";
+import {BehaviorSubject, switchMap} from "rxjs";
 import {Product} from "../../shared/model/Product";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {AuthService} from "../../shared/service/auth.service";
@@ -20,6 +20,7 @@ export class CartComponent implements OnInit{
   userInfo!: UserInfo;
   userId: number | null | undefined;
   showCart=true;
+  cart$ = new BehaviorSubject<CartProduct[]>([]);
 
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,
@@ -34,6 +35,7 @@ export class CartComponent implements OnInit{
     } )).subscribe(res =>{
       if (res.success) {
         this.userInfo = res.data;
+        this.cart$.next(this.userInfo.cart);
       }else {
         console.log(res);
       }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from "../../shared/model/Product";
 import {ProductService} from "../../shared/service/product.service";
 import {ActivatedRoute, Router, Routes} from "@angular/router";
-import {switchMap} from "rxjs";
+import {BehaviorSubject, switchMap} from "rxjs";
 import {CartProduct} from "../../shared/model/CartProduct";
 import {AuthService} from "../../shared/service/auth.service";
 import {UserInfoService} from "../../shared/service/user-info.service";
@@ -14,6 +14,7 @@ import {UserInfoService} from "../../shared/service/user-info.service";
 })
 export class ProductDetailComponent implements OnInit{
   product!: Product;
+  product$ = new BehaviorSubject<Product | undefined>(undefined);
   id: number | null | undefined;
   qty: number | undefined;
   stars = [1, 2, 3, 4, 5];
@@ -35,6 +36,7 @@ export class ProductDetailComponent implements OnInit{
         if (res.success){
           console.log(res.data);
           this.product = res.data;
+          this.product$.next(res.data);
         }else{
           console.log(res);
         }
@@ -44,8 +46,6 @@ export class ProductDetailComponent implements OnInit{
 
   addToCart(product: Product, event: Event) {
     event.stopPropagation();
-    // check user first
-    // if login
     if (this.auth.user){
       const cartProduct:CartProduct = {
         product: product,

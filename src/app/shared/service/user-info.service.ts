@@ -15,7 +15,7 @@ import {OrderService} from "./order.service";
   providedIn: 'root'
 })
 export class UserInfoService {
-  userInfo$ = new BehaviorSubject<UserInfo|null>(null);
+  userInfo$ = new BehaviorSubject<UserInfo|undefined>(undefined);
   userInfo!:UserInfo;
   cart: CartProduct[]|undefined;
 

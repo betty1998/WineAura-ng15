@@ -49,7 +49,7 @@
       </div>
     </div>
   </section>
-  <section class="products-list-section" fxFlex="90%" fxLayout="column" fxFlexAlign="end center">
+  <section class="products-list-section" fxFlex fxLayout="column" fxFlexAlign="end center">
     <div class="sort-container">
       <span fxFlex="62"></span>
       <mat-form-field appearance="outline" fxFlex="18%">
@@ -69,7 +69,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="products-list" fxFlex="90" fxLayout="row wrap" fxFlexAlign="start start">
+    <div class="products-list" fxLayout="row wrap" fxFlexAlign="start start">
       <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
                             [product]="p" [amount] = "l" *ngFor="let p of products
                           | search: searchKey
@@ -79,8 +79,8 @@
       </app-product-overview>
     </div>
     <div fxFlex=100 fxLayout="row" class="pagination">
-      <div fxFlex="80"></div>
-      <div fxFlex="20" fxFlexAlign="end">
+<!--      <div fxFlex="70"></div>-->
+      <div fxFlex="100" fxFlexAlign="end start" class="page">
         <pagination-controls (pageChange)="page = $event" previousLabel="Prev"></pagination-controls>
       </div>
 

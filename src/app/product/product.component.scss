@@ -73,4 +73,11 @@ div.result-found{
 .pagination{
   margin-top: 30px;
   margin-bottom: 20px;
+  .page{
+    display: flex;
+    justify-content: end;
+    flex:1 1 100%;
+    margin-right: 20px;
+  }
 }
+
