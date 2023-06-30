@@ -1,20 +1,45 @@
-<div class="container">
-  <h1>Return an Item</h1>
-
+<div class="container mt-4">
+  <h1>Select Items to Return</h1>
   <form [formGroup]="returnForm" (ngSubmit)="onSubmit()">
-    <div formArrayName="purchases">
-      <div *ngFor="let purchase of order.purchases; let i=index" [formGroupName]="i">
-        <mat-checkbox formControlName="return"> {{ purchase.product.name }} </mat-checkbox>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Select a Reason</mat-label>
-          <mat-select formControlName="reason">
-            <mat-option *ngFor="let reason of returnReasons" [value]="reason">{{ reason }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <div formArrayName="returnArray">
+      <div *ngFor="let return of returnArray.controls; let i=index;" [formGroupName]="i">
+        <div class="list-container mt-2">
+          <div *ngIf="return.get('purchase')?.value as purchase" class="row">
+            <mat-divider *ngIf="i>0"></mat-divider>
+            <div class="image col-2">
+              <mat-checkbox formControlName="return"></mat-checkbox>
+              <img [src]="purchase.product.image" width="140" height="140" class="ms-3">
+            </div>
+            <div class="info col-3">
+              <div>{{purchase.product.name}}</div>
+              <p class="small">{{purchase.product.capacity}}</p>
+              <div>qty: {{purchase.qty}}</div>
+              <div class="mt-3">{{purchase.product.price * purchase.qty | currency}}</div>
+            </div>
+            <div class="reason col-3 text-center">
+              <mat-form-field appearance="outline">
+                <mat-label>Select a Reason</mat-label>
+                <mat-select formControlName="reason">
+                  <mat-option *ngFor="let reason of ps.returnReasons" [value]="reason">{{ reason }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="comment col text-center">
+              <mat-form-field appearance="outline" class="example-full-width">
+                <textarea matInput placeholder="Add a comment" formControlName="comment"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end mt-4 gap-4">
+      <div class="d-flex align-items-end">
+        <a mat-button type="button" (click)="cancel($event)">Cancel</a>
+      </div>
+      <button class="" mat-raised-button color="primary" type="submit" [disabled]="!returnForm.valid">Submit</button>
+    </div>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!returnForm.valid">Submit</button>
   </form>
 </div>
+

@@ -6,6 +6,7 @@ import {DataResponse} from "../httpResponse/dataResponse";
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import {Purchase} from "../model/Purchase";
+import {Return} from "../model/Return";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class OrderService {
   orderList!: Order[];
   taxRate = 0.08;
   freeDelivery= 99;
-  statusMap: Map<string, number> = new Map([["Pending",0],["Shipped",1],["Delivered",2],["Reviewed",3]]);
+  statusMap: Map<string, number> = new Map([
+    ["Pending",0],["Shipped",1],["Delivered",2],["Returned",3],["Refunded",4],["Reviewed",5],["Complete",6]]);
 
   constructor(private http:HttpClient,
               private auth:AuthService) {
@@ -53,4 +55,7 @@ export class OrderService {
     return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/user/${userId}`);
   }
 
+  returnItems(orderId: number, returnList: Return[]) {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/returnItems/${orderId}`, returnList);
+  }
 }

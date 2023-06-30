@@ -8,15 +8,15 @@
   </div>
   <div class="mb-4">
     <div class="text-secondary">Name</div>
-    <div>{{infoService.userInfo.firstName}} {{infoService.userInfo.lastName}} </div>
+    <div>{{userInfo?.firstName}} {{userInfo?.lastName}} </div>
   </div>
   <div class="mb-4">
     <div class="text-secondary">Email</div>
-    <div>{{infoService.userInfo.email}}</div>
+    <div>{{userInfo?.email}}</div>
   </div>
   <div class="mb-4">
     <div class="text-secondary">Phone Number</div>
-    <div>{{infoService.userInfo.phone}}</div>
+    <div>{{userInfo?.phone}}</div>
   </div>
   <div class="mb-4">
     <button mat-raised-button color="accent" (click)="edit(auth.user)">Edit</button>

@@ -25,7 +25,8 @@
   </div>
 </div>
 <div class="order-list shadow">
-  <div *ngFor="let order of ((orderList$ | async) | orderFilter:+selectedMonth | orderSort: selectedSort)">
+  <div *ngFor="let order of ((orderList$ | async) | orderFilter:+selectedMonth | orderSort: selectedSort); let i = index">
+    <mat-divider *ngIf="i>0"></mat-divider>
     <div *ngIf="order.purchases.length>=1" class="row">
       <div class="image col-2">
         <img [src]="order.purchases[0].product.image" width="120" height="120">
@@ -47,7 +48,6 @@
         <button mat-stroked-button color="primary" (click)="openOrder(order)">View Details</button>
       </div>
     </div>
-    <mat-divider></mat-divider>
   </div>
 
 </div>

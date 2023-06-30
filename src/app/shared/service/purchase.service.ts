@@ -8,7 +8,12 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class PurchaseService {
-
+  returnReasons = [
+    'Incorrect item sent',
+    'Item arrived damaged',
+    'Not satisfied with the product',
+    'Other'
+  ];
   constructor(private http:HttpClient) { }
 
 

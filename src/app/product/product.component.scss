@@ -45,9 +45,11 @@ h3{
   }
 }
 
-.products-list{
+.products-list {
   border-top: 1px solid lightgrey;
-  min-height: 80px;
+  //min-height: 80px;
+  flex: 0 0;
+
 }
 
 .sort-container{
@@ -67,4 +69,8 @@ div.result-found{
 
 #price-range{
   border-top: 1px solid lightgrey;
+}
+.pagination{
+  margin-top: 30px;
+  margin-bottom: 20px;
 }

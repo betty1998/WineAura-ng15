@@ -41,6 +41,7 @@ export class AuthService {
       if (res && res.success){
         console.log("user info: ", res.data);
         this.userInfoService.userInfo = res.data;
+        this.userInfoService.userInfo$.next(res.data);
       }
     });
 

@@ -3,13 +3,13 @@
     <div class="order-summary">
       <div class="d-flex justify-content-between">
         <h2>Order Summary</h2>
-        <button mat-flat-button color="accent"
+        <button *ngIf="checkReturn(order.purchases)" mat-flat-button color="accent"
                 (click)="close()" [routerLink]="['/return',order.id]">Start a Return </button>
       </div>
 
       <div class="list-container mt-2">
-        <div *ngFor="let purchase of order.purchases" class="row">
-          <mat-divider></mat-divider>
+        <div *ngFor="let purchase of order.purchases; let i = index" class="row">
+          <mat-divider *ngIf="i>0"></mat-divider>
           <div class="image col-3">
             <img [src]="purchase.product.image" width="90" height="90">
           </div>

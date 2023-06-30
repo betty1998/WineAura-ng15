@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Order} from "../../../shared/model/Order";
 import {OrderService} from "../../../shared/service/order.service";
+import {Purchase} from "../../../shared/model/Purchase";
 
 @Component({
   selector: 'app-order-dialog',
@@ -23,5 +24,9 @@ export class OrderDialogComponent {
 
   close() {
     this.dialogRef.close();
+  }
+
+  checkReturn(purchases: Purchase[]) {
+    return purchases.some(p=>(this.statusMap.get(p.status) || 0) == 2);
   }
 }

@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {CartProduct} from "../model/CartProduct";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Data} from "@angular/router";
 import {Product} from "../model/Product";
 import {AddressBook} from "../model/AddressBook";
@@ -15,6 +15,7 @@ import {OrderService} from "./order.service";
   providedIn: 'root'
 })
 export class UserInfoService {
+  userInfo$ = new BehaviorSubject<UserInfo|null>(null);
   userInfo!:UserInfo;
   cart: CartProduct[]|undefined;
 
@@ -25,6 +26,7 @@ export class UserInfoService {
     this.getUserInfo(userId).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
+        this.userInfo$.next(res.data);
       } else {
         console.log(res);
       }
