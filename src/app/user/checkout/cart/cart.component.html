@@ -50,6 +50,6 @@
     <router-outlet></router-outlet>
   </section>
   <section fxFlex="28%" fxFlex.lt-sm="95" class="order-summary">
-    <app-order-summary [cart]="(userInfoService.userInfo$|async)?.cart" (checkout)="checkout()"></app-order-summary>
+    <app-order-summary [cart]="cart$|async" (checkout)="checkout()"></app-order-summary>
   </section>
 </main>

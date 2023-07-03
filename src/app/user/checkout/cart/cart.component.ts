@@ -62,6 +62,7 @@ export class CartComponent implements OnInit{
       if(res.success){
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.cart$.next(this.userInfo.cart);
         console.log(res.data);
       }else {
         console.log(res);
@@ -94,6 +95,7 @@ export class CartComponent implements OnInit{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.cart$.next(this.userInfo.cart);
       } else {
         console.log(res);
       }
@@ -106,6 +108,7 @@ export class CartComponent implements OnInit{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.cart$.next(this.userInfo.cart);
       } else {
         console.log(res);
       }
@@ -119,6 +122,7 @@ export class CartComponent implements OnInit{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.cart$.next(this.userInfo.cart);
       } else {
         console.log(res);
       }

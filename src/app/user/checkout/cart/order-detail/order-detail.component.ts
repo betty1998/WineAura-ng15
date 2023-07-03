@@ -114,6 +114,7 @@ export class OrderDetailComponent implements OnInit{
     // purchase date should be generated in backend
     this.order.purchases = purchases;
     this.order.status = "Pending";
+    this.order.subTotal = this.orderService.subTotal;
     const store = {id:1,manager:{id:1}}
     this.order.store = store;
     console.log(this.order);

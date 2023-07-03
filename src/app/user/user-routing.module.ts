@@ -79,8 +79,9 @@ const routes: Routes = [
         path:"return/:orderId",
         component:ReturnComponent
       }
-    ]
+    ],
   },
+
 
 ];
 @NgModule({

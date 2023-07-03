@@ -15,41 +15,47 @@ import {ErrorInterceptor} from "./shared/interceptor/error.interceptor";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatCardModule} from "@angular/material/card";
-import {AccountModule} from "./user/account/account.module";
+import { TotalSalesComponent } from './dashboard/total-sales/total-sales.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    CustomStyleModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatGridListModule,
-    MatCardModule,
-    NgxPaginationModule
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        TotalSalesComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        CustomStyleModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatGridListModule,
+        MatCardModule,
+        NgxPaginationModule,
+        NgChartsModule
 
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        }
+    ],
+    exports: [
+        TotalSalesComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

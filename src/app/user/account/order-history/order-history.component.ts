@@ -55,11 +55,6 @@ export class OrderHistoryComponent implements OnInit{
     });
   }
 
-  calculateSubTotal(order:Order) {
-    order.subTotal = order.purchases.reduce((acc, purchase) =>
-                acc + purchase.qty * purchase.product.price, 0);
-    return order.subTotal
-  }
 
   calculate(order: Order) {
     order.itemAmount = order.purchases.reduce((acc, purchase) =>

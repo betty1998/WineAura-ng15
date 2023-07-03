@@ -2,15 +2,18 @@
 <nb-layout>
   <nb-layout-header>
     Wine Aura Management System
+    <span><button mat-button routerLink="/products">Website</button></span>
   </nb-layout-header>
   <nb-sidebar state="expanded" class="menu-sidebar" tag="menu-sidebar">
-    <nb-menu [items]="menu"></nb-menu>
+    <nb-menu [items]="menu">
+    </nb-menu>
   </nb-sidebar>
   <nb-layout-column class="colored-column-warning">
-    Right column
     <router-outlet></router-outlet>
   </nb-layout-column>
   <nb-layout-footer fixed>
     footer
   </nb-layout-footer>
 </nb-layout>
+
+

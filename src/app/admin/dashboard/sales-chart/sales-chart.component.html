@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-content>
+    <div style="display: block;">
+      <canvas baseChart width="400" height="400"
+              [datasets]="data"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              type="line"
+              [legend]="lineChartLegend"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </mat-card-content>
+</mat-card>

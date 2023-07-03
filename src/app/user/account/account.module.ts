@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 
 import {ProfileComponent} from "./profile/profile.component";
 import {RouterModule, Routes} from "@angular/router";
@@ -10,7 +10,6 @@ import {CustomStyleModule} from "../../shared/modules/custom-style/custom-style.
 import {MatListModule} from "@angular/material/list";
 import {MatDividerModule} from "@angular/material/divider";
 import { OrderDialogComponent } from './order-history/order-dialog/order-dialog.component';
-import {AppModule} from "../../app.module";
 import { AddressDialogComponent } from './address-book/address-dialog/address-dialog.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UpdatePasswordDialogComponent } from './profile/update-password-dialog/update-password-dialog.component';
@@ -18,13 +17,8 @@ import {ProfileEditDialogComponent} from "./profile/profile-edit-dialog/profile-
 import { AccountComponent } from './account.component';
 import {OrderSortPipe} from "../../shared/pipe/order-sort.pipe";
 import {OrderFilterPipe} from "../../shared/pipe/order-filter.pipe";
-import {SearchPipe} from "../../shared/pipe/search.pipe";
-import {PriceRangePipe} from "../../shared/pipe/price-range.pipe";
-import {FilterPipe} from "../../shared/pipe/filter.pipe";
 
-const routes:Routes=[
 
-]
 
 @NgModule({
   declarations: [
@@ -45,7 +39,7 @@ const routes:Routes=[
     CustomStyleModule,
     MatDividerModule,
     MatListModule,
-    RouterModule.forChild(routes),
+    RouterModule,
     ReactiveFormsModule
   ],
   providers:[

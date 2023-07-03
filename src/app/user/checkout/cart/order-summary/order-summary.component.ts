@@ -10,7 +10,7 @@ import {OrderService} from "../../../../shared/service/order.service";
 })
 export class OrderSummaryComponent implements OnChanges {
   @Input()
-  cart!: CartProduct[]|undefined;
+  cart!: CartProduct[]|null;
   subTotal!: number;
   tax!: number;
   shipping = 0.00;
@@ -27,6 +27,7 @@ export class OrderSummaryComponent implements OnChanges {
     console.log("ngOnChange: ", this.cart);
     this.subTotal = (this.cart || []).reduce((acc, cp) =>
       acc + cp.qty * cp.product.price, 0);
+    this.orderService.subTotal = this.subTotal;
     this.tax = +(this.subTotal * this.orderService.taxRate).toFixed(2);
     if (this.subTotal < this.orderService.freeDelivery) {
       this.shipping = 8;

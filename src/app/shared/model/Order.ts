@@ -17,7 +17,7 @@ export interface Order {
   paymentMethod: string;
   paymentCardNumber: string;
   total?:number;
-  subTotal?: number;
+  subTotal: number;
   tax?: number;
   shipping?:number;
   itemAmount?:number;

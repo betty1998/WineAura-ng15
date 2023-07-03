@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Order} from "../../shared/model/Order";
 import {OrderService} from "../../shared/service/order.service";
-import {switchMap} from "rxjs";
+import {BehaviorSubject, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-checkout-success',
@@ -10,7 +10,7 @@ import {switchMap} from "rxjs";
   styleUrls: ['./checkout-success.component.scss']
 })
 export class CheckoutSuccessComponent implements OnInit{
-  order!: Order;
+  order$ = new BehaviorSubject<Order | null>(null);
   id!: number;
 
   constructor(private orderService:OrderService,
@@ -23,7 +23,8 @@ export class CheckoutSuccessComponent implements OnInit{
       return this.orderService.getOrder(this.id);
     })).subscribe(res=>{
       if (res.success) {
-        this.order = res.data;
+        this.order$.next(res.data);
+        this.orderService.updateOrder(this.id);
       } else {
         console.log(res);
       }

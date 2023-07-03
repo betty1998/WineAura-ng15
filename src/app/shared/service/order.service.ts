@@ -18,7 +18,7 @@ export class OrderService {
   freeDelivery= 99;
   statusMap: Map<string, number> = new Map([
     ["Pending",0],["Shipped",1],["Delivered",2],["Returned",3],["Refunded",4],["Reviewed",5],["Complete",6]]);
-
+  subTotal: number = 0;
   constructor(private http:HttpClient,
               private auth:AuthService) {
     // if user is not undefined, get orderList data
@@ -49,6 +49,10 @@ export class OrderService {
 
   getOrder(id: number) {
     return this.http.get<DataResponse<Order>>(`${environment.api}/orders/${id}`);
+  }
+
+  getOrders() {
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders`);
   }
 
   getOrderByUserId(userId: number | undefined) {
