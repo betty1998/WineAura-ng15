@@ -1,23 +1,32 @@
-<main class="d-flex flex-wrap justify-content-around gap-4">
-  <section class="total-sales">
-    <app-total-sales title="sales"></app-total-sales>
-  </section>
-  <section class="total-orders">
-    <app-total-sales title="orders"></app-total-sales>
-  </section>
-  <section class="total-users">
-    <app-total-sales title="users"></app-total-sales>
-  </section>
-  <section class="sales-chart">
-    <app-sales-chart></app-sales-chart>
-  </section>
-  <section class="today">
+<!--<main class="d-flex flex-wrap column-gap-4 row-gap-4 justify-content-between">-->
+<main fxFlex fxLayout="column" fxLayoutGap="4%">
+  <div class="d-flex justify-content-between" fxLayoutGap="4%">
+    <section class="total-sales">
+      <app-total-sales title="sales"></app-total-sales>
+    </section>
+    <section class="total-orders">
+      <app-total-sales title="orders"></app-total-sales>
+    </section>
+    <section class="total-users">
+      <app-total-sales title="users"></app-total-sales>
+    </section>
+  </div>
+  <div fxFlex="100%" fxLayout="row" fxLayoutGap="4%">
+    <section class="sales-chart">
+      <app-sales-chart [orderPeriodMap]="orderMap$|async"
+                       (periodChange)="getOrderByPeriod($event)"></app-sales-chart>
+    </section>
+    <section class="top-selling" fxFlex>
+      <app-top-selling [topSelling]="topSelling$|async"></app-top-selling>
+    </section>
+  </div>
+  <div fxFlex="100%" fxLayout="row" fxLayoutGap="4%" class="justify-content-between">
+    <section class="recent-order" fxFlex>
+      <app-recent-order [recentOrders]="recentOrders$|async"></app-recent-order>
+    </section>
+    <section class="category-chart" >
+      <app-category-chart [categoryMap]="(categoryMap$|async)"></app-category-chart>
+    </section>
+  </div>
 
-  </section>
-  <section class="recent-order">
-
-  </section>
-  <section class="category-chart">
-
-  </section>
 </main>

@@ -1,1 +1,17 @@
-<p>category-chart works!</p>
+<main>
+  <mat-card>
+    <mat-card-content>
+      <div class="title">Sales by Categories</div>
+      <div class="chart-container">
+        <canvas baseChart
+                [datasets]="pieChartData"
+                [labels]="pieChartLabels"
+                [options]="pieChartOptions"
+                [legend]="pieChartLegend"
+                [type]="'pie'"
+        ></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</main>
+

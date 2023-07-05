@@ -115,6 +115,8 @@ export class OrderDetailComponent implements OnInit{
     this.order.purchases = purchases;
     this.order.status = "Pending";
     this.order.subTotal = this.orderService.subTotal;
+    this.order.itemAmount = purchases.reduce((acc, purchase) =>
+      acc + purchase.qty, 0);
     const store = {id:1,manager:{id:1}}
     this.order.store = store;
     console.log(this.order);
@@ -134,6 +136,7 @@ export class OrderDetailComponent implements OnInit{
     ).subscribe((res) => {
       if (res.success) {
         this.userInfoService.userInfo = res.data;
+        this.orderService.updateOrder(this.auth.user?.id);
         console.log('before navigate', this.order);
         this.router.navigate(['checkout-success', this.order.id]).catch();
       }

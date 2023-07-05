@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {AsyncPipe, CommonModule, CurrencyPipe, DatePipe, NgStyle} from '@angular/common';
 import {
   NbCardModule, NbIconComponent,
   NbIconLibraries,
@@ -30,7 +30,20 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDivider, MatDividerModule} from "@angular/material/divider";
 import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
-import {NgChartsConfiguration, NgChartsModule} from "ng2-charts";
+import {BaseChartDirective, NgChartsConfiguration, NgChartsModule} from "ng2-charts";
+import {SalesChartHeaderComponent} from "./dashboard/sales-chart/sales-chart-header/sales-chart-header";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {FormsModule} from "@angular/forms";
+import {FlexModule} from "@angular/flex-layout";
+import {TopSellingComponent } from './dashboard/top-selling/top-selling.component';
+import {MatTableModule} from "@angular/material/table";
+import {AppModule} from "../app.module";
+import {StatusDirective} from "../shared/directive/status.directive";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {AdminTabTitleDirective} from "../shared/directive/admin-tab-title.directive";
+import { AdminProductDetailComponent } from './admin-product/admin-product-detail/admin-product-detail.component';
 
 const routes:Routes =[
   {
@@ -44,6 +57,14 @@ const routes:Routes =[
       {
         path:"product",
         component:AdminProductComponent
+      },
+      {
+        path:"product/add-product",
+        component:AdminProductDetailComponent
+      },
+      {
+        path:"product/edit-product/:id",
+        component:AdminProductDetailComponent
       },
       {
         path:"order",
@@ -89,7 +110,12 @@ const routes:Routes =[
     SalesChartComponent,
     TodayComponent,
     RecentOrderComponent,
-    CategoryChartComponent
+    CategoryChartComponent,
+    SalesChartHeaderComponent,
+    TopSellingComponent,
+    StatusDirective,
+    AdminTabTitleDirective,
+    AdminProductDetailComponent
 
   ],
   imports: [
@@ -105,7 +131,18 @@ const routes:Routes =[
     NbIconModule,
     MatIconModule,
     MatGridListModule,
-    NgChartsModule
+    NgChartsModule,
+    AsyncPipe,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    FlexModule,
+    MatTableModule,
+    DatePipe,
+    CurrencyPipe,
+    MatSortModule,
+    MatPaginatorModule,
+
 
   ],
   providers:[

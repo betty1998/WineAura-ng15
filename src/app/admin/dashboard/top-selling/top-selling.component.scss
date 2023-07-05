@@ -1,0 +1,67 @@
+*{
+  box-sizing: border-box;
+}
+main{
+  min-width: 500px;
+  height:600px;
+  mat-card{
+    padding: 20px;
+  }
+}
+
+.title{
+  font-size: 27.5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/*remove horizontal border inside table*/
+table{
+  box-shadow: none;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  padding: 10px 0px;
+  margin-top: 0px;
+}
+
+.mat-header-row {
+  height: 100px;
+}
+
+.mat-mdc-row .mat-mdc-cell:nth-child(-n+2) {
+  text-align:center
+}
+
+.mat-mdc-row .mat-mdc-cell:last-child {
+  text-align:center
+}
+
+th{
+  background-color: rgba(255, 255, 224, 0.2);
+  font-weight: bold;
+  font-size: 16px;
+}
+tr[mat-row]:nth-child(1){
+  background-color: rgba(251, 231, 116, 0.55);
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+
+}
+
+tr:nth-child(2), tr:nth-child(2):hover{
+  background-color: rgba(182, 194, 203, 0.28);
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+}
+
+tr:nth-child(3), tr:nth-child(3):hover{
+  background-color: rgba(219, 185, 148, 0.38);
+  font-weight: bold;
+  border-radius: 50%;
+  text-align: center;
+}

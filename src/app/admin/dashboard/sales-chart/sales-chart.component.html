@@ -1,13 +1,17 @@
-<mat-card>
-  <mat-card-content>
-    <div style="display: block;">
-      <canvas baseChart width="400" height="400"
-              [datasets]="data"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              type="line"
-              [legend]="lineChartLegend"
-              (chartClick)="chartClicked($event)"></canvas>
-    </div>
-  </mat-card-content>
-</mat-card>
+<main>
+  <mat-card>
+    <mat-card-content>
+      <app-sales-chart-header (periodChange)="updatePeriod($event)" [period]="period"></app-sales-chart-header>
+      <div>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [options]="lineChartOptions"
+                type="line"
+                [legend]="lineChartLegend"
+                (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</main>
+

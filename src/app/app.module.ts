@@ -19,7 +19,6 @@ import { TotalSalesComponent } from './dashboard/total-sales/total-sales.compone
 import { NgChartsModule } from 'ng2-charts';
 
 
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -53,9 +52,9 @@ import { NgChartsModule } from 'ng2-charts';
             multi: true
         }
     ],
-    exports: [
-        TotalSalesComponent
-    ],
+  exports: [
+    TotalSalesComponent
+  ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

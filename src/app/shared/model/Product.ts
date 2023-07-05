@@ -10,8 +10,12 @@ export interface Product{
   category: string;
   brand: string;
   region: string;
+  taste: string;
+  style: string;
+  ABV: string;
   image: string;
   stockQty: number;
+  sold: number;
   discount: number;
   productStatus: ProductStatus;
   reviews: Review[];

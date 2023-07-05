@@ -20,7 +20,7 @@ export interface Order {
   subTotal: number;
   tax?: number;
   shipping?:number;
-  itemAmount?:number;
+  itemAmount:number;
   purchases: Purchase[];
   purchaseDate?: string;
   status: string;

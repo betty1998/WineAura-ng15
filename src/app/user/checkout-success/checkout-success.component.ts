@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Order} from "../../shared/model/Order";
 import {OrderService} from "../../shared/service/order.service";
 import {BehaviorSubject, switchMap} from "rxjs";
+import {UserInfoService} from "../../shared/service/user-info.service";
 
 @Component({
   selector: 'app-checkout-success',
@@ -24,7 +25,6 @@ export class CheckoutSuccessComponent implements OnInit{
     })).subscribe(res=>{
       if (res.success) {
         this.order$.next(res.data);
-        this.orderService.updateOrder(this.id);
       } else {
         console.log(res);
       }

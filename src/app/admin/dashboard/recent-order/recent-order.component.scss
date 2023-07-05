@@ -1,0 +1,26 @@
+main{
+  min-width: 500px;
+  //height:600px;
+  mat-card{
+    padding: 20px;
+    height:590px
+  }
+}
+.title{
+  font-size: 27.5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+
+th{
+  font-weight: bold;
+  font-size: 16px;
+  //text-align: center;
+}
+
+// apply to last two columns
+tr td:nth-last-child(-n+2){
+  //text-align: center;
+}
+

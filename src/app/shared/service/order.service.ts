@@ -18,6 +18,15 @@ export class OrderService {
   freeDelivery= 99;
   statusMap: Map<string, number> = new Map([
     ["Pending",0],["Shipped",1],["Delivered",2],["Returned",3],["Refunded",4],["Reviewed",5],["Complete",6]]);
+  statusColors = {
+    Pending: '#f1d245',     // Yellow
+    Shipped: '#4CAF50',     // Green
+    Delivered: '#03A9F4',   // Blue
+    Returned: 'rgba(238,59,44,0.85)',    // Red
+    Refunded: 'rgba(175,44,199,0.81)',    // Purple
+    Reviewed: 'rgba(234,111,152,0.84)',    // Pink
+    Complete: '#6f4d41'     // Brown
+  };
   subTotal: number = 0;
   constructor(private http:HttpClient,
               private auth:AuthService) {
@@ -62,4 +71,13 @@ export class OrderService {
   returnItems(orderId: number, returnList: Return[]) {
     return this.http.put<DataResponse<Order>>(`${environment.api}/orders/returnItems/${orderId}`, returnList);
   }
+
+  getOrderByPeriod(period: string) {
+    return this.http.get<DataResponse<{[key:string]:Order[]}>>(`${environment.api}/orders/period/${period}`);
+  }
+
+  getRecentOrders(amount: number) {
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/recent/${amount}`);
+  }
+
 }
