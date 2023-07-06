@@ -2,7 +2,7 @@ import {ProductStatus} from "./ProductStatus";
 import {Review} from "./Review";
 
 export interface Product{
-  id: number;
+  id?: number;
   name: string;
   description: string;
   capacity: string;
@@ -15,7 +15,7 @@ export interface Product{
   ABV: string;
   image: string;
   stockQty: number;
-  sold: number;
+  sold?: number;
   discount: number;
   productStatus: ProductStatus;
   reviews: Review[];

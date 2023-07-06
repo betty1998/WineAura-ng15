@@ -58,12 +58,12 @@ export class UserInfoService {
       `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/cartProduct/${cartProductId}`,null);
   }
 
-  addToFavorite(userInfoId: number, productId: number):Observable<DataResponse<UserInfo>> {
+  addToFavorite(userInfoId: number, productId: number | undefined):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/addToFavorite/${userInfoId}/product/${productId}`, null);
   }
 
-  removeFromFavorite(userInfoId: number, productId: number):Observable<DataResponse<UserInfo>> {
+    removeFromFavorite(userInfoId: number, productId: number | undefined):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null);
   }

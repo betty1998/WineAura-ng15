@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {AsyncPipe, CommonModule, CurrencyPipe, DatePipe, NgStyle} from '@angular/common';
+import {AsyncPipe, CommonModule, CurrencyPipe, DatePipe, NgForOf, NgStyle} from '@angular/common';
 import {
   NbCardModule, NbIconComponent,
   NbIconLibraries,
@@ -34,7 +34,7 @@ import {BaseChartDirective, NgChartsConfiguration, NgChartsModule} from "ng2-cha
 import {SalesChartHeaderComponent} from "./dashboard/sales-chart/sales-chart-header/sales-chart-header";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FlexModule} from "@angular/flex-layout";
 import {TopSellingComponent } from './dashboard/top-selling/top-selling.component';
 import {MatTableModule} from "@angular/material/table";
@@ -44,6 +44,8 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AdminTabTitleDirective} from "../shared/directive/admin-tab-title.directive";
 import { AdminProductDetailComponent } from './admin-product/admin-product-detail/admin-product-detail.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 const routes:Routes =[
   {
@@ -142,6 +144,11 @@ const routes:Routes =[
     CurrencyPipe,
     MatSortModule,
     MatPaginatorModule,
+    NgForOf,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    CommonModule,
+    ReactiveFormsModule
 
 
   ],

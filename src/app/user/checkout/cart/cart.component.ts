@@ -91,7 +91,7 @@ export class CartComponent implements OnInit{
 
   addToFavorite(product: Product, event: Event) {
     event.stopPropagation();
-    this.userInfoService.addToFavorite(this.userInfo.id, product.id).subscribe(res=>{
+    this.userInfoService.addToFavorite(this.userInfo.id, product?.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
@@ -104,7 +104,7 @@ export class CartComponent implements OnInit{
 
   removeFromFavorite(product: Product, event: Event) {
     event.stopPropagation();
-    this.userInfoService.removeFromFavorite(this.userInfo.id, product.id).subscribe(res=>{
+    this.userInfoService.removeFromFavorite(this.userInfo.id, product?.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;

@@ -43,5 +43,9 @@ export class ProductService {
     return this.httpClient.get<DataResponse<number>>(`${environment.api}/products/checkStock/${id}`);
 
   }
+
+  addProduct(product: Product):Observable<DataResponse<Product>> {
+    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, product);
+  }
 }
 

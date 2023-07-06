@@ -1,0 +1,86 @@
+.info-section{
+  flex: 75%;
+}
+
+.upload-section{
+  flex:400px;
+}
+
+mat-card{
+  padding: 20px 15px;
+}
+
+label{
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+.form-group{
+  margin-bottom: 24px;
+}
+.two-column{
+  display:flex;
+  justify-content: space-between;
+  .form-group{
+    width: 48%;
+  }
+
+}
+
+textarea{
+  min-height:160px;
+}
+
+img{
+  width: 100%;
+  object-fit: cover;
+}
+
+.image{
+  margin-top: 20px;
+  width:400px;
+  height: 400px;
+  background-color: rgba(165, 135, 231, 0.44);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cancel-upload{
+  height:24px;
+  width: 24px;
+  margin-bottom: 10px;
+  margin-top:-5px;
+  mat-icon{
+    height:20px;
+    width: 20px;
+    font-size: 20px;
+  }
+}
+.add{
+  height:78px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  button{
+    width: 260px;
+    height: 40px;
+    font-size:20px;
+  }
+}
+
+.input-group-text{
+  border-radius: 15% 0% 0% 15%;
+}
+.price{
+  label{
+    margin-top:10px;
+  }
+  div.input-group{
+    width: 320px;
+  }
+}
