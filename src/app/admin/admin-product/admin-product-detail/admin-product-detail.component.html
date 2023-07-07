@@ -1,11 +1,11 @@
 <main>
   <section class="header">
     <div class="mb-3">
-      <button mat-stroked-button color="primary">
+      <button mat-stroked-button color="primary" routerLink="/admin/product">
         <mat-icon>arrow_back</mat-icon><span>Back to Product List</span>
       </button>
     </div>
-    <div admin-tab-title>Add New Product</div>
+    <div admin-tab-title>{{title}}</div>
   </section>
   <section class="product-card">
     <mat-card>
@@ -14,18 +14,18 @@
           <div class="info-section">
             <div class="form-group">
               <label>Product Name</label>
-              <input formControlName="name" class="form-control"placeholder="Type product name">
+              <input formControlName="name" class="form-control" placeholder="Type product name" required>
             </div>
             <div class="form-group">
               <label>Product Description</label>
-              <textarea formControlName="description" class="form-control" rows="3" placeholder="Type product description"></textarea>
+              <textarea formControlName="description" class="form-control" rows="3" placeholder="Type product description" required></textarea>
             </div>
 
             <!--category and brand-->
             <div class="two-column">
               <div class="form-group">
                 <label>Category</label>
-                <select formControlName="category" class="form-control" value="Wine">
+                <select formControlName="category" class="form-control">
                   <option [value]="category" *ngFor="let category of categories">{{category}}</option>
                 </select>
               </div>
@@ -57,14 +57,14 @@
               </div>
               <div class="form-group col-2">
                 <label>ABV</label>
-                <input formControlName="ABV" class="form-control"placeholder="14.5%">
-                <mat-error *ngIf="productForm.get('ABV')?.hasError('pattern')">should end with %</mat-error>
+                <input formControlName="abv" class="form-control"placeholder="14.5%">
+                <mat-error *ngIf="productForm.get('abv')?.hasError('pattern')">should end with %</mat-error>
               </div>
             </div>
             <div class="two-column">
               <div class="form-group">
                 <label>In Stock</label>
-                <input formControlName="stock" type="number" min="0" class="form-control"placeholder="100">
+                <input formControlName="stockQty" type="number" min="0" class="form-control"placeholder="100">
               </div>
               <div class="form-group">
                 <label>Capacity</label>
@@ -77,22 +77,17 @@
           <div class="upload-section">
             <label>Product Image</label>
             <div style="display: none">
-              <input formControlName="image" type="file" [accept]="requiredFileType"
+              <input type="file" [accept]="requiredFileType"
                      (change)="onFileSelected($event)" #fileUpload>
             </div>
+            <!--todo: modify progress-bar-->
 <!--            <div class="progress">-->
-
 <!--              <mat-progress-bar class="progress-bar" mode="determinate"-->
-<!--                                [value]="uploadProgress" *ngIf="uploadProgress">-->
-
+<!--                                [value]="totalProgress" *ngIf="totalProgress">-->
 <!--              </mat-progress-bar>-->
-
-<!--              <mat-icon class="cancel-upload" (click)="cancelUpload()"-->
-<!--                        *ngIf="uploadProgress">delete_forever</mat-icon>-->
-
 <!--            </div>-->
-            <div class="image">
-              <img *ngIf="imageUrl; else placeholderTemplate" [src]="imageUrl" alt="product image">
+            <div class="image-container">
+              <img *ngIf="id; else placeholderTemplate" [src]="imageUrl$|async" alt="product image" class="image-placeholder">
               <ng-template #placeholderTemplate>
                 <div class="text-secondary">
                   Upload product image
@@ -111,8 +106,8 @@
                 <div>File types: .jpg, .jpeg, .png </div>
                 <div>Max size: 1MB</div>
               </div>
-              <div *ngIf="imageUrl" class="d-flex flex-column">
-                <button (click)="cancelUpload()" mat-icon-button class="cancel-upload">
+              <div *ngIf="imageUrl$|async" class="d-flex flex-column">
+                <button (click)="deleteImage()" mat-icon-button class="delete-image">
                   <mat-icon >cancel</mat-icon>
                 </button>
                 <span>Delete</span>
@@ -128,7 +123,10 @@
               </div>
             </div>
             <div class="add mt-2">
-              <button mat-raised-button color="primary" (click)="addProduct()" [disabled]="!productForm.valid">Add Product</button>
+              <button *ngIf="!this.id; else updateTemplate" mat-raised-button color="primary" (click)="addProduct()" [disabled]="!productForm.valid">Add Product</button>
+              <ng-template #updateTemplate>
+                <button mat-raised-button color="primary" type="submit" [disabled]="!productForm.valid" (click)="updateProduct()">Update Product</button>
+              </ng-template>
             </div>
           </div>
 

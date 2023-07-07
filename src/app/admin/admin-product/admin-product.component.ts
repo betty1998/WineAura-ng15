@@ -5,6 +5,8 @@ import {ProductService} from "../../shared/service/product.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../../shared/dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-admin-product',
@@ -20,7 +22,8 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
   selected: string="";
 
-  constructor(private productService:ProductService) {
+  constructor(private productService:ProductService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -46,15 +49,29 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  addProduct() {
-
-  }
 
   deleteProduct(id:number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Deletion',
+        message: 'Are you sure you want to delete this product?'
+      }
+    });
 
-  }
-
-  editProduct(id:number) {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.productService.deleteProduct(id).subscribe(res=>{
+          if (res.success) {
+            this.products = this.products.filter(product => product.id !== id);
+            this.dataSource = new MatTableDataSource<Product>(this.products);
+            this.setDataSourceAttributes();
+          } else {
+            console.log(res);
+            alert(res.message);
+          }
+        });
+      }
+    });
 
   }
 

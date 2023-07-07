@@ -47,5 +47,13 @@ export class ProductService {
   addProduct(product: Product):Observable<DataResponse<Product>> {
     return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, product);
   }
+
+  deleteProduct(id: number) {
+    return this.httpClient.delete<DataResponse<Product>>(`${environment.api}/products/${id}`);
+  }
+
+  updateProduct(product: Product) {
+    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateInfo/${product.id}`, product);
+  }
 }
 

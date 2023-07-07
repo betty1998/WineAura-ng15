@@ -17,6 +17,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {MatCardModule} from "@angular/material/card";
 import { TotalSalesComponent } from './dashboard/total-sales/total-sales.component';
 import { NgChartsModule } from 'ng2-charts';
+import { ConfirmDialogComponent } from './shared/dialog/confirm-dialog.component';
+import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { NgChartsModule } from 'ng2-charts';
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        TotalSalesComponent
+        TotalSalesComponent,
+        ConfirmDialogComponent,
+        InfoDialogComponent
     ],
     imports: [
         BrowserModule,

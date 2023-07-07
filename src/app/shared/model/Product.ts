@@ -12,13 +12,14 @@ export interface Product{
   region: string;
   taste: string;
   style: string;
-  ABV: string;
+  abv: string;
   image: string;
   stockQty: number;
   sold?: number;
   discount: number;
   productStatus: ProductStatus;
   reviews: Review[];
+  [key: string]: any;
 }
 
 

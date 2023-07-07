@@ -10,6 +10,8 @@ import {BehaviorSubject, switchMap} from "rxjs";
 import {Product} from "../../../shared/model/Product";
 import {OrderDetailComponent} from "./order-detail/order-detail.component";
 import {AuthService} from "../../../shared/service/auth.service";
+import {ConfirmDialogComponent} from "../../../shared/dialog/confirm-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-cart',
@@ -25,7 +27,8 @@ export class CartComponent implements OnInit{
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,
               private route:ActivatedRoute,
-              private auth: AuthService) {
+              private auth: AuthService,
+              private dialog: MatDialog){
   }
 
   ngOnInit(): void {
@@ -118,25 +121,30 @@ export class CartComponent implements OnInit{
   delete(cartProduct: CartProduct, event: Event) {
     event.stopPropagation();
     // TODO: open a dialog to confirm deletion
-    this.userInfoService.deleteCartProduct(this.userInfo.id, cartProduct.id).subscribe(res=>{
-      if (res.success) {
-        this.userInfo = res.data;
-        this.userInfoService.userInfo = res.data;
-        this.cart$.next(this.userInfo.cart);
-      } else {
-        console.log(res);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Deletion',
+        message: 'Are you sure you want to delete this product from your cart?'
       }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userInfoService.deleteCartProduct(this.userInfo.id, cartProduct.id).subscribe(res=>{
+          if (res.success) {
+            this.userInfo = res.data;
+            this.userInfoService.userInfo = res.data;
+            this.cart$.next(this.userInfo.cart);
+          } else {
+            console.log(res);
+          }
+        });
+      }
+    });
+
   }
 
-  @ViewChild('childRef')
-  childRef!: any;
-
-
-  placeOrder(event: Event) {
-    console.log(this.childRef)
-    // this.childRef.placeOrder();
-  }
+  // @ViewChild('childRef')
+  // childRef!: any;
 
   checkout() {
     this.showCart = !this.showCart;
