@@ -25,22 +25,25 @@
             <div class="two-column">
               <div class="form-group">
                 <label>Category</label>
-                <select formControlName="category" class="form-control">
+                <select formControlName="category" class="form-control" (change)="addNewCategory($event)">
                   <option [value]="category" *ngFor="let category of categories">{{category}}</option>
+                  <option value="">Add New</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Brand</label>
-                <select formControlName="brand" class="form-control" value="brand1">
+                <select formControlName="brand" class="form-control" value="brand1" (change)="addNewBrand($event)">
                   <option [value]="brand" *ngFor="let brand of brands">{{brand}}</option>
+                  <option value="">Add New</option>
                 </select>
               </div>
             </div>
             <div class="two-column">
               <div class="form-group ">
                 <label>Region</label>
-                <select formControlName="region" class="form-control" value="region1">
+                <select formControlName="region" class="form-control" value="region1" (change)="addNewRegion($event)">
                   <option [value]="region" *ngFor="let region of regions">{{region}}</option>
+                  <option value="">Add New</option>
                 </select>
               </div>
               <div class="form-group">
@@ -87,7 +90,7 @@
 <!--              </mat-progress-bar>-->
 <!--            </div>-->
             <div class="image-container">
-              <img *ngIf="id; else placeholderTemplate" [src]="imageUrl$|async" alt="product image" class="image-placeholder">
+              <img *ngIf="id||imageUrl$.value; else placeholderTemplate" [src]="imageUrl$|async" alt="product image" class="image-placeholder">
               <ng-template #placeholderTemplate>
                 <div class="text-secondary">
                   Upload product image

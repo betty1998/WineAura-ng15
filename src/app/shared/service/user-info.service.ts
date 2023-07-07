@@ -92,4 +92,9 @@ export class UserInfoService {
     return this.httpClient.post<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/createProfile/${userId}`, userInfo);
   }
+
+  getUserInfos() {
+    return this.httpClient.get<DataResponse<UserInfo[]>>(
+      `${environment.api}/userinfos`);
+  }
 }

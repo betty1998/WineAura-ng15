@@ -1,16 +1,6 @@
 <!--<main class="d-flex flex-wrap column-gap-4 row-gap-4 justify-content-between">-->
 <main fxFlex fxLayout="column" fxLayoutGap="4%">
-  <div class="d-flex justify-content-between" fxLayoutGap="4%">
-    <section class="total-sales">
-      <app-total-sales title="sales"></app-total-sales>
-    </section>
-    <section class="total-orders">
-      <app-total-sales title="orders"></app-total-sales>
-    </section>
-    <section class="total-users">
-      <app-total-sales title="users"></app-total-sales>
-    </section>
-  </div>
+  <app-total-static></app-total-static>
   <div fxFlex="100%" fxLayout="row" fxLayoutGap="4%">
     <section class="sales-chart">
       <app-sales-chart [orderPeriodMap]="orderMap$|async"

@@ -55,5 +55,9 @@ export class ProductService {
   updateProduct(product: Product) {
     return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateInfo/${product.id}`, product);
   }
+
+  updateStatus(id: number | undefined, newStatus: String) {
+    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateStatus/${id}`, newStatus);
+  }
 }
 

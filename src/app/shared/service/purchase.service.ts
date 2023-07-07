@@ -32,4 +32,12 @@ export class PurchaseService {
   getCategoryMap() {
     return this.http.get<DataResponse<Count>>(`${environment.api}/purchases/categoryMap`);
   }
+
+  getPurchases() {
+    return this.http.get<DataResponse<Purchase[]>>(`${environment.api}/purchases`);
+  }
+
+  getTotalPurchases() {
+    return this.http.get<DataResponse<number>>(`${environment.api}/purchases/totalPurchases`);
+  }
 }

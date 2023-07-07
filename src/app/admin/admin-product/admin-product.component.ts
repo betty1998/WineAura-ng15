@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Product} from "../../shared/model/Product";
-import {OrderService} from "../../shared/service/order.service";
 import {ProductService} from "../../shared/service/product.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../shared/dialog/confirm-dialog.component";
+import {ProductStatus} from "../../shared/model/ProductStatus";
 
 @Component({
   selector: 'app-admin-product',
@@ -21,6 +21,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   selected: string="";
+  statuses: string[] = Object.values(ProductStatus);
 
   constructor(private productService:ProductService,
               public dialog: MatDialog) {
@@ -31,6 +32,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
       if (res.success) {
         this.products = res.data;
         this.dataSource = new MatTableDataSource<Product>(this.products);
+        this.customizeSort();
         this.setDataSourceAttributes();
       } else {
         console.log(res);
@@ -72,35 +74,62 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
         });
       }
     });
-
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterStatus = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterStatus.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  filterBy(event: Event) {
-    console.log(this.selected);
-    if (this.selected) {
-      const filterType = this.selected;
-      const customFilterPredicate = (data: Product, filter: string) => {
-        switch (filterType) {
-          case 'category':
-            return data.category.toLowerCase().includes(filter.toLowerCase());
-          case 'brand':
-            return data.brand.toLowerCase().includes(filter.toLowerCase());
-          case 'status':
-            return data.productStatus.toLowerCase().includes(filter.toLowerCase());
-          default:
-            return data.toString().toLowerCase().includes(filter.toLowerCase());
-        }
-      };
-      this.dataSource.filterPredicate = customFilterPredicate;
-    }
+  customizeSort() {
+    this.dataSource.sortingDataAccessor = (product, property) => {
+      if (property === 'stock') {
+         return product.stockQty;
+      } else {
+        return product[property];
+      }
+    };
+  }
+
+  // filterBy(event: Event) {
+  //   console.log(this.selected);
+  //   if (this.selected) {
+  //     const filterType = this.selected;
+  //     const customFilterPredicate = (data: Product, filter: string) => {
+  //       switch (filterType) {
+  //         case 'category':
+  //           return data.category.toLowerCase().includes(filter.toLowerCase());
+  //         case 'brand':
+  //           return data.brand.toLowerCase().includes(filter.toLowerCase());
+  //         case 'status':
+  //           return data.productStatus.toLowerCase().includes(filter.toLowerCase());
+  //         default:
+  //           return data.toString().toLowerCase().includes(filter.toLowerCase());
+  //       }
+  //     };
+  //     this.dataSource.filterPredicate = customFilterPredicate;
+  //   }
+  // }
+
+  updateStatus(product: Product, newStatus: String) {
+    console.log(typeof newStatus);
+    this.productService.updateStatus(product.id, newStatus).subscribe(res=>{
+      if (res.success) {
+        // find the corresponding product in the products array and update its status
+        this.products.forEach((p, i) => {
+          if (p.id === product.id) {
+            this.products[i] = res.data;
+          }
+        });
+        this.dataSource.data = this.products;
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
   }
 }

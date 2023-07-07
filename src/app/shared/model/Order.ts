@@ -26,4 +26,5 @@ export interface Order {
   status: string;
   trackingNumber?: string;
   store?: Store;
+  [key: string]: any;
 }

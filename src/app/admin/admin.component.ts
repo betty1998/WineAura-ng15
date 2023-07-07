@@ -23,7 +23,15 @@ export class AdminComponent implements AfterViewInit, OnInit{
     },
     {
       title:"Product",
-      link:"product"
+      children: [
+        {
+          title: "Product List",
+          link:"product",
+        },
+        {
+          title: "Category",
+          link:"product/category",
+        }]
     },
     {
       title: "Order",
@@ -47,11 +55,11 @@ export class AdminComponent implements AfterViewInit, OnInit{
       children: [
         {
           title: "Change Password",
-          link:"profile",
+          link:"profile/change-password",
         },
         {
           title: "Logout",
-          link:"profile",
+          link:"profile/logout",
         },
       ],
     },
@@ -61,8 +69,6 @@ export class AdminComponent implements AfterViewInit, OnInit{
   }
 
   ngAfterViewInit(): void {
-    // const aTags:NodeList = this.el.nativeElement.querySelectorAll("nb-menu a");
-
 
   }
 
@@ -71,7 +77,7 @@ export class AdminComponent implements AfterViewInit, OnInit{
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const url = event.urlAfterRedirects.split('/')[2];
+        const url = event.urlAfterRedirects.substring(7);
         console.log(url);
         this.checkUrl(url);
       }
@@ -80,8 +86,17 @@ export class AdminComponent implements AfterViewInit, OnInit{
 
   checkUrl(url: string) {
     this.menu.forEach(item => {
-      if (item.link === url) {
+      if (item.link=== url && !item.children) {
         item.selected = true;
+      } else if (item.children) {
+        item.children.forEach(child => {
+          if (child.link === url) {
+            child.selected = true;
+          }
+          else {
+            child.selected = false;
+          }
+        })
       } else {
         item.selected = false;
       }

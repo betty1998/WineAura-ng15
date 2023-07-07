@@ -18,9 +18,9 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CategoryComponent } from './category/category.component';
 import { AdministratorComponent } from './administrator/administrator.component';
-import { TotalOrdersComponent } from './dashboard/total-orders/total-orders.component';
-import { TotalSalesComponent } from './dashboard/total-sales/total-sales.component';
-import { TotalUsersComponent } from './dashboard/total-users/total-users.component';
+import { TotalOrdersComponent } from './dashboard/total-static/total-orders/total-orders.component';
+import { TotalSalesComponent } from './dashboard/total-static/total-sales/total-sales.component';
+import { TotalUsersComponent } from './dashboard/total-static/total-users/total-users.component';
 import { SalesChartComponent } from './dashboard/sales-chart/sales-chart.component';
 import { TodayComponent } from './dashboard/today/today.component';
 import { RecentOrderComponent } from './dashboard/recent-order/recent-order.component';
@@ -46,6 +46,7 @@ import {AdminTabTitleDirective} from "../shared/directive/admin-tab-title.direct
 import { AdminProductDetailComponent } from './admin-product/admin-product-detail/admin-product-detail.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { TotalStaticComponent } from './dashboard/total-static/total-static.component';
 
 const routes:Routes =[
   {
@@ -77,7 +78,7 @@ const routes:Routes =[
         component:CustomerComponent
       },
       {
-        path:"category",
+        path:"product/category",
         component:CategoryComponent
       },
       {
@@ -117,7 +118,8 @@ const routes:Routes =[
     TopSellingComponent,
     StatusDirective,
     AdminTabTitleDirective,
-    AdminProductDetailComponent
+    AdminProductDetailComponent,
+    TotalStaticComponent
 
   ],
   imports: [

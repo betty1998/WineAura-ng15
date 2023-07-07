@@ -11,14 +11,14 @@
     <mat-grid-list cols="5" rowHeight="60px" gutterSize="10px">
       <mat-grid-tile colspan="1">
         <div class="square-icon">
-          <mat-icon>attach_money</mat-icon>
+          <mat-icon>{{sign}}</mat-icon>
         </div>
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
-        $ 21,760
+        {{total}}
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
-        <mat-icon>arrow_upward</mat-icon> 20%
+        <mat-icon>{{change>=0?'arrow_upward':'arrow_downward'}}</mat-icon> {{change|percent}}
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>

@@ -12,3 +12,31 @@ img {
   margin-top: 8px;
   height: 46px;
 }
+
+
+.status-cell{
+  width:190px;
+}
+mat-select{
+  border-radius: 25px;
+  padding: 8px 12px;
+  text-align: center;
+  width:100%;
+}
+
+// create class for each product status with different background color
+.AVAILABLE{
+  background-color: rgba(0, 255, 0, 0.4);
+}
+.UNAVAILABLE{
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+.OUT_OF_STOCK{
+  background-color: rgba(182, 194, 203, 0.5);
+}
+
+.ON_SALE{
+  background-color: rgba(255, 255, 0, 0.4);
+}
+

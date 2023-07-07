@@ -80,4 +80,7 @@ export class OrderService {
     return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/recent/${amount}`);
   }
 
+  getTotalOrders() {
+    return this.http.get<DataResponse<number>>(`${environment.api}/orders/total`);
+  }
 }

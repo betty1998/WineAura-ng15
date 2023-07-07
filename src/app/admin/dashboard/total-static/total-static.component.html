@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between" fxLayoutGap="4%">
+  <section class="total-sales">
+    <app-total-sales title="sales"
+                     [total]="'$'+(totalSales$|async)?.toFixed(2)"
+                     [change]="(salesMonthlyChange$|async)||0"
+                     sign="attach_money"></app-total-sales>
+  </section>
+  <section class="total-orders">
+    <app-total-sales title="orders"
+                     [total]="(totalOrders$|async)?.toString()||''"
+                     [change]="(orderMonthlyChange$|async)||0"
+                     sign="calendar_today"></app-total-sales>
+  </section>
+  <section class="total-users">
+    <app-total-sales title="users"
+                     [total]="(totalUsers$|async)?.toString()||''"
+                     sign="people"></app-total-sales>
+  </section>
+</div>

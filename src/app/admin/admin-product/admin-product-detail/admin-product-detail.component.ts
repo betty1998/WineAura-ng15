@@ -12,6 +12,7 @@ import {DataResponse} from "../../../shared/httpResponse/dataResponse";
 import {UtilService} from "../../../shared/service/util.service";
 import {MatDialog} from "@angular/material/dialog";
 import {InfoDialogComponent} from "../../../shared/dialog/info-dialog.component";
+import {AddOptionDialogComponent} from "../../../shared/dialog/add-option-dialog.component";
 
 @Component({
   selector: 'app-admin-product-detail',
@@ -33,7 +34,7 @@ export class AdminProductDetailComponent implements OnInit{
   addProductSub!: Subscription;
   totalProgress!: number;
   file!: File|null;
-  imageUrl$ = new BehaviorSubject("");
+  imageUrl$ = new BehaviorSubject<string | ArrayBuffer | null>("");
   title!:string;
 
   constructor(private route:ActivatedRoute,
@@ -85,7 +86,7 @@ export class AdminProductDetailComponent implements OnInit{
       category: ['Wine',[Validators.required]],
       price: ['',[Validators.required, Validators.min(0)]],
       stockQty: ['',[Validators.required, Validators.min(0)]],
-      image: ['',[Validators.required, Validators.pattern(/\.(png|jpg|jpeg)$/)]],
+      image: ['',[Validators.required]],
     });
   }
 
@@ -119,9 +120,9 @@ export class AdminProductDetailComponent implements OnInit{
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (_event) => {
-        if (typeof reader.result === "string") {
-          this.imageUrl$.next(reader.result);
-        }
+        console.log(reader.result)
+        this.imageUrl$.next(reader.result);
+        this.productForm.get('image')?.setValue(reader.result);
         this.isLoading = false;
         this.cdr.detectChanges();
         console.log(this.fileName);
@@ -163,6 +164,7 @@ export class AdminProductDetailComponent implements OnInit{
   }
 
   addProduct() {
+    console.log(this.productForm);
     this.totalProgress = 0;
     const formData = new FormData();
     formData.append("file", this.file||new Blob());
@@ -224,5 +226,65 @@ export class AdminProductDetailComponent implements OnInit{
     this.productForm.get('image')?.setValue( null);
     console.log(this.productForm.get('image')?.value);
     this.reset();
+  }
+
+  addNewCategory(event:Event) {
+    const selected = (event.target as HTMLSelectElement).value;
+    if (!selected) {
+      console.log("add new category");
+      const dialogRef = this.dialog.open(AddOptionDialogComponent, {
+        data:  "Category"
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.categories.push(result);
+          this.productForm.get('category')?.setValue(result);
+        }else {
+          //reset the select
+          this.productForm.get('category')?.setValue(null);
+        };
+      });
+    } else {
+      console.log("selected category:",selected);
+    }
+
+  }
+
+  addNewBrand(event: Event) {
+    const selected = (event.target as HTMLSelectElement).value;
+    if (!selected) {
+      console.log("add new brand");
+      const dialogRef = this.dialog.open(AddOptionDialogComponent, {
+        data:  "Brand"
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.brands.push(result);
+          this.productForm.get('brand')?.setValue(result);
+        }else {
+          //reset the select
+          this.productForm.get('brand')?.setValue(null);
+        };
+      });
+    }
+  }
+
+  addNewRegion(event: Event) {
+    const selected = (event.target as HTMLSelectElement).value;
+    if (!selected) {
+      console.log("add new region");
+      const dialogRef = this.dialog.open(AddOptionDialogComponent, {
+        data: "Region",
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.regions.push(result);
+          this.productForm.get('region')?.setValue(result);
+        }else {
+          //reset the select
+          this.productForm.get('region')?.setValue(null);
+        };
+      });
+    }
   }
 }

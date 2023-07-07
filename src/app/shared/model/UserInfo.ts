@@ -14,4 +14,5 @@ export interface UserInfo {
   addresses: AddressBook[];
   favorites: Product[];
   cart: CartProduct[];
+  [key: string]: any;
 }

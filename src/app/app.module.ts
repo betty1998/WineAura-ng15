@@ -19,6 +19,7 @@ import { TotalSalesComponent } from './dashboard/total-sales/total-sales.compone
 import { NgChartsModule } from 'ng2-charts';
 import { ConfirmDialogComponent } from './shared/dialog/confirm-dialog.component';
 import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
+import {AddOptionDialogComponent} from "./shared/dialog/add-option-dialog.component";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
         RegisterComponent,
         TotalSalesComponent,
         ConfirmDialogComponent,
-        InfoDialogComponent
+        InfoDialogComponent,
+        AddOptionDialogComponent
     ],
     imports: [
         BrowserModule,
