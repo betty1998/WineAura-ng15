@@ -1,15 +1,18 @@
 <main>
   <div admin-tab-title>Product List</div>
-  <section class="actions d-flex justify-content-between" >
+  <section class="actions d-flex justify-content-between mb-2" >
     <div class="add">
       <button mat-raised-button color="primary" routerLink="add-product">Add New Product</button>
     </div>
-    <div class="search">
-      <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search for product/category/brand ..." [(ngModel)]="searchText" #input>
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+    <div class="d-flex gap-3">
+      <app-status-filter (pickStatus)="statusFilter($event)" [statuses]="statuses"></app-status-filter>
+      <div class="search">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search for product/category/brand ..." [(ngModel)]="searchText" #input>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
     </div>
 
   </section>

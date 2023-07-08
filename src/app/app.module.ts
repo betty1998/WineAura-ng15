@@ -20,6 +20,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ConfirmDialogComponent } from './shared/dialog/confirm-dialog.component';
 import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
 import {AddOptionDialogComponent} from "./shared/dialog/add-option-dialog.component";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {AddOptionDialogComponent} from "./shared/dialog/add-option-dialog.compon
         MatGridListModule,
         MatCardModule,
         NgxPaginationModule,
-        NgChartsModule
+        NgChartsModule,
+        MatNativeDateModule,
 
     ],
     providers: [

@@ -47,6 +47,10 @@ import { AdminProductDetailComponent } from './admin-product/admin-product-detai
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { TotalStaticComponent } from './dashboard/total-static/total-static.component';
+import { DateRangeFilterComponent } from './admin-order/date-range-filter/date-range-filter.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {DateRangePipe} from "../shared/pipe/date-range.pipe";
+import { StatusFilterComponent } from './admin-order/status-filter/status-filter.component';
 
 const routes:Routes =[
   {
@@ -58,7 +62,7 @@ const routes:Routes =[
         component:DashboardComponent
       },
       {
-        path:"product",
+        path:"product-list",
         component:AdminProductComponent
       },
       {
@@ -78,7 +82,7 @@ const routes:Routes =[
         component:CustomerComponent
       },
       {
-        path:"product/category",
+        path:"category",
         component:CategoryComponent
       },
       {
@@ -119,7 +123,10 @@ const routes:Routes =[
     StatusDirective,
     AdminTabTitleDirective,
     AdminProductDetailComponent,
-    TotalStaticComponent
+    TotalStaticComponent,
+    DateRangeFilterComponent,
+    DateRangePipe,
+    StatusFilterComponent
 
   ],
   imports: [
@@ -150,12 +157,13 @@ const routes:Routes =[
     MatProgressBarModule,
     MatProgressSpinnerModule,
     CommonModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    MatDatepickerModule,
 
   ],
   providers:[
-    {provide:NgChartsConfiguration, useValue:{generateColors:false}}
+    {provide:NgChartsConfiguration, useValue:{generateColors:false}},
+    DatePipe
   ]
 })
 export class AdminModule { }

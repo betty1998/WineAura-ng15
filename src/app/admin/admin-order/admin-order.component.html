@@ -1,9 +1,6 @@
 <main>
   <div admin-tab-title>Order List</div>
-  <section class="actions d-flex justify-content-between" >
-    <div class="add">
-      <button mat-raised-button color="primary" routerLink="add-order">Add New Order</button>
-    </div>
+  <section class="actions d-flex justify-content-between mb-2" >
     <div class="search">
       <mat-form-field appearance="outline">
         <mat-label>Search</mat-label>
@@ -11,12 +8,15 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
-
+    <div class="filters d-flex gap-4">
+      <app-order-filter (pickDate)="dateRangeFilter($event)" ></app-order-filter>
+      <app-status-filter (pickStatus)="statusFilter($event)" [statuses]="orderStatus"></app-status-filter>
+    </div>
   </section>
 
   <section class="order-table">
     <!-- order table list -->
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource | dateRange:dateRange" matSort>
       <!--id column-->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>No. Order</th>

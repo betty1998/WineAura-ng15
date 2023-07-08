@@ -23,15 +23,25 @@ export class AdminComponent implements AfterViewInit, OnInit{
     },
     {
       title:"Product",
+      expanded: true,
       children: [
         {
           title: "Product List",
-          link:"product",
+          link:"product-list",
         },
         {
           title: "Category",
-          link:"product/category",
-        }]
+          link:"category",
+        },
+        {
+          title: "Brand",
+          link:"brand",
+        },
+        {
+          title: "Region",
+          link:"region",
+        }
+        ]
     },
     {
       title: "Order",
@@ -40,10 +50,6 @@ export class AdminComponent implements AfterViewInit, OnInit{
     {
       title:"Customer",
       link:"customer"
-    },
-    {
-      title:"Category",
-      link:"category"
     },
     {
       title:"Administrator",
@@ -86,7 +92,8 @@ export class AdminComponent implements AfterViewInit, OnInit{
 
   checkUrl(url: string) {
     this.menu.forEach(item => {
-      if (item.link=== url && !item.children) {
+      if (item.link=== url) {
+        console.log(item.link);
         item.selected = true;
       } else if (item.children) {
         item.children.forEach(child => {

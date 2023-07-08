@@ -20,7 +20,6 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   dataSource!: MatTableDataSource<Product>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  selected: string="";
   statuses: string[] = Object.values(ProductStatus);
 
   constructor(private productService:ProductService,
@@ -95,25 +94,6 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
     };
   }
 
-  // filterBy(event: Event) {
-  //   console.log(this.selected);
-  //   if (this.selected) {
-  //     const filterType = this.selected;
-  //     const customFilterPredicate = (data: Product, filter: string) => {
-  //       switch (filterType) {
-  //         case 'category':
-  //           return data.category.toLowerCase().includes(filter.toLowerCase());
-  //         case 'brand':
-  //           return data.brand.toLowerCase().includes(filter.toLowerCase());
-  //         case 'status':
-  //           return data.productStatus.toLowerCase().includes(filter.toLowerCase());
-  //         default:
-  //           return data.toString().toLowerCase().includes(filter.toLowerCase());
-  //       }
-  //     };
-  //     this.dataSource.filterPredicate = customFilterPredicate;
-  //   }
-  // }
 
   updateStatus(product: Product, newStatus: String) {
     console.log(typeof newStatus);
@@ -131,5 +111,17 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
         alert(res.message);
       }
     });
+  }
+
+  statusFilter(event: string) {
+    if (event) {
+      this.dataSource.filter = event.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
+    }
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

@@ -5,6 +5,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {OrderService} from "../../shared/service/order.service";
 import {MatDialog} from "@angular/material/dialog";
+import {DatePipe} from "@angular/common";
+import {OrderStatus} from "../../shared/model/OrderStatus";
+
 
 @Component({
   selector: 'app-admin-order',
@@ -18,18 +21,23 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  dateRange: Date[]=[];
+  orderStatus: string[]=[];
 
   constructor(private orderService:OrderService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private date:DatePipe) {
   }
 
   ngOnInit(): void {
+    this.orderStatus = Object.values(OrderStatus);
     this.orderService.getOrders().subscribe(res=>{
       if (res.success) {
         this.orders = res.data;
         console.log(this.orders)
         this.dataSource = new MatTableDataSource<Order>(this.orders);
         this.customizeSort();
+        this.customizeFilter();
         this.setDataSourceAttributes();
       } else {
         console.log(res);
@@ -74,5 +82,34 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
 
   deleteOrder(id:number) {
 
+  }
+
+  customizeFilter() {
+    // Save a reference to the default filter predicate
+    const defaultFilter = this.dataSource.filterPredicate;
+    this.dataSource.filterPredicate = (order: Order, filter: string) => {
+      const defaultResult = defaultFilter(order, filter);
+      const id = ("O"+(1000+(order.id||0))).toLowerCase();
+      const name = (order.firstName + order.lastName).toLowerCase();
+      const idResult = id.includes(filter.trim().toLowerCase());
+      const nameResult = name.includes(filter.trim().toLowerCase());
+      const dateResult = this.date.transform(order.purchaseDate,"short")?.includes(filter.trim().toLowerCase());
+      return dateResult || idResult || nameResult || defaultResult;
+    };
+  }
+
+  dateRangeFilter(event: Date[]) {
+    this.dateRange = event;
+  }
+
+  statusFilter(status: string) {
+    if (status) {
+      this.dataSource.filter = status.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = "";
+    }
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
