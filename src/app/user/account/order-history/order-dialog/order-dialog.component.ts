@@ -29,4 +29,10 @@ export class OrderDialogComponent {
   checkReturn(purchases: Purchase[]) {
     return purchases.some(p=>(this.statusMap.get(p.status) || 0) == 2);
   }
+
+  checkReview(purchase:Purchase) {
+    // check if the purchase is delivered and not reviewed
+    const orderStatus = this.statusMap.get(this.order.status) || 0;
+    return orderStatus >=2 && orderStatus < 4 && purchase.status!=="Reviewed";
+  }
 }

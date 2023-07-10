@@ -7,4 +7,5 @@ export interface Purchase {
   product: Product;
   qty: number;
   status: string;
+  isEdit?: boolean;
 }

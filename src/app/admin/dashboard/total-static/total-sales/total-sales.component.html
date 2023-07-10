@@ -18,7 +18,7 @@
         {{total}}
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
-        <mat-icon>{{change>=0?'arrow_upward':'arrow_downward'}}</mat-icon> {{change|percent}}
+        <mat-icon>{{change<0?'arrow_downward':'arrow_upward'}}</mat-icon> {{change||0|percent}}
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>

@@ -1,8 +1,14 @@
 
 <nb-layout>
-  <nb-layout-header>
-    Wine Aura Management System
-    <span><button mat-button routerLink="/products">Website</button></span>
+  <nb-layout-header fixed>
+    <div>
+      Wine Aura Management System
+    </div>
+    <div class="m-auto"></div>
+    <div>
+      <button mat-raised-button color="primary" routerLink="/products">Go to Website</button>
+      <button mat-stroked-button color="primary" (click)="logout()" routerLink="/products" >Logout</button>
+    </div>
   </nb-layout-header>
   <nb-sidebar state="expanded" class="menu-sidebar" tag="menu-sidebar">
     <nb-menu [items]="menu">

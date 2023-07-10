@@ -18,9 +18,7 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CategoryComponent } from './category/category.component';
 import { AdministratorComponent } from './administrator/administrator.component';
-import { TotalOrdersComponent } from './dashboard/total-static/total-orders/total-orders.component';
 import { TotalSalesComponent } from './dashboard/total-static/total-sales/total-sales.component';
-import { TotalUsersComponent } from './dashboard/total-static/total-users/total-users.component';
 import { SalesChartComponent } from './dashboard/sales-chart/sales-chart.component';
 import { TodayComponent } from './dashboard/today/today.component';
 import { RecentOrderComponent } from './dashboard/recent-order/recent-order.component';
@@ -38,7 +36,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FlexModule} from "@angular/flex-layout";
 import {TopSellingComponent } from './dashboard/top-selling/top-selling.component';
 import {MatTableModule} from "@angular/material/table";
-import {AppModule} from "../app.module";
 import {StatusDirective} from "../shared/directive/status.directive";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -51,6 +48,16 @@ import { DateRangeFilterComponent } from './admin-order/date-range-filter/date-r
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {DateRangePipe} from "../shared/pipe/date-range.pipe";
 import { StatusFilterComponent } from './admin-order/status-filter/status-filter.component';
+import { AdminOrderDetailComponent } from './admin-order/admin-order-detail/admin-order-detail.component';
+import {CustomStyleModule} from "../shared/modules/custom-style/custom-style.module";
+import {AppModule} from "../app.module";
+import {StatusFilterPipe} from "../shared/pipe/status-filter.pipe";
+import {MatMenuModule} from "@angular/material/menu";
+import { TrackingNumberDialogComponent } from './admin-order/tracking-number-dialog/tracking-number-dialog.component';
+import { CustomerDetailComponent } from './customer/customer-detail/customer-detail.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {RoleDirective} from "../shared/directive/role.directive";
+import {AccountModule} from "../user/account/account.module";
 
 const routes:Routes =[
   {
@@ -66,11 +73,11 @@ const routes:Routes =[
         component:AdminProductComponent
       },
       {
-        path:"product/add-product",
+        path:"product-list/add-product",
         component:AdminProductDetailComponent
       },
       {
-        path:"product/edit-product/:id",
+        path:"product-list/edit-product/:id",
         component:AdminProductDetailComponent
       },
       {
@@ -78,8 +85,20 @@ const routes:Routes =[
         component:AdminOrderComponent
       },
       {
+        path:"order/edit-order/:id",
+        component:AdminOrderDetailComponent
+      },
+      {
+        path:"order/view-order/:id",
+        component:AdminOrderDetailComponent
+      },
+      {
         path:"customer",
         component:CustomerComponent
+      },
+      {
+        path:"customer/edit-customer/:id",
+        component:CustomerDetailComponent
       },
       {
         path:"category",
@@ -88,6 +107,10 @@ const routes:Routes =[
       {
         path:"administrator",
         component:AdministratorComponent
+      },
+      {
+        path:"administrator/edit-admin/:id",
+        component:CustomerDetailComponent
       },
       {
         path:"profile",
@@ -111,9 +134,7 @@ const routes:Routes =[
     CustomerComponent,
     CategoryComponent,
     AdministratorComponent,
-    TotalOrdersComponent,
     TotalSalesComponent,
-    TotalUsersComponent,
     SalesChartComponent,
     TodayComponent,
     RecentOrderComponent,
@@ -126,7 +147,12 @@ const routes:Routes =[
     TotalStaticComponent,
     DateRangeFilterComponent,
     DateRangePipe,
-    StatusFilterComponent
+    StatusFilterComponent,
+    AdminOrderDetailComponent,
+    StatusFilterPipe,
+    TrackingNumberDialogComponent,
+    CustomerDetailComponent,
+    RoleDirective
 
   ],
   imports: [
@@ -136,21 +162,15 @@ const routes:Routes =[
     NbMenuModule.forRoot(),
     NbLayoutModule,
     NbSidebarModule.forRoot(),
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
     NbIconModule,
-    MatIconModule,
-    MatGridListModule,
     NgChartsModule,
     AsyncPipe,
-    MatInputModule,
-    MatSelectModule,
     FormsModule,
     FlexModule,
-    MatTableModule,
     DatePipe,
     CurrencyPipe,
+    MatGridListModule,
+    CustomStyleModule,
     MatSortModule,
     MatPaginatorModule,
     NgForOf,
@@ -159,6 +179,9 @@ const routes:Routes =[
     CommonModule,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatMenuModule,
+    MatTooltipModule,
+    AccountModule
 
   ],
   providers:[

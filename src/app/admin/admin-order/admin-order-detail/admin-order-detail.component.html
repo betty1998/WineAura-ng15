@@ -1,0 +1,158 @@
+<main>
+  <section class="header">
+    <div class="mb-3">
+      <button mat-stroked-button color="primary" routerLink="/admin/order">
+        <mat-icon>arrow_back</mat-icon><span>Back to Order List</span>
+      </button>
+    </div>
+    <div admin-tab-title>{{title}}</div>
+  </section>
+  <mat-card>
+    <mat-card-content>
+      <div class="order-id">
+        <span>Order #{{(order$|async)?.id}}</span>
+      </div>
+      <section class="order-title mb-4">
+        <div class="d-flex justify-content-between">
+          <div class="left-info d-flex gap-4">
+            <div class="order-date me-4">
+              {{(order$|async)?.purchaseDate | date:"short"}}
+            </div>
+            <button mat-raised-button [appStatus]="(order$|async)?.status||''">{{(order$|async)?.status}}</button>
+
+          </div>
+          <div class="right-changeStatus">
+            <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">
+              <mat-icon>edit</mat-icon><span>Change Status</span>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Shipped'" (click)="ship(order$.value)">Shipped</button>
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Pending'" (click)="updateStatus(order$.value,'Pending')">Pending</button>
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Delivered'" (click)="updateStatus(order$.value,'Delivered')">Delivered</button>
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Refunded'" (click)="updateStatus(order$.value,'Refunded')">Refunded</button>
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Cancelled'" (click)="updateStatus(order$.value,'Cancelled')">Cancelled</button>
+              <button mat-menu-item *ngIf="(order$|async)?.status !== 'Completed'" (click)="updateStatus(order$.value,'Completed')">Completed</button>
+            </mat-menu>
+<!--            <mat-form-field>-->
+<!--              <mat-select (selectionChange)="changeStatus($event.value,order$.value)" [value]="(order$|async)?.status">-->
+<!--                <mat-select-trigger>-->
+<!--                  <mat-icon>edit</mat-icon>-->
+<!--                  <span>{{(order$|async)?.status}}</span>-->
+<!--                </mat-select-trigger>-->
+<!--                <mat-option value="Pending" *ngIf="(order$|async)?.status!='Pending'">Pending</mat-option>-->
+<!--                <mat-option value="Shipped" *ngIf="(order$|async)?.status!='Shipped'">Shipped</mat-option>-->
+<!--                <mat-option value="Delivered" *ngIf="(order$|async)?.status!='Delivered'">Delivered</mat-option>-->
+<!--                <mat-option value="Refunded" *ngIf="(order$|async)?.status!='Refunded'">Refunded</mat-option>-->
+<!--                <mat-option value="Cancelled" *ngIf="(order$|async)?.status!='Cancelled'">Cancelled</mat-option>-->
+
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+          </div>
+        </div>
+        <div *ngIf="(order$|async)?.trackingNumber" class="order-status mt-3">
+          Tracking Number: <span>{{(order$|async)?.trackingNumber}}</span>
+        </div>
+      </section>
+
+      <mat-divider></mat-divider>
+      <section class="details d-flex justify-content-between">
+        <div class="detail-container d-flex">
+          <div><mat-icon>person_outline</mat-icon></div>
+          <div class="flex-fill">
+            <div class="detail-title">Customer Details</div>
+            <div class="mt-2">{{(userInfo$|async)?.firstName}} {{(userInfo$|async)?.lastName}}</div>
+            <div class="mt-1">{{(userInfo$|async)?.phone}}</div>
+            <div class="mt-1">{{(userInfo$|async)?.email}}</div>
+          </div>
+        </div>
+        <div class="detail-container d-flex">
+          <div><mat-icon>local_shipping</mat-icon></div>
+          <div class="flex-fill">
+            <div class="detail-title">Shipping Details</div>
+            <div class="mt-2">{{(order$|async)?.firstName}} {{(order$|async)?.lastName}}</div>
+            <div class="mt-1">{{(order$|async)?.phone}}</div>
+            <div class="mt-1">{{(order$|async)?.email}}</div>
+            <div class="mt-1">{{(order$|async)?.address1}}, {{(order$|async)?.address2}}</div>
+            <div class="mt-1 mb-4">{{(order$|async)?.city}}, {{(order$|async)?.state}}, {{(order$|async)?.zipcode}}</div>
+          </div>
+        </div>
+        <div class="detail-container d-flex">
+          <div><mat-icon>payment</mat-icon></div>
+          <div>
+            <div class="detail-title">Payment Details</div>
+            <div class="mt-3" class="text-capitalize">{{(order$|async)?.paymentMethod}} Card</div>
+            <div class="mt-1 mb-4">************{{(order$|async)?.paymentCardNumber?.slice(-4)}}</div>
+          </div>
+        </div>
+      </section>
+      <section class="product-list">
+        <mat-divider></mat-divider>
+        <table mat-table [dataSource]="datasource">
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="warn" (click)="delete(order$.value?.id,element)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <button *ngIf="!element.isEdit" mat-icon-button color="primary" (click)="edit(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="element.isEdit" mat-icon-button color="primary" (click)="save(element)">
+                <mat-icon>save</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef>Product</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex">
+                <div class="product-image">
+                  <img [src]="element.product?.image" alt="product image" width="70" height="70">
+                  {{element.product?.name}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let element">{{element.product?.price | currency}}</td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="!element.isEdit">{{element.qty}}</ng-container>
+              <input *ngIf="element.isEdit" type="number" [(ngModel)]="element.qty" min="1">
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="subtotal">
+            <th mat-header-cell *matHeaderCellDef>Total</th>
+            <td mat-cell *matCellDef="let element">{{element.product?.price * element.qty | currency}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </section>
+      <section class="order-summary">
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-end align-items-start mt-2">
+          <div class="title">SubTotal</div>
+          <div class="total">{{(order$|async)?.subTotal?.toFixed(2) | currency}}</div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="title">Shipping</div>
+          <div class="total">{{(order$|async)?.shipping | currency}}</div>
+        </div>
+        <div class="d-flex justify-content-end mb-2">
+          <div class="title">Tax</div>
+          <div class="total">{{(order$|async)?.tax?.toFixed(2) | currency}}</div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="title">Total</div>
+          <div class="total">{{(order$|async)?.total?.toFixed(2) | currency}}</div>
+        </div>
+
+      </section>
+
+    </mat-card-content>
+  </mat-card>
+</main>

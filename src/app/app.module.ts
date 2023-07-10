@@ -21,6 +21,7 @@ import { ConfirmDialogComponent } from './shared/dialog/confirm-dialog.component
 import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
 import {AddOptionDialogComponent} from "./shared/dialog/add-option-dialog.component";
 import {MatNativeDateModule} from "@angular/material/core";
+import { RoleDirective } from './shared/directive/role.directive';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatNativeDateModule} from "@angular/material/core";
         TotalSalesComponent,
         ConfirmDialogComponent,
         InfoDialogComponent,
-        AddOptionDialogComponent
+        AddOptionDialogComponent,
+
     ],
     imports: [
         BrowserModule,

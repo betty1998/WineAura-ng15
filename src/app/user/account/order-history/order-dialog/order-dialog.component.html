@@ -20,9 +20,9 @@
           </div>
           <div class="price col-3 text-center">
             <p class="mt-3">{{purchase.product.price * purchase.qty | currency}}</p>
-            <p>Qty: {{purchase.qty}}</p>
+            <p>qty: {{purchase.qty}}</p>
 <!--            <a *ngIf="statusMap?.get(purchase.status)<3 && purchase.id" type="button" (click)="close()" [routerLink]="['/review',purchase?.product?.id,'purchase',purchase.id]">Write a review</a>-->
-            <a *ngIf="((statusMap.get(purchase.status) || 0) >= 2) && ((statusMap.get(purchase.status) || 0) <= 4)" type="button"
+            <a *ngIf="checkReview(purchase)" type="button"
                (click)="close()" [routerLink]="['/review',purchase.product.id,'purchase',purchase.id]">Write a review</a>
           </div>
         </div>

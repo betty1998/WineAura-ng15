@@ -59,5 +59,17 @@ export class ProductService {
   updateStatus(id: number | undefined, newStatus: String) {
     return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateStatus/${id}`, newStatus);
   }
+
+  addCategory(category: string) {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/categories/${category}`, null);
+  }
+
+  addBrand(brand: string) {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/brands/${brand}`, null);
+  }
+
+  addRegion(region: string) {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/regions/${region}`, null);
+  }
 }
 

@@ -71,7 +71,8 @@ export class ReturnComponent implements OnInit {
     return returnGroup;
   }
 
-//TODO:at least one checkbox is selected
+//TODO
+//at least one checkbox is selected
   onSubmit(): void {
     let form = this.returnForm.get("returnArray")?.value;
     form = form.filter((re: { reason: any; })=>re.reason);

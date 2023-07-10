@@ -7,6 +7,9 @@ import {OrderService} from "../../shared/service/order.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DatePipe} from "@angular/common";
 import {OrderStatus} from "../../shared/model/OrderStatus";
+import {ConfirmDialogComponent} from "../../shared/dialog/confirm-dialog.component";
+import {Product} from "../../shared/model/Product";
+import {TrackingNumberDialogComponent} from "./tracking-number-dialog/tracking-number-dialog.component";
 
 
 @Component({
@@ -23,6 +26,7 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   dateRange: Date[]=[];
   orderStatus: string[]=[];
+  statusToFilter!: string;
 
   constructor(private orderService:OrderService,
               public dialog: MatDialog,
@@ -81,7 +85,27 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
   }
 
   deleteOrder(id:number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirm Deletion',
+        message: 'Are you sure you want to delete this order?'
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.orderService.deleteOrder(id).subscribe(res=>{
+          if (res.success) {
+            this.orders = this.orders.filter(order => order.id !== id);
+            this.dataSource = new MatTableDataSource<Order>(this.orders);
+            this.setDataSourceAttributes();
+          } else {
+            console.log(res);
+            alert(res.message);
+          }
+        });
+      }
+    });
   }
 
   customizeFilter() {
@@ -103,13 +127,48 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
   }
 
   statusFilter(status: string) {
-    if (status) {
-      this.dataSource.filter = status.trim().toLowerCase();
-    } else {
-      this.dataSource.filter = "";
-    }
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.statusToFilter = status;
+    // if (status) {
+    //   this.dataSource.filter = status.trim().toLowerCase();
+    // } else {
+    //   this.dataSource.filter = "";
+    // }
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
+
+  ship(order: Order) {
+    // open dialog to add tracking number
+    const dialogRef = this.dialog.open(TrackingNumberDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        order.trackingNumber = result;
+        order.status = OrderStatus.SHIPPED;
+        this.orderService.updateStatus(order.id, order).subscribe(res => {
+          if (res.success) {
+            this.setDataSourceAttributes();
+          } else {
+            console.log(res);
+            alert(res.message);
+          }
+        });
+      }
+    });
+  }
+
+  updateStatus(order: Order, status: string) {
+    // convert string to OrderStatus
+    order.status = status as OrderStatus;
+    console.log(order);
+    this.orderService.updateStatus(order.id, order).subscribe(res => {
+      if (res.success) {
+        this.setDataSourceAttributes();
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+  }
+
 }

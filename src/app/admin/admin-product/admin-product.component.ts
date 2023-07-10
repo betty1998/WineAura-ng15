@@ -21,6 +21,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   statuses: string[] = Object.values(ProductStatus);
+  statusToFilter!: string;
 
   constructor(private productService:ProductService,
               public dialog: MatDialog) {
@@ -114,14 +115,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   }
 
   statusFilter(event: string) {
-    if (event) {
-      this.dataSource.filter = event.trim().toLowerCase();
-    } else {
-      this.dataSource.filter = '';
-    }
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.statusToFilter = event;
+    this.statusToFilter = event;
   }
 }

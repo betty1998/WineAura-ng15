@@ -1,1 +1,29 @@
-<p>admin-profile works!</p>
+<main>
+  <div admin-tab-title>Profile</div>
+  <mat-card>
+    <mat-card-content>
+      <div class="mb-4">
+        <div class="text-secondary">Username</div>
+        <div>{{(userInfo$|async)?.user?.username}}</div>
+      </div>
+      <div class="mb-4">
+        <div class="text-secondary">Name</div>
+        <div>{{(userInfo$|async)?.firstName}} {{(userInfo$|async)?.lastName}} </div>
+      </div>
+      <div class="mb-4">
+        <div class="text-secondary">Email</div>
+        <div>{{(userInfo$|async)?.email}}</div>
+      </div>
+      <div class="mb-4">
+        <div class="text-secondary">Phone Number</div>
+        <div>{{(userInfo$|async)?.phone}}</div>
+      </div>
+      <div class="mb-4">
+        <button mat-raised-button color="accent" (click)="edit(userInfo$.value?.user)">Edit</button>
+      </div>
+
+      <a class="mb-4" type="button" (click)="changePassword(userInfo$.value?.user)">Change Passsword</a>
+    </mat-card-content>
+  </mat-card>
+
+</main>

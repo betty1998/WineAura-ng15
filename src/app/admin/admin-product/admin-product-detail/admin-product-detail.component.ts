@@ -204,7 +204,7 @@ export class AdminProductDetailComponent implements OnInit{
             message: "Update product successfully"
           }
         })
-        this.router.navigate(['/admin/product']).catch();
+        this.router.navigate(['/admin/product-list']).catch();
       } else {
         console.log(res);
         alert(res.message);
@@ -213,7 +213,7 @@ export class AdminProductDetailComponent implements OnInit{
   }
 
   deleteImage() {
-    console.log('cancel');
+    console.log("cancel image");
     if(this.product && this.product.image) {
 
     }
@@ -239,6 +239,14 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.categories.push(result);
           this.productForm.get('category')?.setValue(result);
+          this.productService.addCategory(result).subscribe(res => {
+            if (res.success) {
+              console.log(res.data);
+            } else {
+              console.log(res);
+              alert(res.message);
+            }
+          } );
         }else {
           //reset the select
           this.productForm.get('category')?.setValue(null);
@@ -261,6 +269,14 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.brands.push(result);
           this.productForm.get('brand')?.setValue(result);
+          this.productService.addBrand(result).subscribe(res => {
+            if (res.success) {
+              console.log(res.data);
+            } else {
+              console.log(res);
+              alert(res.message);
+            }
+          } );
         }else {
           //reset the select
           this.productForm.get('brand')?.setValue(null);
@@ -280,6 +296,14 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.regions.push(result);
           this.productForm.get('region')?.setValue(result);
+          this.productService.addRegion(result).subscribe(res => {
+            if (res.success) {
+              console.log(res.data);
+            } else {
+              console.log(res);
+              alert(res.message);
+            }
+          } );
         }else {
           //reset the select
           this.productForm.get('region')?.setValue(null);

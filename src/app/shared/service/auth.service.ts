@@ -72,4 +72,17 @@ export class AuthService {
   updateUsername(user: User) {
     return this.httpClient.put<LoginResponse>(`${environment.api}/auth/updateUsername`, user);
   }
+
+  updateUser(id:number|undefined,status:string){
+    return this.httpClient.put<DataResponse<User>>(`${environment.api}/auth/${id}/updateStatus/${status}`, null);
+  }
+
+  updateRole(id: number, role: string) {
+    return this.httpClient.put<DataResponse<User>>(`${environment.api}/auth/${id}/updateRole/${role}`, null);
+
+  }
+
+  deleteUser(userId: number) {
+    return this.httpClient.delete<DataResponse<User>>(`${environment.api}/auth/${userId}`);
+  }
 }

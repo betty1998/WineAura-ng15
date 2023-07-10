@@ -21,30 +21,33 @@ import {OrderFilterPipe} from "../../shared/pipe/order-filter.pipe";
 
 
 @NgModule({
-  declarations: [
-    FavoriteComponent,
-    ProfileComponent,
-    AddressBookComponent,
-    OrderHistoryComponent,
-    OrderDialogComponent,
-    AddressDialogComponent,
-    ProfileEditDialogComponent,
-    UpdatePasswordDialogComponent,
-    AccountComponent,
-    OrderFilterPipe,
-    OrderSortPipe
-  ],
-  imports: [
-    CommonModule,
-    CustomStyleModule,
-    MatDividerModule,
-    MatListModule,
-    RouterModule,
-    ReactiveFormsModule
-  ],
-  providers:[
-    OrderFilterPipe,
-    OrderSortPipe
-  ]
+    declarations: [
+        FavoriteComponent,
+        ProfileComponent,
+        AddressBookComponent,
+        OrderHistoryComponent,
+        OrderDialogComponent,
+        AddressDialogComponent,
+        ProfileEditDialogComponent,
+        UpdatePasswordDialogComponent,
+        AccountComponent,
+        OrderFilterPipe,
+        OrderSortPipe
+    ],
+    imports: [
+        CommonModule,
+        CustomStyleModule,
+        MatDividerModule,
+        MatListModule,
+        RouterModule,
+        ReactiveFormsModule
+    ],
+    exports: [
+        ProfileComponent
+    ],
+    providers: [
+        OrderFilterPipe,
+        OrderSortPipe
+    ]
 })
 export class AccountModule { }

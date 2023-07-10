@@ -1,0 +1,63 @@
+mat-card{
+  min-width: 1200px;
+  max-width: 2400px;
+  padding: 20px 0px;
+}
+.order-id{
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.order-date{
+  margin-top:auto;
+  margin-bottom: auto;
+}
+
+.detail-container{
+  padding-top:10px;
+  min-width: 360px;
+  font-size: 17px;
+  div.detail-title{
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height:23.5px;
+  }
+  mat-icon{
+    transform: scale(1.5);
+    margin-left:18px;
+    margin-top:8px;
+    width:36px;
+  }
+  .label{
+    font-size: 17px;
+    margin-top:auto;
+    margin-bottom: auto;
+  }
+
+}
+
+img {
+  margin: 10px 0px;
+}
+input {
+  width: 60px;
+  height: 15px;
+  padding: 10px 0px;
+  text-align: center;
+
+}
+
+section.order-summary{
+  div.title{
+    width: 200px;
+  }
+  div.total{
+    width: 100px;
+  }
+  >div:last-child{
+    font-weight: bold;
+  }
+}

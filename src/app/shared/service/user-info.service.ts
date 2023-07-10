@@ -38,6 +38,11 @@ export class UserInfoService {
       `${environment.api}/userinfos/${userId}`);
   }
 
+  public getUserInfoById(id:number):Observable<DataResponse<UserInfo>> {
+    return this.httpClient.get<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/${id}`);
+  }
+
   public getCart(userInfoId:number):Observable<DataResponse<CartProduct[]>>{
     return this.httpClient.get<DataResponse<CartProduct[]>>(
       `${environment.api}/userinfos/cart/${userInfoId}`);
@@ -97,4 +102,10 @@ export class UserInfoService {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
       `${environment.api}/userinfos`);
   }
+
+  getAdmins() {
+    return this.httpClient.get<DataResponse<UserInfo[]>>(
+      `${environment.api}/userinfos/admins`);
+  }
+
 }

@@ -19,7 +19,7 @@
 
   <section class="product-table">
     <!-- product table list -->
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource | statusFilter:statusToFilter" matSort>
       <!-- Id Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>No. Product</th>

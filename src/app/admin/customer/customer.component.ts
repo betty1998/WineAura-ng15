@@ -7,6 +7,7 @@ import {UserService} from "../../shared/service/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {UserInfoService} from "../../shared/service/user-info.service";
 import {UserInfo} from "../../shared/model/UserInfo";
+import {AuthService} from "../../shared/service/auth.service";
 
 @Component({
   selector: 'app-customer',
@@ -15,13 +16,14 @@ import {UserInfo} from "../../shared/model/UserInfo";
 })
 export class CustomerComponent implements AfterViewInit, OnInit{
   searchText: any;
-  displayedColumns: string[] = ["id","username", "name","email","phone","action"];
+  displayedColumns: string[] = ["id","username", "name","email","phone","status","action"];
   customerInfos:UserInfo[] = [];
   dataSource!: MatTableDataSource<UserInfo>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private infoService:UserInfoService,
+              private auth:AuthService,
               public dialog: MatDialog) {
   }
 
@@ -75,11 +77,30 @@ export class CustomerComponent implements AfterViewInit, OnInit{
     };
   }
 
-  deleteUser(id:number) {
-
+  deleteCustomer(userId:number) {
+    this.auth.deleteUser(userId).subscribe(res=>{
+      if (res.success) {
+        this.customerInfos = this.customerInfos.filter(item=>item.user.id!=userId);
+        this.dataSource.data = this.customerInfos;
+        this.setDataSourceAttributes();
+      } else {
+        alert(res.message);
+      }
+    });
   }
 
-  deleteCustomer(id:number) {
-
+  updateStatus(status:string, id:number) {
+    this.customerInfos.forEach(item=>{
+      if (item.user.id==id) {
+        item.user.status = status;
+      }
+    })
+    this.auth.updateUser(id,status).subscribe(res=>{
+      if (res.success) {
+        this.setDataSourceAttributes();
+      } else {
+        alert(res.message);
+      }
+    } );
   }
 }

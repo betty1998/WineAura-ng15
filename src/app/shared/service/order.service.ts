@@ -83,4 +83,16 @@ export class OrderService {
   getTotalOrders() {
     return this.http.get<DataResponse<number>>(`${environment.api}/orders/total`);
   }
+
+  deleteOrder(id: number) {
+    return this.http.delete<DataResponse<Order>>(`${environment.api}/orders/${id}`);
+  }
+
+  deletePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase) {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/${orderId}/deletePurchase/${purchaseId}`,purchase);
+  }
+
+  updateStatus(id: number | undefined, order:Order) {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/updateStatus/${id}`,order);
+  }
 }

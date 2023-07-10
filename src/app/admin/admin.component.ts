@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import {NbMenuItem} from "@nebular/theme";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {AuthService} from "../shared/service/auth.service";
 
 
 @Component({
@@ -57,21 +58,11 @@ export class AdminComponent implements AfterViewInit, OnInit{
     },
     {
       title: "Profile",
-      expanded: true,
-      children: [
-        {
-          title: "Change Password",
-          link:"profile/change-password",
-        },
-        {
-          title: "Logout",
-          link:"profile/logout",
-        },
-      ],
-    },
+      link: "profile",
+    }
   ];
   constructor(private renderer: Renderer2, private el: ElementRef,
-              private router:Router, private route:ActivatedRoute) {
+              private router:Router, private auth:AuthService) {
   }
 
   ngAfterViewInit(): void {
@@ -111,4 +102,7 @@ export class AdminComponent implements AfterViewInit, OnInit{
   }
 
 
+  logout() {
+    this.auth.logout();
+  }
 }
