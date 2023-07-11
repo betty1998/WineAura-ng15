@@ -18,7 +18,7 @@ import {mergeMap, throwError} from "rxjs";
 export class OrderDetailComponent implements OnInit{
   checkoutForm!: FormGroup;
   step = 0;
-  userInfo!: UserInfo;
+  userInfo!: UserInfo|undefined;
   order!:Order
 
   constructor(private fb:FormBuilder,
@@ -28,17 +28,20 @@ export class OrderDetailComponent implements OnInit{
               private router:Router) {
   }
   ngOnInit(): void {
-    this.userInfo = this.userInfoService.userInfo;
-    console.log(this.userInfo);
     this.buildForm();
+    this.userInfoService.userInfo$.subscribe(res=>{
+      this.userInfo = res;
+      this.fillForm(this.userInfo);
+    });
+    console.log(this.userInfo);
   }
 
   buildForm(){
     this.checkoutForm = this.fb.group({
       shippingDetails: this.fb.group({
         shippingAddress: this.fb.group({
-          firstName: [this.userInfo.firstName, Validators.required],
-          lastName: [this.userInfo.lastName, Validators.required],
+          firstName: ['', Validators.required],
+          lastName: ['',Validators.required],
           address1: ['', Validators.required],
           address2: '',
           city: ['', Validators.required],
@@ -47,18 +50,18 @@ export class OrderDetailComponent implements OnInit{
           zipcode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
         }),
         contactInfo: this.fb.group({
-          email:[this.userInfo.email,[Validators.required,Validators.email]],
-          phone: [this.userInfo.phone, [Validators.required,
+          email:['',[Validators.required,Validators.email]],
+          phone: ['', [Validators.required,
             // Validators.pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}')]]
             Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]]
         }),
       }),
       paymentDetails: this.fb.group({
         paymentMethod: ['', Validators.required],
-        paymentCardNumber: ['1111111122222233', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-        cardHolderName: ['Beibei', Validators.required],
-        expirationDate: ['05/28', Validators.required],
-        cvv: ['253', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
+        paymentCardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+        cardHolderName: ['', Validators.required],
+        expirationDate: ['', Validators.required],
+        cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
         billingAddress: this.fb.group({
           address1: ['', Validators.required],
           address2: '',
@@ -67,11 +70,37 @@ export class OrderDetailComponent implements OnInit{
           country: ['', Validators.required],
           zipcode: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]]
         })
-      }),
-      orderReview: this.fb.group({
-        // Insert the form controls for the order review here
       })
     })
+  }
+
+  fillForm(userInfo: UserInfo | undefined){
+    this.checkoutForm.patchValue({
+      shippingDetails: {
+        shippingAddress: {
+          firstName: userInfo?.firstName,
+          lastName: userInfo?.lastName,
+          address1: '1234 Main St.',
+          address2: '',
+          city: 'San Francisco',
+          state: 'CA',
+          country: 'USA',
+          zipcode: '94123'
+        },
+        contactInfo: {
+          email: userInfo?.email,
+          phone: userInfo?.phone
+        }
+      },
+      paymentDetails: {
+        paymentMethod: 'Credit Card',
+        paymentCardNumber: '1111111122222233',
+        cardHolderName: 'Beibei Zhang',
+        expirationDate: '05/28',
+        cvv: '253',
+      }
+    })
+
   }
   setStep(index: number) {
     this.step = index;
@@ -104,7 +133,7 @@ export class OrderDetailComponent implements OnInit{
     this.order.userId = this.auth.user?.id;
     this.order.paymentMethod = this.checkoutForm.get('paymentDetails.paymentMethod')?.value;
     this.order.paymentCardNumber = this.checkoutForm.get('paymentDetails.paymentCardNumber')?.value;
-    const purchases: Purchase[] = this.userInfo.cart.map(cartProduct => {
+    const purchases: Purchase[]|undefined = this.userInfo?.cart.map(cartProduct => {
       return {
         product: cartProduct.product,
         qty: cartProduct.qty,
@@ -112,11 +141,11 @@ export class OrderDetailComponent implements OnInit{
       };
     });
     // purchase date should be generated in backend
-    this.order.purchases = purchases;
+    this.order.purchases = purchases||[];
     this.order.status = "Pending";
     this.order.subTotal = this.orderService.subTotal;
-    this.order.itemAmount = purchases.reduce((acc, purchase) =>
-      acc + purchase.qty, 0);
+    this.order.itemAmount = purchases?.reduce((acc, purchase) =>
+      acc + purchase.qty, 0)||0;
     const store = {id:1,manager:{id:1}}
     this.order.store = store;
     console.log(this.order);

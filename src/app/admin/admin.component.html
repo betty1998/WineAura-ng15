@@ -2,24 +2,55 @@
 <nb-layout>
   <nb-layout-header fixed>
     <div>
-      Wine Aura Management System
+      <button mat-icon-button (click)="toggleSidebar()" [hidden]="!(auth.admin$|async)">
+        <mat-icon>menu</mat-icon>
+      </button>
+        Wine Aura Management System
     </div>
     <div class="m-auto"></div>
     <div>
       <button mat-raised-button color="primary" routerLink="/products">Go to Website</button>
-      <button mat-stroked-button color="primary" (click)="logout()" routerLink="/products" >Logout</button>
+      <button *ngIf="auth.admin$|async" mat-stroked-button color="primary" (click)="logout()" routerLink="/products">Sign out</button>
+      <button *ngIf="!(auth.admin$|async)" mat-stroked-button routerLink="/admin/login">Sign In</button>
+      <button *ngIf="!(auth.admin$|async)" mat-button routerLink="/admin/register">Register</button>
     </div>
   </nb-layout-header>
-  <nb-sidebar state="expanded" class="menu-sidebar" tag="menu-sidebar">
+  <nb-sidebar [state]="auth.admin?'expanded':'collapsed'" class="menu-sidebar" tag="menu-sidebar">
     <nb-menu [items]="menu">
     </nb-menu>
   </nb-sidebar>
   <nb-layout-column class="colored-column-warning">
     <router-outlet></router-outlet>
   </nb-layout-column>
-<!--  <nb-layout-footer fixed>-->
-<!--    footer-->
-<!--  </nb-layout-footer>-->
 </nb-layout>
+<!--<main>-->
+<!--  <nav class="sticky-top">-->
+<!--    <div>-->
+<!--      <button mat-icon-button (click)="toggleSidebar()" [hidden]="!(auth.admin$|async)">-->
+<!--        <mat-icon>menu</mat-icon>-->
+<!--      </button>-->
+<!--      Wine Aura Management System-->
+<!--    </div>-->
+<!--    <div class="m-auto"></div>-->
+<!--    <div>-->
+<!--      <button mat-raised-button color="primary" routerLink="/products">Go to Website</button>-->
+<!--      <button *ngIf="auth.admin$|async" mat-stroked-button color="primary" (click)="logout()" routerLink="/products">Sign out</button>-->
+<!--      <button *ngIf="!(auth.admin$|async)" mat-stroked-button routerLink="/admin/login">Sign In</button>-->
+<!--      <button *ngIf="!(auth.admin$|async)" mat-button routerLink="/admin/register">Register</button>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--&lt;!&ndash;  <nb-sidebar [state]="auth.admin?'expanded':'collapsed'" class="menu-sidebar" tag="menu-sidebar">&ndash;&gt;-->
+<!--&lt;!&ndash;    <nb-menu [items]="menu">&ndash;&gt;-->
+<!--&lt;!&ndash;    </nb-menu>&ndash;&gt;-->
+<!--&lt;!&ndash;  </nb-sidebar>&ndash;&gt;-->
+<!--  <div>-->
+<!--    <div>-->
+<!--      -->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <nb-layout-column class="colored-column-warning">-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </nb-layout-column>-->
+<!--</main>-->
 
 

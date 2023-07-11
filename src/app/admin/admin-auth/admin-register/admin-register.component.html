@@ -1,0 +1,67 @@
+<div fxLayout fxLayoutAlign="center" style="margin: 60px 60px;">
+  <mat-card fxLayout="column" fxFlex="1 1 50%" fxFlex.lt-sm="1 1 auto">
+    <mat-card-content>
+      <div admin-tab-title class="mt-2 pb-2">Admin Register</div>
+      <ng-template [ngIf]="showMessage">
+        Register successfully. Please&nbsp;<a routerLink="/admin/login">Sign in</a>.
+      </ng-template>
+      <form fxLayout="column" [formGroup]="registerFormGroup" (ngSubmit)="register()">
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input type="text" matInput formControlName="username">
+          <mat-error *ngIf="registerFormGroup.get('username')?.getError('email')">
+            Your username must be in email format</mat-error>
+          <mat-error *ngIf="registerFormGroup.get('username')?.getError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+        <div fxLayout="column" formGroupName="infoGroup">
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="registerFormGroup.get('email')?.getError('email')"></mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone" placeholder="1234567890">
+            <mat-error *ngIf="registerFormGroup.get('phone')?.hasError('pattern')">
+              Phone number format is invalid.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" formGroupName="passwordGroup">
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+            <mat-error *ngIf="registerFormGroup.get('passwordGroup.password')?.getError('pattern')&& registerFormGroup.get('passwordGroup.password')?.touched">
+              Password must contain only lowercase letters and numbers, and be 6-20 characters long.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input type="password" matInput formControlName="confirmPassword">
+          </mat-form-field>
+          <mat-error>
+            {{registerFormGroup.get("passwordGroup")?.getError('passwordNotMatch')}}
+          </mat-error>
+        </div>
+        <p style="margin-top: 10px">
+          <button type="submit" mat-raised-button color="primary" [disabled]="registerFormGroup.invalid">Register</button>
+        </p>
+      </form>
+    </mat-card-content>
+
+  </mat-card>
+</div>

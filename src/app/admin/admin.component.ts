@@ -5,7 +5,7 @@ import {
   ElementRef, OnInit,
   Renderer2,
 } from "@angular/core";
-import {NbMenuItem} from "@nebular/theme";
+import {NbMenuItem, NbSidebarService} from "@nebular/theme";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
 
@@ -62,7 +62,8 @@ export class AdminComponent implements AfterViewInit, OnInit{
     }
   ];
   constructor(private renderer: Renderer2, private el: ElementRef,
-              private router:Router, private auth:AuthService) {
+              private router:Router, public auth:AuthService,
+              private sidebarService: NbSidebarService) {
   }
 
   ngAfterViewInit(): void {
@@ -103,6 +104,19 @@ export class AdminComponent implements AfterViewInit, OnInit{
 
 
   logout() {
-    this.auth.logout();
+    this.auth.adminLogout();
+    // Get current URL.
+    let currentUrl = this.router.url;
+
+    // Navigate away and then back to trigger route guards.
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+
+  }
+
+  toggleSidebar() {
+    this.sidebarService.toggle(false, "menu-sidebar");
+    console.log("admin:", this.auth.admin);
   }
 }

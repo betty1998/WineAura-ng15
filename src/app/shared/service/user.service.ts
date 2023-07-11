@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "../model/User";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {environment} from "../../../environments/environment.development";
+import {UserInfo} from "../model/UserInfo";
+import {AdminData} from "../../admin/administrator/add-admin-dialog/add-admin-dialog.component";
 
 
 @Injectable({
@@ -19,5 +21,19 @@ export class UserService {
 
   getUsers() {
     return this.http.get<DataResponse<User[]>>(`${environment.api}/users`);
+  }
+
+  addAdmin(newAdmin:AdminData) {
+    return this.http.post<DataResponse<UserInfo>>(`${environment.api}/users/addAdmin`,newAdmin);
+
+  }
+
+  deleteAdmin(userId: number | undefined) {
+    return this.http.delete<DataResponse<UserInfo>>(`${environment.api}/users/deleteAdmin/${userId}`);
+  }
+
+  checkUnactivatedUsername(username:string) {
+    return this.http.get<DataResponse<User>>(`${environment.api}/users/checkUnactivatedUsername/${username}`);
+
   }
 }

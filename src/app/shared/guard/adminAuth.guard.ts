@@ -15,7 +15,7 @@ import {AuthService} from "../service/auth.service";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanLoad {
+export class AdminAuthGuard implements CanActivate, CanLoad {
 
   constructor(
     private auth: AuthService,
@@ -24,19 +24,19 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log("AuthGuard",this.auth.user)
-    if (this.auth.user){
-      return !!this.auth.user;
+    console.log("AdminAuthGuard",this.auth.admin)
+    if (this.auth.admin){
+      return !!this.auth.admin;
     }else {
-      return this.auth.checkLogin().pipe(
+      return this.auth.adminCheckLogin().pipe(
         switchMap(res => {
           console.log("authGuard: checkLogin response: ", res);
-          if (res.success&&res.data.role.type==='Customer') {
-            this.auth.user = res.data;
-            this.auth.user$.next(res.data);
+          if (res.success&&res.data.role.type==='Admin') {
+            this.auth.admin = res.data;
+            this.auth.admin$.next(res.data);
             return of(true); // Emit true to allow navigation
           } else {
-            this.router.navigate(['login']).catch(); // Navigate to login page
+            this.router.navigate(['/admin/login']).catch(); // Navigate to login page
             return of(false); // Emit false to prevent navigation
           }
         })
@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    !this.auth.user && this.router.navigate(['login']).catch();
-    return !!this.auth.user;
+    !this.auth.admin && this.router.navigate(['login']).catch();
+    return !!this.auth.admin;
   }
 }

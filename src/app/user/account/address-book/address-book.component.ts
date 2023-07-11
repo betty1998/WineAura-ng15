@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserInfoService} from "../../../shared/service/user-info.service";
 import {UserInfo} from "../../../shared/model/UserInfo";
 import {ActivatedRoute} from "@angular/router";
@@ -13,7 +13,8 @@ import {AddressBook} from "../../../shared/model/AddressBook";
   templateUrl: './address-book.component.html',
   styleUrls: ['./address-book.component.scss']
 })
-export class AddressBookComponent {
+export class AddressBookComponent implements OnInit{
+  userInfo!: UserInfo;
   constructor(public userInfoService: UserInfoService,
               private route:ActivatedRoute,
               private dialog: MatDialog) {
@@ -23,20 +24,24 @@ export class AddressBookComponent {
     })).subscribe(res =>{
       if (res.success) {
         userInfoService.userInfo = res.data;
+        this.userInfo = res.data;
       } else {
         console.log(res);
       }
     })
   }
-  /*TODO
-  *
-  * - send request in dialog
-  * */
+
+  ngOnInit(): void {
+    if (this.userInfoService.userInfo) {
+      this.userInfo = this.userInfoService.userInfo;
+    }
+  }
+
 
   editAddress(addressBook:AddressBook) {
     this.dialog.open(AddressDialogComponent, {
       data: {
-        userInfoId: this.userInfoService.userInfo.id,
+        userInfoId: this.userInfo.id,
         address: addressBook,
         dialogTitle: 'Edit Address',
       },
@@ -47,14 +52,14 @@ export class AddressBookComponent {
   addAddress() {
     this.dialog.open(AddressDialogComponent, {
       data: {
-        userInfoId: this.userInfoService.userInfo.id,
+        userInfoId: this.userInfo.id,
         dialogTitle: 'New Address',
       },
     });
   }
 
   deleteAddress(address: AddressBook) {
-    this.userInfoService.deleteAddress(this.userInfoService.userInfo.id, address).subscribe(res=>{
+    this.userInfoService.deleteAddress(this.userInfo.id, address).subscribe(res=>{
       if (res.success) {
         this.userInfoService.userInfo = res.data;
       } else {

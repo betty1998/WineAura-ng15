@@ -11,7 +11,6 @@ export class StatusFilterPipe implements PipeTransform {
 
   transform(datasource: MatTableDataSource<any>, status:string): MatTableDataSource<any> {
     const obj = datasource?.data;
-    obj?.forEach(item=>{console.log(item.id,item.status)});
     if (status) {
       const  newOrders =obj.filter(item=>item.status === status || item.productStatus === status);
       return new MatTableDataSource(newOrders);

@@ -28,10 +28,9 @@ export class CustomerComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit(): void {
-    this.infoService.getUserInfos().subscribe(res=>{
+    this.infoService.getCustomers().subscribe(res=>{
       if (res.success) {
-        this.customerInfos = res.data.filter((item:UserInfo)=>
-                  item.user.roles?.some(role=>role.type=="Customer"));
+        this.customerInfos = res.data;
         console.log(this.customerInfos);
         this.dataSource = new MatTableDataSource<UserInfo>(this.customerInfos);
         this.customizeSort();

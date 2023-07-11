@@ -19,13 +19,17 @@ import {ReturnComponent} from "./after-sale/return/return.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CustomStyleModule} from "../shared/modules/custom-style/custom-style.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {CheckoutModule} from "./checkout/checkout.module";
 import {NgxPaginationModule} from "ngx-pagination";
 import {AccountModule} from "./account/account.module";
 import {OrderFilterPipe} from "../shared/pipe/order-filter.pipe";
 import {OrderSortPipe} from "../shared/pipe/order-sort.pipe";
+import {AuthInterceptor} from "../shared/interceptor/auth.interceptor";
+import {ErrorInterceptor} from "../shared/interceptor/error.interceptor";
+import {AuthService} from "../shared/service/auth.service";
+import {NbLayoutModule} from "@nebular/theme";
 
 
 @NgModule({
@@ -53,10 +57,11 @@ import {OrderSortPipe} from "../shared/pipe/order-sort.pipe";
     MatGridListModule,
     CheckoutModule,
     NgxPaginationModule,
-    AccountModule
+    AccountModule,
+    NbLayoutModule
   ],
   providers:[
-    SearchPipe
+    SearchPipe,
   ]
 
 })

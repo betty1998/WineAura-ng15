@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit{
     })).subscribe(res=>{
       if (res.success) {
         console.log(res);
-        this.infoService.userInfo = res.data;
+        // this.infoService.userInfo = res.data;
       } else {
         console.log(res);
       }

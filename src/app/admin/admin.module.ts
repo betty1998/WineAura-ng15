@@ -23,10 +23,6 @@ import { SalesChartComponent } from './dashboard/sales-chart/sales-chart.compone
 import { TodayComponent } from './dashboard/today/today.component';
 import { RecentOrderComponent } from './dashboard/recent-order/recent-order.component';
 import { CategoryChartComponent } from './dashboard/category-chart/category-chart.component';
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDivider, MatDividerModule} from "@angular/material/divider";
-import {MatIconModule} from "@angular/material/icon";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {BaseChartDirective, NgChartsConfiguration, NgChartsModule} from "ng2-charts";
 import {SalesChartHeaderComponent} from "./dashboard/sales-chart/sales-chart-header/sales-chart-header";
@@ -58,6 +54,16 @@ import { CustomerDetailComponent } from './customer/customer-detail/customer-det
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {RoleDirective} from "../shared/directive/role.directive";
 import {AccountModule} from "../user/account/account.module";
+import { AddAdminDialogComponent } from './administrator/add-admin-dialog/add-admin-dialog.component';
+import {LoginComponent} from "../auth/login/login.component";
+import {RegisterComponent} from "../auth/register/register.component";
+import {AdminRegisterComponent} from "./admin-auth/admin-register/admin-register.component";
+import {AdminLoginComponent} from "./admin-auth/admin-login/admin-login.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AdminInterceptor} from "../shared/interceptor/admin.interceptor";
+import {ErrorInterceptor} from "../shared/interceptor/error.interceptor";
+import {AdminErrorInterceptor} from "../shared/interceptor/admin-error.interceptor";
+import {AdminAuthGuard} from "../shared/guard/adminAuth.guard";
 
 const routes:Routes =[
   {
@@ -65,56 +71,77 @@ const routes:Routes =[
     component:AdminComponent,
     children:[
       {
+        path: "login",
+        component: AdminLoginComponent
+      },
+      {
+        path: "register",
+        component: AdminRegisterComponent
+      },
+      {
         path:"dashboard",
-        component:DashboardComponent
+        component:DashboardComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"product-list",
-        component:AdminProductComponent
+        component:AdminProductComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"product-list/add-product",
-        component:AdminProductDetailComponent
+        component:AdminProductDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"product-list/edit-product/:id",
-        component:AdminProductDetailComponent
+        component:AdminProductDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"order",
-        component:AdminOrderComponent
+        component:AdminOrderComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"order/edit-order/:id",
-        component:AdminOrderDetailComponent
+        component:AdminOrderDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"order/view-order/:id",
-        component:AdminOrderDetailComponent
+        component:AdminOrderDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"customer",
-        component:CustomerComponent
+        component:CustomerComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"customer/edit-customer/:id",
-        component:CustomerDetailComponent
+        component:CustomerDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"category",
-        component:CategoryComponent
+        component:CategoryComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"administrator",
-        component:AdministratorComponent
+        component:AdministratorComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"administrator/edit-admin/:id",
-        component:CustomerDetailComponent
+        component:CustomerDetailComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"profile",
-        component:AdminProfileComponent
+        component:AdminProfileComponent,
+        canActivate:[AdminAuthGuard]
       },
       {
         path:"**",
@@ -152,7 +179,8 @@ const routes:Routes =[
     StatusFilterPipe,
     TrackingNumberDialogComponent,
     CustomerDetailComponent,
-    RoleDirective
+    RoleDirective,
+    AddAdminDialogComponent
 
   ],
   imports: [
@@ -184,8 +212,12 @@ const routes:Routes =[
     AccountModule
 
   ],
-  providers:[
-    {provide:NgChartsConfiguration, useValue:{generateColors:false}},
+  exports: [
+    AdminTabTitleDirective
+  ],
+  providers: [
+    {provide: NgChartsConfiguration, useValue: {generateColors: false}},
+
     DatePipe
   ]
 })

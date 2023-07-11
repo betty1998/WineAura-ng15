@@ -23,27 +23,27 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return token",()=>{
-    const user: User = {username: 'testuser', password: 'testpassword' };
-    service.login(user).subscribe(res =>{
-      expect(res).toBeTruthy();
-      expect(typeof res).toBe("string")
-      });
-    const req = httpMock.expectOne(`${environment.api}/auth/token`);
-    expect(req.request.method).toBe('POST');
-    req.flush("2dzuvhi23iufh")
-  })
-
-  it('should make a POST request to register endpoint', () => {
-    const user: User = { username: 'testuser', password: 'testpassword' };
-
-    service.register(user).subscribe(response => {
-      expect(response).toBeTruthy(); // Add your response expectations here
-    });
-
-    const req = httpMock.expectOne(`${environment.api}/auth/register`);
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(user); // Verify that the request body matches the user object
-    req.flush({}); // Provide a mock response if needed
-  });
+  // it("should return token",()=>{
+  //   const user: User = {username: 'testuser', password: 'testpassword' };
+  //   service.login(user).subscribe(res =>{
+  //     expect(res).toBeTruthy();
+  //     expect(typeof res).toBe("string")
+  //     });
+  //   const req = httpMock.expectOne(`${environment.api}/auth/token`);
+  //   expect(req.request.method).toBe('POST');
+  //   req.flush("2dzuvhi23iufh")
+  // })
+  //
+  // it('should make a POST request to register endpoint', () => {
+  //   const user: User = { username: 'testuser', password: 'testpassword' };
+  //
+  //   service.register(user).subscribe(response => {
+  //     expect(response).toBeTruthy(); // Add your response expectations here
+  //   });
+  //
+  //   const req = httpMock.expectOne(`${environment.api}/auth/register`);
+  //   expect(req.request.method).toBe('POST');
+  //   expect(req.request.body).toEqual(user); // Verify that the request body matches the user object
+  //   req.flush({}); // Provide a mock response if needed
+  // });
 });

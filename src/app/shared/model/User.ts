@@ -3,7 +3,7 @@ export interface User{
   username: string;
   password: string;
   status?: string;
-  roles?: Role[];
+  role: Role;
   [key: string]: any;
 
 }

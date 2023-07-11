@@ -36,7 +36,7 @@ export class ProductOverviewComponent {
                   product: product,
                   qty: 1,
                   userInfo:this.userInfoService.userInfo};
-      this.userInfoService.addToCart(this.userInfoService.userInfo.id,cartProduct).subscribe(res =>{
+      this.userInfoService.addToCart(this.userInfoService.userInfo?.id,cartProduct).subscribe(res =>{
         if (res.success) {
           this.userInfoService.userInfo = res.data;
         } else {

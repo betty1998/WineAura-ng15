@@ -17,7 +17,7 @@
       <mat-icon>favorite</mat-icon>
     </button>
     <button mat-icon-button [routerLink]="['/checkout',auth.user?.id,'cart']">
-      <mat-icon>shopping_cart</mat-icon>
+      <mat-icon [matBadge]="getCartAmount(infoService.userInfo)" matBadgeOverlap="false">shopping_cart</mat-icon>
     </button>
     <button mat-icon-button [routerLink]="['/account',auth.user?.id,'profile']" >
       <mat-icon>account_circle</mat-icon>
@@ -29,9 +29,9 @@
     <input class="search-input" type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
     <span class="example-spacer"></span>
     <div>
-      <button mat-raised-button routerLink="/admin">Admin</button>
+      <button *ngIf="!!auth.admin" mat-raised-button routerLink="/admin" class="me-2">Admin</button>
       <button *ngIf="!auth.user" mat-stroked-button routerLink="/login">Sign In</button>
-      <button *ngIf="!!auth.user" mat-stroked-button (click)="auth.logout()">Sign Out</button>
+      <button *ngIf="!!auth.user" mat-stroked-button (click)="logout()">Sign Out</button>
       <button *ngIf="!auth.user" mat-button routerLink="/register">Create Account </button>
     </div>
   </mat-toolbar-row>

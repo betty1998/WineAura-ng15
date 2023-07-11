@@ -8,7 +8,7 @@ import {
 import {catchError, Observable, retry, throwError} from 'rxjs';
 
 @Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
+export class AdminErrorInterceptor implements HttpInterceptor {
 
   constructor() {}
 
@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log(error);
         if (error.error.message.startsWith("JWT expired")) {
           // remove expired token
-          localStorage.removeItem('customerToken');
+          localStorage.removeItem('adminToken');
 
           // remove authentication header
           const cloneReq = request.clone({

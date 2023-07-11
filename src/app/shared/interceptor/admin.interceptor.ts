@@ -8,18 +8,12 @@ import {
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class AdminInterceptor implements HttpInterceptor {
 
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let token;
-    if(request.url.includes('admin')){
-      token = localStorage.getItem("adminToken");
-    }else {
-      token = localStorage.getItem("customerToken");
-    }
-    console.log(localStorage);
+    const token = localStorage.getItem("adminToken");
     if (token){
       request = request.clone({
         setHeaders:{

@@ -7,6 +7,10 @@ import {AuthService} from "../../shared/service/auth.service";
 import {UserInfo} from "../../shared/model/UserInfo";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
+import {AddAdminDialogComponent} from "./add-admin-dialog/add-admin-dialog.component";
+import {UserService} from "../../shared/service/user.service";
+import {InfoDialogComponent} from "../../shared/dialog/info-dialog.component";
 
 @Component({
   selector: 'app-administrator',
@@ -22,8 +26,9 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
   searchText:any;
 
   constructor(private infoService:UserInfoService,
+              private userService:UserService,
               private auth:AuthService,
-              private cdr:ChangeDetectorRef){
+              private dialog:MatDialog){
   }
 
   ngOnInit(): void {
@@ -66,21 +71,28 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
     } );
   }
 
-  deleteAdmin(id: number) {
-
-  }
-
-  getRole(user: User) {
-    let adminRole:string="";
-    user.roles?.forEach(role=>{
-      if (role.type=="Admin") {
-        adminRole = role.type;
-      }else {
-        adminRole = "Manager";
+  deleteAdmin(user:User) {
+    if (user.id == 1){
+      this.dialog.open(InfoDialogComponent,{
+        data:{
+          title:"Error",
+          message:"You can't delete this admin"
+        }
+      });
+      return;
+    }
+    this.userService.deleteAdmin(user.id).subscribe(res=>{
+      if (res.success) {
+        this.admins = this.admins.filter(item=>item.user.id!=user.id);
+        this.dataSource.data = this.admins;
+        this.setDataSourceAttributes();
+      } else {
+        alert(res.message);
       }
     });
-    return adminRole;
+
   }
+
 
   applyFilter(event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -96,11 +108,31 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
       if (res.success) {
         this.admins.forEach(item => {
           if (item.user.id == id) {
-            item.user.roles?.forEach(role => {
-              if (role.type != "Customer") {
-                role.type = newRole;
-              }
-            });
+            item.user = res.data;
+          }
+        });
+        this.setDataSourceAttributes();
+      }else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+  }
+
+  addAdmin() {
+    const dialogRef = this.dialog.open(AddAdminDialogComponent, {
+      data: this.admins
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.userService.addAdmin(result).subscribe(res=>{
+          if (res.success) {
+            this.admins.push(res.data);
+            this.dataSource.data = this.admins;
+            this.setDataSourceAttributes();
+          } else {
+            alert(res.message);
           }
         });
       }

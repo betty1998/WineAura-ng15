@@ -22,6 +22,9 @@ import {InfoDialogComponent} from "./shared/dialog/info-dialog.component";
 import {AddOptionDialogComponent} from "./shared/dialog/add-option-dialog.component";
 import {MatNativeDateModule} from "@angular/material/core";
 import { RoleDirective } from './shared/directive/role.directive';
+import { AdminLoginComponent } from './admin/admin-auth/admin-login/admin-login.component';
+import { AdminRegisterComponent } from './admin/admin-auth/admin-register/admin-register.component';
+import {AdminModule} from "./admin/admin.module";
 
 
 @NgModule({
@@ -33,23 +36,25 @@ import { RoleDirective } from './shared/directive/role.directive';
         ConfirmDialogComponent,
         InfoDialogComponent,
         AddOptionDialogComponent,
+        AdminLoginComponent,
+        AdminRegisterComponent,
 
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        CustomStyleModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatGridListModule,
-        MatCardModule,
-        NgxPaginationModule,
-        NgChartsModule,
-        MatNativeDateModule,
-
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CustomStyleModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
+    NgxPaginationModule,
+    NgChartsModule,
+    MatNativeDateModule,
+    AdminModule,
+  ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
@@ -62,9 +67,6 @@ import { RoleDirective } from './shared/directive/role.directive';
             multi: true
         }
     ],
-  exports: [
-    TotalSalesComponent
-  ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

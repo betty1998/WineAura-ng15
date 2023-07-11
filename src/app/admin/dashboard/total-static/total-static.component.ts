@@ -80,7 +80,7 @@ export class TotalStaticComponent implements OnInit{
       if (res.success) {
         // filter user with role of customer
         this.totalUsers$.next( res.data.filter(user=>
-                        user.roles?.some(role =>role.type==='Customer')).length);
+                        user.role.type==='Customer').length);
       } else {
         console.log(res);
         alert(res.message);

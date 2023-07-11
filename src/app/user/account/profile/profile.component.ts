@@ -5,8 +5,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {ProfileEditDialogComponent} from "./profile-edit-dialog/profile-edit-dialog.component";
 import {UpdatePasswordDialogComponent} from "./update-password-dialog/update-password-dialog.component";
 import {User} from "../../../shared/model/User";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, switchMap} from "rxjs";
 import {UserInfo} from "../../../shared/model/UserInfo";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,19 @@ export class ProfileComponent implements OnInit{
 
   constructor(public infoService:UserInfoService,
               public auth:AuthService,
-              private dialog:MatDialog) {
+              private dialog:MatDialog,
+              private route:ActivatedRoute) {
+    infoService.userInfo && route.parent?.paramMap.pipe(switchMap(params =>{
+      const id = Number(params.get("id"));
+      return infoService.getUserInfo(id);
+    })).subscribe(res =>{
+      if (res.success) {
+        infoService.userInfo = res.data;
+        this.userInfo = res.data;
+      } else {
+        console.log(res);
+      }
+    })
   }
 
   ngOnInit(): void {

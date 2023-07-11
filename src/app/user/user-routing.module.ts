@@ -50,7 +50,6 @@ const routes: Routes = [
       {
         path:"account/:id",
         component: AccountComponent,
-        // canActivate:[AuthGuard],
         children:[
           {
             path:"profile",
@@ -69,15 +68,18 @@ const routes: Routes = [
             component: FavoriteComponent
           }
         ],
-        canActivate:[AuthGuard]
+        canActivate:[AuthGuard],
+        canLoad:[AuthGuard]
       },
       {
         path:"review/:productId/purchase/:purchaseId",
-        component: ReviewComponent
+        component: ReviewComponent,
+        canActivate:[AuthGuard]
       },
       {
         path:"return/:orderId",
-        component:ReturnComponent
+        component:ReturnComponent,
+        canActivate:[AuthGuard]
       }
     ],
   },

@@ -16,7 +16,9 @@ import {OrderService} from "./order.service";
 })
 export class UserInfoService {
   userInfo$ = new BehaviorSubject<UserInfo|undefined>(undefined);
-  userInfo!:UserInfo;
+  userInfo!:UserInfo|undefined;
+  adminInfo$ = new BehaviorSubject<UserInfo|undefined>(undefined);
+  adminInfo!:UserInfo|undefined;
   cart: CartProduct[]|undefined;
 
   constructor(private httpClient:HttpClient) {
@@ -25,8 +27,13 @@ export class UserInfoService {
   public updateUserInfo(userId: number | undefined){
     this.getUserInfo(userId).subscribe(res=>{
       if (res.success) {
-        this.userInfo = res.data;
-        this.userInfo$.next(res.data);
+        if (res.data.user.role.type === "Admin") {
+          this.adminInfo = res.data;
+          this.adminInfo$.next(res.data);
+        }else {
+          this.userInfo = res.data;
+          this.userInfo$.next(res.data);
+        }
       } else {
         console.log(res);
       }
@@ -36,6 +43,10 @@ export class UserInfoService {
   public getUserInfo(userId: number|undefined):Observable<DataResponse<UserInfo>> {
     return this.httpClient.get<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/${userId}`);
+  }
+  public getAdminUserInfo(adminId: number | undefined) {
+    return this.httpClient.get<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/${adminId}`);
   }
 
   public getUserInfoById(id:number):Observable<DataResponse<UserInfo>> {
@@ -48,7 +59,7 @@ export class UserInfoService {
       `${environment.api}/userinfos/cart/${userInfoId}`);
   }
 
-  public addToCart(userInfoId:number,cartProduct:CartProduct):Observable<DataResponse<UserInfo>>{
+  public addToCart(userInfoId:number|undefined,cartProduct:CartProduct):Observable<DataResponse<UserInfo>>{
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/addToCart/${userInfoId}`,cartProduct);
   }
@@ -107,5 +118,11 @@ export class UserInfoService {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
       `${environment.api}/userinfos/admins`);
   }
+
+  getCustomers() {
+    return this.httpClient.get<DataResponse<UserInfo[]>>(
+      `${environment.api}/userinfos/customers`);
+  }
+
 
 }

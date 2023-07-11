@@ -16,40 +16,78 @@ import {UserInfo} from "../model/UserInfo";
 export class AuthService {
   user: User|null = null;
   user$= new BehaviorSubject<User|null>(null);
+  admin: User|null = null;
+  admin$=new BehaviorSubject<User|null>(null);
 
   constructor(private httpClient:HttpClient,
               private router: Router,
               private userInfoService:UserInfoService) {
     // everytime refresh the page will call checklogin()
-    !this.user && this.checkLogin().pipe(
-      switchMap(res => {
-
-        if(res.success){
-          this.user = res.data;
-          console.log("checklogin response: ", res);
-          console.log(this.user);
-          this.user$.next(res.data);
-          // If checkLogin is successful, getUserInfo will be called
-          return this.userInfoService.getUserInfo(this.user.id);
-        } else {
-          console.log(res);
-          // If checkLogin is not successful, an empty observable is returned
-          return of(null);
-        }
-      })
-    ).subscribe(res => {
-      if (res && res.success){
-        console.log("user info: ", res.data);
-        this.userInfoService.userInfo = res.data;
-        this.userInfoService.userInfo$.next(res.data);
+    console.log("user:", this.user);
+    console.log("admin:", this.admin);
+    !this.user && this.checkLogin().subscribe(res => {
+      if(res.success){
+        this.user = res.data;
+        this.user$.next(res.data);
+        console.log("user checklogin response: ", res);
+        this.userInfoService.updateUserInfo(res.data.id);
+      }else {
+        console.log(res);
+        // alert(res.message);
       }
     });
+    !this.admin && this.adminCheckLogin().subscribe(res => {
+      if(res.success){
+        this.admin = res.data;
+        this.admin$.next(res.data);
+        console.log("admin checklogin response: ", res);
+        this.userInfoService.updateUserInfo(res.data.id);
+      }else {
+        console.log(res);
+        // alert(res.message);
+      }
+    } );
+
+
+    // !this.user && !this.admin && this.checkLogin().pipe(
+    //   switchMap(res => {
+    //     if(res.success){
+    //       if (res.data.role.type === "Admin") {
+    //         this.user = res.data;
+    //         this.user$.next(res.data);
+    //         console.log("admin checklogin response: ", res);
+    //         return this.userInfoService.getAdminUserInfo(res.data.id);
+    //       } else {
+    //         this.admin = res.data;
+    //         this.admin$.next(res.data);
+    //         console.log("customer checklogin response: ", res);
+    //         return this.userInfoService.getUserInfo(res.data.id);
+    //       }
+    //
+    //       // If checkLogin is successful, getUserInfo will be called
+    //     } else {
+    //       console.log(res);
+    //       // If checkLogin is not successful, an empty observable is returned
+    //       return of(null);
+    //     }
+    //   })
+    // ).subscribe(res => {
+    //   if (res && res.success){
+    //     console.log("user info: ", res.data);
+    //     this.userInfoService.userInfo = res.data;
+    //     this.userInfoService.userInfo$.next(res.data);
+    //   }
+    // });
 
   }
 
   login(user: User):Observable<LoginResponse> {
     console.log("login user: ", user);
     return this.httpClient.post<LoginResponse>(`${environment.api}/auth/login`,user);
+  }
+  adminLogin(user: User):Observable<LoginResponse> {
+    console.log("login admin: ", user);
+    return this.httpClient.post<LoginResponse>(`${environment.api}/auth/admin/login`,user);
   }
 
   register(user: any):Observable<DataResponse<User>> {
@@ -59,10 +97,24 @@ export class AuthService {
   checkLogin():Observable<DataResponse<User>> {
     return this.httpClient.get<DataResponse<User>>(`${environment.api}/auth/checklogin`);
   }
+  adminCheckLogin():Observable<DataResponse<User>> {
+    return this.httpClient.get<DataResponse<User>>(`${environment.api}/auth/admin/checklogin`);
+  }
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("customerToken");
     this.user = null;
+    this.user$.next(null);
+    this.userInfoService.userInfo = undefined;
+    this.userInfoService.userInfo$.next(undefined);
+  }
+
+  adminLogout() {
+    localStorage.removeItem("adminToken");
+    this.admin = null;
+    this.user$.next(null);
+    this.userInfoService.userInfo = undefined;
+    this.userInfoService.userInfo$.next(undefined);
   }
 
   updatePassword(user:User):Observable<DataResponse<User>>  {
@@ -84,5 +136,10 @@ export class AuthService {
 
   deleteUser(userId: number) {
     return this.httpClient.delete<DataResponse<User>>(`${environment.api}/auth/${userId}`);
+  }
+
+
+  adminRegister(user: User) {
+    return this.httpClient.put<DataResponse<User>>(`${environment.api}/auth/adminRegister`, user);
   }
 }

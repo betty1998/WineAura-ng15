@@ -27,7 +27,6 @@ export class ProfileEditDialogComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.userInfo = this.infoService.userInfo;
     this.profileForm = this.fb.group({
       username: [this.auth.user?.username, Validators.required],
       userInfoForm: this.fb.group({
