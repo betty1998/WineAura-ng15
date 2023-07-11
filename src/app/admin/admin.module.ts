@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
 import {AsyncPipe, CommonModule, CurrencyPipe, DatePipe, NgForOf, NgStyle} from '@angular/common';
 import {
-  NbCardModule, NbIconComponent,
-  NbIconLibraries,
-  NbIconModule, NbIconPackType,
-  NbLayoutModule,
   NbMenuModule,
-  NbSidebarModule,
-  NbThemeModule
+  NbSidebarModule
 } from "@nebular/theme";
 import { AdminComponent } from './admin.component';
 import {RouterModule, Routes} from "@angular/router";
@@ -184,14 +179,9 @@ const routes:Routes =[
 
   ],
   imports: [
-    NbThemeModule.forRoot(),
-    NbCardModule,
     RouterModule.forChild(routes),
-    NbMenuModule.forRoot(),
-    NbLayoutModule,
-    NbSidebarModule.forRoot(),
-    NbIconModule,
     NgChartsModule,
+    NbSidebarModule.forRoot(),
     AsyncPipe,
     FormsModule,
     FlexModule,
@@ -209,7 +199,8 @@ const routes:Routes =[
     MatDatepickerModule,
     MatMenuModule,
     MatTooltipModule,
-    AccountModule
+    AccountModule,
+
 
   ],
   exports: [
