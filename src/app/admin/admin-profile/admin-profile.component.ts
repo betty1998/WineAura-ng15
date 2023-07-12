@@ -28,7 +28,7 @@ export class AdminProfileComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.infoService.userInfo$.subscribe(res=>{
+    this.infoService.adminInfo$.subscribe(res=>{
         this.userInfo$.next(res);
       }
     )

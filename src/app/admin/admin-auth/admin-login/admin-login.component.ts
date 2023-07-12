@@ -31,7 +31,7 @@ export class AdminLoginComponent {
 
           // If login is successful, getUserInfo will be called
           this.userInfoService.updateUserInfo(res.user.id);
-          this.location.back();
+          this.router.navigate(["/admin/dashboard"]).catch();
         } else {
           console.log(res);
           this.errorMessage = res.message;

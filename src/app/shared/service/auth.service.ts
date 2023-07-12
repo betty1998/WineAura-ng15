@@ -112,9 +112,9 @@ export class AuthService {
   adminLogout() {
     localStorage.removeItem("adminToken");
     this.admin = null;
-    this.user$.next(null);
-    this.userInfoService.userInfo = undefined;
-    this.userInfoService.userInfo$.next(undefined);
+    this.admin$.next(null);
+    this.userInfoService.adminInfo = undefined;
+    this.userInfoService.adminInfo$.next(undefined);
   }
 
   updatePassword(user:User):Observable<DataResponse<User>>  {

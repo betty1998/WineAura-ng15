@@ -3,9 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef, OnInit,
-  Renderer2,
+  Renderer2, ViewChild,
 } from "@angular/core";
-import {NbMenuItem, NbSidebarService} from "@nebular/theme";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
 
@@ -17,53 +16,13 @@ import {AuthService} from "../shared/service/auth.service";
   styleUrls: ["./admin.component.scss"]
 })
 export class AdminComponent implements AfterViewInit, OnInit{
-  menu:NbMenuItem[] = [
-    {
-      title: "Dashboard",
-      link:"dashboard"
-    },
-    {
-      title:"Product",
-      expanded: true,
-      children: [
-        {
-          title: "Product List",
-          link:"product-list",
-        },
-        {
-          title: "Category",
-          link:"category",
-        },
-        {
-          title: "Brand",
-          link:"brand",
-        },
-        {
-          title: "Region",
-          link:"region",
-        }
-        ]
-    },
-    {
-      title: "Order",
-      link:"order"
-    },
-    {
-      title:"Customer",
-      link:"customer"
-    },
-    {
-      title:"Administrator",
-      link:"administrator"
-    },
-    {
-      title: "Profile",
-      link: "profile",
-    }
-  ];
+  show: boolean = true;
+  showSide: boolean = false;
+  @ViewChild('myrouter') routerRef!: ElementRef;
+
   constructor(private renderer: Renderer2, private el: ElementRef,
-              private router:Router, public auth:AuthService,
-              private sidebarService: NbSidebarService) {
+              private router:Router, public auth:AuthService) {
+    // this.showSide = auth.admin ? true : false;
   }
 
   ngAfterViewInit(): void {
@@ -71,36 +30,9 @@ export class AdminComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit(): void {
-    this.checkUrl(this.router.url.split('/')[2])
-
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const url = event.urlAfterRedirects.substring(7);
-        console.log(url);
-        this.checkUrl(url);
-      }
-    })
+    this.routerRef.nativeElement.style.marginLeft = this.showSide ? "330px" : "0";
   }
 
-  checkUrl(url: string) {
-    this.menu.forEach(item => {
-      if (item.link=== url) {
-        console.log(item.link);
-        item.selected = true;
-      } else if (item.children) {
-        item.children.forEach(child => {
-          if (child.link === url) {
-            child.selected = true;
-          }
-          else {
-            child.selected = false;
-          }
-        })
-      } else {
-        item.selected = false;
-      }
-    })
-  }
 
 
   logout() {
@@ -115,8 +47,14 @@ export class AdminComponent implements AfterViewInit, OnInit{
 
   }
 
-  toggleSidebar() {
-    this.sidebarService.toggle(false, "menu-sidebar");
-    console.log("admin:", this.auth.admin);
+  toggle() {
+    this.show = !this.show;
+  }
+
+  toggleSide(event:Event) {
+    event.stopPropagation();
+    this.showSide = !this.showSide;
+    this.routerRef.nativeElement.style.marginLeft = this.showSide ? "330px" : "0";
+    console.log(this.showSide);
   }
 }

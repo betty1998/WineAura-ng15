@@ -125,4 +125,8 @@ export class UserInfoService {
   }
 
 
+  updateAdminProfile(userId:number|undefined, userInfo: UserInfo) {
+    return this.httpClient.put<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/updateAdminProfile/${userId}`, userInfo);
+  }
 }

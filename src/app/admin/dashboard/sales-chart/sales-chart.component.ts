@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import {OrderService} from "../../../shared/service/order.service";
 import {Order} from "../../../shared/model/Order";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-sales-chart',
@@ -18,7 +19,7 @@ import {Order} from "../../../shared/model/Order";
 })
 export class SalesChartComponent implements OnInit, OnChanges{
   chartData:{data:number[],label:string}[]=[];
-  chartLabels:string[]=[];
+  chartLabels:(string | null|undefined)[]=[];
   @Input()
   orderPeriodMap!: { [key: string]: Order[]; }|null;
   period = "week";
@@ -26,7 +27,8 @@ export class SalesChartComponent implements OnInit, OnChanges{
   periodChange = new EventEmitter<string>();
 
   constructor(private orderService:OrderService,
-              private cd:ChangeDetectorRef){}
+              private cd:ChangeDetectorRef,
+              private datePipe:DatePipe){}
 
   ngOnInit(): void {}
 
@@ -41,22 +43,21 @@ export class SalesChartComponent implements OnInit, OnChanges{
     if (this.period == "week") {
       this.chartLabels = Object.keys(orderPeriodMap);
       this.chartLabels = this.chartLabels.map(key => {
-        const date = new Date(key);
-        return date.toLocaleString('en-US', {weekday: 'short'});
+        return this.datePipe.transform(key,'EE');
       });
     } else if (this.period == "month") {
       this.chartLabels = Object.keys(orderPeriodMap);
       this.chartLabels = this.chartLabels.map(key => {
-        const date = new Date(key);
-        return date.toLocaleString('en-US', {month: 'numeric', day: 'numeric'});
+        return this.datePipe.transform(key,'M/d');
       });
     } else if (this.period == "year") {
       this.chartLabels = Object.keys(orderPeriodMap);
       this.chartLabels = this.chartLabels.map(key => {
-        return key.slice(0, 3);
+        return key?.slice(0, 3);
       });
       console.log(this.chartLabels)
     }
+    console.log("chartLabels:",this.chartLabels)
 
     // assign chartData: calculate sales for each day
     this.calculateSales("Pending");

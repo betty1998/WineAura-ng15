@@ -67,7 +67,7 @@ export class AdminRegisterComponent {
           this.showMessage = true;
           console.log(res);
           this.auth.user = res.data;
-          return this.infoService.createProfile(res.data.id, formValue.infoGroup);
+          return this.infoService.updateAdminProfile(res.data.id, formValue.infoGroup);
         } else {
           console.log(res);
           return throwError(res.message);
@@ -75,6 +75,7 @@ export class AdminRegisterComponent {
       })).subscribe(res=>{
       if (res.success) {
         console.log(res);
+        // this.router.navigate(["/admin/dashboard"]).catch();
         // this.infoService.userInfo = res.data;
       } else {
         console.log(res);
