@@ -36,4 +36,17 @@ export class UserService {
     return this.http.get<DataResponse<User>>(`${environment.api}/users/checkUnactivatedUsername/${username}`);
 
   }
+
+  updateUser(id:number|undefined,status:string){
+    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateStatus/${status}`, null);
+  }
+
+  updateRole(id: number, role: string) {
+    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateRole/${role}`, null);
+
+  }
+
+  deleteUser(userId: number) {
+    return this.http.delete<DataResponse<User>>(`${environment.api}/users/${userId}`);
+  }
 }

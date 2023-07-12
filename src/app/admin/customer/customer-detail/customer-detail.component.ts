@@ -9,6 +9,7 @@ import {mergeMap} from "rxjs";
 import {InfoDialogComponent} from "../../../shared/dialog/info-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UserService} from "../../../shared/service/user.service";
 
 @Component({
   selector: 'app-customer-detail',
@@ -24,6 +25,7 @@ export class CustomerDetailComponent implements OnInit{
 
   constructor(private fb:FormBuilder,
               private auth:AuthService,
+              private userService:UserService,
               private infoService:UserInfoService,
               private dialog:MatDialog,
               private router:Router,
@@ -67,7 +69,7 @@ export class CustomerDetailComponent implements OnInit{
     this.userInfo.email = formValue.email;
     this.userInfo.phone = formValue.phone;
     // update status then update user info, then open dialog
-    this.auth.updateUser(this.user?.id,formValue.status).pipe(mergeMap(res=>{
+    this.userService.updateUser(this.user?.id,formValue.status).pipe(mergeMap(res=>{
       if(res.success){
         return this.infoService.updateProfile(this.userInfo.id,this.userInfo);
       } else {

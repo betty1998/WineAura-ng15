@@ -24,6 +24,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
 
   constructor(private infoService:UserInfoService,
               private auth:AuthService,
+              private userService:UserService,
               public dialog: MatDialog) {
   }
 
@@ -77,7 +78,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
   }
 
   deleteCustomer(userId:number) {
-    this.auth.deleteUser(userId).subscribe(res=>{
+    this.userService.deleteUser(userId).subscribe(res=>{
       if (res.success) {
         this.customerInfos = this.customerInfos.filter(item=>item.user.id!=userId);
         this.dataSource.data = this.customerInfos;
@@ -94,7 +95,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
         item.user.status = status;
       }
     })
-    this.auth.updateUser(id,status).subscribe(res=>{
+    this.userService.updateUser(id,status).subscribe(res=>{
       if (res.success) {
         this.setDataSourceAttributes();
       } else {
