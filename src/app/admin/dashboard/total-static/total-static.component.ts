@@ -27,7 +27,7 @@ export class TotalStaticComponent implements OnInit{
   }
 
   getTotalOrders() {
-    return this.orderService.getOrders().subscribe(res=>{
+    return this.orderService.getOrders("admin").subscribe(res=>{
       if (res.success) {
         this.totalOrders$.next(res.data.length);
         this.calculateMonthlyChange(res.data);
@@ -76,7 +76,7 @@ export class TotalStaticComponent implements OnInit{
     console.log("test:",orderOneMonthAgo,orderTwoMonthAgo,salesOneMonthAgo,salesTwoMonthAgo);
   }
   getTotalUsers() {
-    this.userService.getUsers().subscribe(res=>{
+    this.userService.getUsers("admin").subscribe(res=>{
       if (res.success) {
         // filter user with role of customer
         this.totalUsers$.next( res.data.filter(user=>

@@ -6,6 +6,8 @@ import {BehaviorSubject, switchMap} from "rxjs";
 import {CartProduct} from "../../../shared/model/CartProduct";
 import {AuthService} from "../../../shared/service/auth.service";
 import {UserInfoService} from "../../../shared/service/user-info.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../../../shared/dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-product-detail',
@@ -23,7 +25,8 @@ export class ProductDetailComponent implements OnInit{
               private auth:AuthService,
               private userInfoService:UserInfoService,
               private route:ActivatedRoute,
-              private router:Router) {
+              private router:Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -59,11 +62,70 @@ export class ProductDetailComponent implements OnInit{
         }
       });
     }else{
-      // if not login
-      // TODO: open a dialog
-      // navigate to login page
-      this.router.navigate(["/login"]).catch();
+      const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+        data:{
+          title:"Please login first",
+          message:"You need to login to add to cart. Do you want to login now?"
+        }
+      });
+      dialogRef.afterClosed().subscribe(res =>{
+        if (res) {
+          this.router.navigate(["/login"]).catch();
+        }
+      });
     }
+  }
+
+  addToFavorite(product: Product | undefined, event: Event) {
+    event.stopPropagation();
+    if (this.auth.user){
+      this.userInfoService.addToFavorite(this.userInfoService.userInfo?.id, product?.id).subscribe(res=>{
+        if (res.success) {
+          this.userInfoService.userInfo = res.data;
+          this.userInfoService.userInfo$.next(res.data);
+          this.ngOnInit();
+          // this.cart$.next(this.userInfo.cart);
+        } else {
+          console.log(res);
+        }
+      });
+    }else {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+        data:{
+          title:"Please login first",
+          message:"You need to login to add to favorite. Do you want to login now?"
+        }
+      });
+      dialogRef.afterClosed().subscribe(res =>{
+        if (res) {
+          this.router.navigate(["/login"]).catch();
+        }
+      });
+    }
+
+  }
+
+  ifLike(product: Product | undefined | null) {
+    console.log(this.userInfoService.userInfo?.favorites);
+    return this.userInfoService.userInfo?.favorites
+      .some(p => p.id === product?.id);
+  }
+
+  removeFromFavorite(product: Product | undefined, event: Event) {
+    event.stopPropagation();
+    if (this.auth.user){
+      this.userInfoService.removeFromFavorite(this.userInfoService.userInfo?.id, product?.id).subscribe(res=>{
+        if (res.success) {
+          this.userInfoService.userInfo = res.data;
+          this.userInfoService.userInfo$.next(res.data);
+          this.ngOnInit();
+          // this.cart$.next(this.userInfo.cart);
+        } else {
+          console.log(res);
+        }  });
+          // this.cart$.next(this.userInfo.cart);
+    }
+
   }
 
 

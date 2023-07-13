@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Order} from "../model/Order";
 import {environment} from "../../../environments/environment.development";
 import {DataResponse} from "../httpResponse/dataResponse";
@@ -52,47 +52,58 @@ export class OrderService {
     })
   }
 
-  placeOrder(order:Order):Observable<DataResponse<Order>>{
-    return this.http.post<DataResponse<Order>>(`${environment.api}/orders`, order);
+  placeOrder(order:Order,module:string="user"):Observable<DataResponse<Order>>{
+    return this.http.post<DataResponse<Order>>(`${environment.api}/orders`, order,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getOrder(id: number) {
-    return this.http.get<DataResponse<Order>>(`${environment.api}/orders/${id}`);
+  getOrder(id: number,module:string="user") {
+    return this.http.get<DataResponse<Order>>(`${environment.api}/orders/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getOrders() {
-    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders`);
+  getOrders(module:string="user") {
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getOrderByUserId(userId: number | undefined) {
-    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/user/${userId}`);
+  getOrderByUserId(userId: number | undefined,module:string="user") {
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/user/${userId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  returnItems(orderId: number, returnList: Return[]) {
-    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/returnItems/${orderId}`, returnList);
+  returnItems(orderId: number, returnList: Return[],module:string="user") {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/returnItems/${orderId}`, returnList,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getOrderByPeriod(period: string) {
-    return this.http.get<DataResponse<{[key:string]:Order[]}>>(`${environment.api}/orders/period/${period}`);
+  getOrderByPeriod(period: string,module:string="user") {
+    return this.http.get<DataResponse<{[key:string]:Order[]}>>(`${environment.api}/orders/period/${period}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getRecentOrders(amount: number) {
-    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/recent/${amount}`);
+  getRecentOrders(amount: number,module:string="user") {
+    return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/recent/${amount}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getTotalOrders() {
-    return this.http.get<DataResponse<number>>(`${environment.api}/orders/total`);
+  getTotalOrders(module:string="user") {
+    return this.http.get<DataResponse<number>>(`${environment.api}/orders/total`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteOrder(id: number) {
-    return this.http.delete<DataResponse<Order>>(`${environment.api}/orders/${id}`);
+  deleteOrder(id: number,module:string="user") {
+    return this.http.delete<DataResponse<Order>>(`${environment.api}/orders/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deletePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase) {
-    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/${orderId}/deletePurchase/${purchaseId}`,purchase);
+  deletePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase,module:string="user") {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/${orderId}/deletePurchase/${purchaseId}`,purchase,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateStatus(id: number | undefined, order:Order) {
-    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/updateStatus/${id}`,order);
+  updateStatus(id: number | undefined, order:Order,module:string="user") {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/updateStatus/${id}`,order,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 }

@@ -22,7 +22,7 @@ export class AdminLoginComponent {
   login(form: NgForm) {
     const value = form.value;
     console.log("user:", value);
-    this.auth.adminLogin(value).subscribe(res => {
+    this.auth.adminLogin(value,"admin").subscribe(res => {
         console.log("admin login response: ", res);
         if (res.success) {
           this.auth.admin = res.user
@@ -30,7 +30,7 @@ export class AdminLoginComponent {
           localStorage.setItem("adminToken", res.token); // store token in local storage
 
           // If login is successful, getUserInfo will be called
-          this.userInfoService.updateUserInfo(res.user.id);
+          this.userInfoService.updateUserInfo(res.user.id,"admin");
           this.router.navigate(["/admin/dashboard"]).catch();
         } else {
           console.log(res);

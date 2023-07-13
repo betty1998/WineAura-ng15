@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {DataResponse} from "../httpResponse/dataResponse";
 import {Purchase} from "../model/Purchase";
 import {environment} from "../../../environments/environment.development";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Product} from "../model/Product";
 import {Observable} from "rxjs";
 import {ProductSold} from "../model/ProductSold";
@@ -21,23 +21,28 @@ export class PurchaseService {
   constructor(private http:HttpClient) { }
 
 
-  updatePurchaseStatus(purchaseId: number, status: string) {
-    return this.http.put<DataResponse<Purchase>>(`${environment.api}/purchases/updateStatus/${purchaseId}`, status);
+  updatePurchaseStatus(purchaseId: number, status: string, module: string = "user"):Observable<DataResponse<Purchase>> {
+    return this.http.put<DataResponse<Purchase>>(`${environment.api}/purchases/updateStatus/${purchaseId}`, status,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getTopSellings() {
-    return this.http.get<DataResponse<ProductSold[]>>(`${environment.api}/purchases/topSelling`);
+  getTopSellings(module: string = "user") {
+    return this.http.get<DataResponse<ProductSold[]>>(`${environment.api}/purchases/topSelling`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getCategoryMap() {
-    return this.http.get<DataResponse<Count>>(`${environment.api}/purchases/categoryMap`);
+  getCategoryMap(module: string = "user") {
+    return this.http.get<DataResponse<Count>>(`${environment.api}/purchases/categoryMap`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getPurchases() {
-    return this.http.get<DataResponse<Purchase[]>>(`${environment.api}/purchases`);
+  getPurchases(module: string = "user") {
+    return this.http.get<DataResponse<Purchase[]>>(`${environment.api}/purchases`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getTotalPurchases() {
-    return this.http.get<DataResponse<number>>(`${environment.api}/purchases/totalPurchases`);
+  getTotalPurchases(module: string = "user") {
+    return this.http.get<DataResponse<number>>(`${environment.api}/purchases/totalPurchases`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 }

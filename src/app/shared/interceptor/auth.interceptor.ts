@@ -14,11 +14,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let token;
-    if(request.url.includes('admin')){
+
+    if(request.headers.get('module')==='admin'){
       token = localStorage.getItem("adminToken");
     }else {
       token = localStorage.getItem("customerToken");
     }
+    console.log(request.url," request from",request.headers.get('module'),"token:",token);
     if (token){
       request = request.clone({
         setHeaders:{

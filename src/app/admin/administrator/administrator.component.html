@@ -47,38 +47,42 @@
       </ng-container>
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element" class="d-flex align-items-center">
-          <button mat-icon-button color="primary" [routerLink]="['edit-admin',element.id]" [disabled]="!element.user.password">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteAdmin(element.user)" [disabled]="element.user.id==1">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button color="primary" matTooltip="Deactivate Customer" class="me-2"
-                  *ngIf="element.user?.status === 'Active'"
-                  (click)="updateStatus('Inactive',element.user.id)"
-                  [disabled]="element.user.id==1"
-                  >
-            <mat-icon>block</mat-icon>
-          </button>
-          <button mat-icon-button color="accent" matTooltip="Activate Customer" class="me-2"
-                  *ngIf="element.user?.status === 'Inactive'"
-                  (click)="updateStatus('Active',element.user.id)"
-                  [disabled]="!element.user.password||element.user.id==1">
-            <mat-icon>check_circle</mat-icon>
-          </button>
+        <td mat-cell *matCellDef="let element">
+          <div class="d-flex align-items-center"
+               *ngIf="!(element.user.role.type==='Admin'&&(auth.admin$|async)?.role?.type=='Manager')">
+            <button mat-icon-button color="primary" [routerLink]="['edit-admin',element.id]" [disabled]="!element.user.password">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteAdmin(element.user)" [disabled]="element.user.id==1">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Deactivate Customer" class="me-2"
+                    *ngIf="element.user?.status === 'Active'"
+                    (click)="updateStatus('Inactive',element.user.id)"
+                    [disabled]="element.user.id==1"
+            >
+              <mat-icon>block</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" matTooltip="Activate Customer" class="me-2"
+                    *ngIf="element.user?.status === 'Inactive'"
+                    (click)="updateStatus('Active',element.user.id)"
+                    [disabled]="!element.user.password||element.user.id==1">
+              <mat-icon>check_circle</mat-icon>
+            </button>
 
-          <button mat-raised-button color="primary"
-                  *ngIf="element.user.role.type === 'Manager'"
-                  (click)="updateRole('Admin',element.user.id)">
-            Upgrade
-          </button>
-          <button mat-raised-button color="warn" matTooltip="Downgrade Customer"
-                  *ngIf="element.user.role.type === 'Admin'"
-                  (click)="updateRole('Customer',element.user.id)"
-                  [disabled]="element.user.id==1">
-            Downgrade
-          </button>
+            <button mat-raised-button color="primary"
+                    *ngIf="element.user.role.type === 'Manager'"
+                    (click)="updateRole('Admin',element.user.id)">
+              Upgrade
+            </button>
+            <button mat-raised-button color="warn" matTooltip="Downgrade Customer"
+                    *ngIf="element.user.role.type === 'Admin'"
+                    (click)="updateRole('Customer',element.user.id)"
+                    [disabled]="element.user.id==1">
+              Downgrade
+            </button>
+          </div>
+
         </td>
       </ng-container>
 

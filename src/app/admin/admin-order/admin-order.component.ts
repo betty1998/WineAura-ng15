@@ -35,7 +35,7 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.orderStatus = Object.values(OrderStatus);
-    this.orderService.getOrders().subscribe(res=>{
+    this.orderService.getOrders("admin").subscribe(res=>{
       if (res.success) {
         this.orders = res.data;
         console.log(this.orders)
@@ -94,7 +94,7 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.orderService.deleteOrder(id).subscribe(res=>{
+        this.orderService.deleteOrder(id,"admin").subscribe(res=>{
           if (res.success) {
             this.orders = this.orders.filter(order => order.id !== id);
             this.dataSource = new MatTableDataSource<Order>(this.orders);
@@ -145,7 +145,7 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
       if (result) {
         order.trackingNumber = result;
         order.status = OrderStatus.SHIPPED;
-        this.orderService.updateStatus(order.id, order).subscribe(res => {
+        this.orderService.updateStatus(order.id, order,"admin").subscribe(res => {
           if (res.success) {
             this.setDataSourceAttributes();
           } else {
@@ -161,7 +161,7 @@ export class AdminOrderComponent implements OnInit, AfterViewInit {
     // convert string to OrderStatus
     order.status = status as OrderStatus;
     console.log(order);
-    this.orderService.updateStatus(order.id, order).subscribe(res => {
+    this.orderService.updateStatus(order.id, order,"admin").subscribe(res => {
       if (res.success) {
         this.setDataSourceAttributes();
       } else {

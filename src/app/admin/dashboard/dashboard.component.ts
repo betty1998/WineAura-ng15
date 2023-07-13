@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit,AfterViewInit{
   ngOnInit(): void {
     this.getOrderByPeriod("week");
     this.getTopSelling();
-    this.orderService.getRecentOrders(this.recentOrderNum).subscribe(res=>{
+    this.orderService.getRecentOrders(this.recentOrderNum,"admin").subscribe(res=>{
       if (res.success) {
         this.recentOrders$.next(res.data);
       } else {
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit,AfterViewInit{
   }
 
   getOrderByPeriod(period: string) {
-    this.orderService.getOrderByPeriod(period).subscribe(res=>{
+    this.orderService.getOrderByPeriod(period,"admin").subscribe(res=>{
       if (res.success) {
         this.orderMap$.next(res.data);
         this.orderMap = res.data;
@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit,AfterViewInit{
   }
 
   getTopSelling() {
-    this.purchaseService.getTopSellings().subscribe(res=>{
+    this.purchaseService.getTopSellings("admin").subscribe(res=>{
       if (res.success) {
         this.topSelling$.next(res.data);
       } else {
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit,AfterViewInit{
   }
 
   getCategoryMap() {
-    this.purchaseService.getCategoryMap().subscribe(res=>{
+    this.purchaseService.getCategoryMap("admin").subscribe(res=>{
       if (res.success) {
         this.categoryMap$.next(res.data);
       } else {

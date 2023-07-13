@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {BehaviorSubject, Observable} from "rxjs";
 import {DataResponse} from "../httpResponse/dataResponse";
@@ -17,12 +17,14 @@ export class ProductService {
   constructor(private httpClient:HttpClient) { }
 
 
-  getProducts():Observable<DataResponse<Product[]>>{
-    return this.httpClient.get<DataResponse<Product[]>>(`${environment.api}/products`);
+  getProducts(module:string="user"):Observable<DataResponse<Product[]>>{
+    return this.httpClient.get<DataResponse<Product[]>>(`${environment.api}/products`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getProduct(id: number): Observable<DataResponse<Product>>{
-    return this.httpClient.get<DataResponse<Product>>(`${environment.api}/products/${id}`);
+  getProduct(id: number,module:string="user"): Observable<DataResponse<Product>>{
+    return this.httpClient.get<DataResponse<Product>>(`${environment.api}/products/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
   getCategories(products:Product[]): string[]{
@@ -39,37 +41,45 @@ export class ProductService {
     return Array.from(new Set(regions));
   }
 
-  checkStock(id: number | undefined):Observable<DataResponse<number>> {
-    return this.httpClient.get<DataResponse<number>>(`${environment.api}/products/checkStock/${id}`);
+  checkStock(id: number | undefined,module:string="user"):Observable<DataResponse<number>> {
+    return this.httpClient.get<DataResponse<number>>(`${environment.api}/products/checkStock/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
 
   }
 
-  addProduct(product: Product):Observable<DataResponse<Product>> {
-    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, product);
+  addProduct(product: Product,module:string="user"):Observable<DataResponse<Product>> {
+    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, product,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteProduct(id: number) {
-    return this.httpClient.delete<DataResponse<Product>>(`${environment.api}/products/${id}`);
+  deleteProduct(id: number,module:string="user") {
+    return this.httpClient.delete<DataResponse<Product>>(`${environment.api}/products/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateProduct(product: Product) {
-    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateInfo/${product.id}`, product);
+  updateProduct(product: Product,module:string="user") {
+    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateInfo/${product.id}`, product,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateStatus(id: number | undefined, newStatus: String) {
-    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateStatus/${id}`, newStatus);
+  updateStatus(id: number | undefined, newStatus: String,module:string="user") {
+    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateStatus/${id}`, newStatus,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addCategory(category: string) {
-    return this.httpClient.post<DataResponse<string>>(`${environment.api}/categories/${category}`, null);
+  addCategory(category: string,module:string="user") {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/categories/${category}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addBrand(brand: string) {
-    return this.httpClient.post<DataResponse<string>>(`${environment.api}/brands/${brand}`, null);
+  addBrand(brand: string,module:string="user") {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/brands/${brand}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addRegion(region: string) {
-    return this.httpClient.post<DataResponse<string>>(`${environment.api}/regions/${region}`, null);
+  addRegion(region: string,module:string="user") {
+    return this.httpClient.post<DataResponse<string>>(`${environment.api}/regions/${region}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 }
 

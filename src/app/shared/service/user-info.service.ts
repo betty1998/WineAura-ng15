@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserInfo} from "../model/UserInfo";
 import {AuthService} from "./auth.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {CartProduct} from "../model/CartProduct";
@@ -24,15 +24,15 @@ export class UserInfoService {
   constructor(private httpClient:HttpClient) {
   }
 
-  public updateUserInfo(userId: number | undefined){
-    this.getUserInfo(userId).subscribe(res=>{
+  public updateUserInfo(userId: number | undefined, module:string="user"){
+    this.getUserInfo(userId,module).subscribe(res=>{
       if (res.success) {
-        if (res.data.user.role.type === "Admin") {
-          this.adminInfo = res.data;
-          this.adminInfo$.next(res.data);
-        }else {
+        if (res.data.user.role.type == "Customer") {
           this.userInfo = res.data;
           this.userInfo$.next(res.data);
+        }else {
+          this.adminInfo = res.data;
+          this.adminInfo$.next(res.data);
         }
       } else {
         console.log(res);
@@ -40,93 +40,111 @@ export class UserInfoService {
     })
   }
 
-  public getUserInfo(userId: number|undefined):Observable<DataResponse<UserInfo>> {
+  public getUserInfo(userId: number|undefined, module:string="user"):Observable<DataResponse<UserInfo>> {
     return this.httpClient.get<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/${userId}`);
+      `${environment.api}/userinfos/${userId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
-  public getAdminUserInfo(adminId: number | undefined) {
+  public getAdminUserInfo(adminId: number | undefined, module:string="user") {
     return this.httpClient.get<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/${adminId}`);
-  }
-
-  public getUserInfoById(id:number):Observable<DataResponse<UserInfo>> {
-    return this.httpClient.get<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/${id}`);
+      `${environment.api}/userinfos/${adminId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  public getCart(userInfoId:number):Observable<DataResponse<CartProduct[]>>{
+  public getUserInfoById(id:number, module:string="user"):Observable<DataResponse<UserInfo>> {
+    return this.httpClient.get<DataResponse<UserInfo>>(
+      `${environment.api}/userinfos/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
+
+  public getCart(userInfoId:number, module:string="user"):Observable<DataResponse<CartProduct[]>>{
     return this.httpClient.get<DataResponse<CartProduct[]>>(
-      `${environment.api}/userinfos/cart/${userInfoId}`);
+      `${environment.api}/userinfos/cart/${userInfoId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  public addToCart(userInfoId:number|undefined,cartProduct:CartProduct):Observable<DataResponse<UserInfo>>{
+  public addToCart(userInfoId:number|undefined,cartProduct:CartProduct, module:string="user"):Observable<DataResponse<UserInfo>>{
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/addToCart/${userInfoId}`,cartProduct);
+      `${environment.api}/userinfos/addToCart/${userInfoId}`,cartProduct,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  public updateCart(userInfoId:number, cart:CartProduct[]):Observable<DataResponse<UserInfo>>{
+  public updateCart(userInfoId:number, cart:CartProduct[], module:string="user"):Observable<DataResponse<UserInfo>>{
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/updateCart/${userInfoId}`,cart);
+      `${environment.api}/userinfos/updateCart/${userInfoId}`,cart,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteCartProduct(userInfoId: number, cartProductId: number | undefined):Observable<DataResponse<UserInfo>> {
+  deleteCartProduct(userInfoId: number, cartProductId: number | undefined, module:string="user"):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/cartProduct/${cartProductId}`,null);
+      `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/cartProduct/${cartProductId}`,null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addToFavorite(userInfoId: number, productId: number | undefined):Observable<DataResponse<UserInfo>> {
+  addToFavorite(userInfoId: number | undefined, productId: number | undefined, module: string = "user"):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/addToFavorite/${userInfoId}/product/${productId}`, null);
+      `${environment.api}/userinfos/addToFavorite/${userInfoId}/product/${productId}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-    removeFromFavorite(userInfoId: number, productId: number | undefined):Observable<DataResponse<UserInfo>> {
+  removeFromFavorite(userInfoId: number | undefined, productId: number | undefined, module: string = "user"):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null);
+      `${environment.api}/userinfos/removeFromFavorite/${userInfoId}/product/${productId}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addAddress(userInfoId: number, address: AddressBook):Observable<DataResponse<UserInfo>>  {
+  addAddress(userInfoId: number, address: AddressBook, module:string="user"):Observable<DataResponse<UserInfo>>  {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/addAddress/${userInfoId}`, address);
+      `${environment.api}/userinfos/addAddress/${userInfoId}`, address,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  editAddress(userInfoId: number, address: AddressBook) {
+  editAddress(userInfoId: number, address: AddressBook, module:string="user") {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/editAddress/${userInfoId}`, address);
+      `${environment.api}/userinfos/editAddress/${userInfoId}`, address,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteAddress(userInfoId: number, address:AddressBook) {
+  deleteAddress(userInfoId: number, address:AddressBook, module:string="user") {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/deleteAddress/${userInfoId}`, address);
+      `${environment.api}/userinfos/deleteAddress/${userInfoId}`, address,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateProfile(userInfoId: number, userInfo: UserInfo) {
+  updateProfile(userInfoId: number, userInfo: UserInfo, module:string="user") {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/updateProfile/${userInfoId}`, userInfo);
+      `${environment.api}/userinfos/updateProfile/${userInfoId}`, userInfo,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  createProfile(userId: number | undefined, userInfo: UserInfo) {
+  createProfile(userId: number | undefined, userInfo: UserInfo, module:string="user") {
     return this.httpClient.post<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/createProfile/${userId}`, userInfo);
+      `${environment.api}/userinfos/createProfile/${userId}`, userInfo,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getUserInfos() {
+  getUserInfos(module:string="user") {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
-      `${environment.api}/userinfos`);
+      `${environment.api}/userinfos`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getAdmins() {
+  getAdmins(module:string="user") {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
-      `${environment.api}/userinfos/admins`);
+      `${environment.api}/userinfos/admins`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getCustomers() {
+  getCustomers(module:string="user") {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
-      `${environment.api}/userinfos/customers`);
+      `${environment.api}/userinfos/customers`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
 
-  updateAdminProfile(userId:number|undefined, userInfo: UserInfo) {
+  updateAdminProfile(userId:number|undefined, userInfo: UserInfo, module:string="user") {
     return this.httpClient.put<DataResponse<UserInfo>>(
-      `${environment.api}/userinfos/updateAdminProfile/${userId}`, userInfo);
+      `${environment.api}/userinfos/updateAdminProfile/${userId}`, userInfo,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 }

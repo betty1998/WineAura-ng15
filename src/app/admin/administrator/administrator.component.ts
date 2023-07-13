@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {User} from "../../shared/model/User";
 import {StoreManager} from "../../shared/model/StoreManager";
@@ -11,6 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddAdminDialogComponent} from "./add-admin-dialog/add-admin-dialog.component";
 import {UserService} from "../../shared/service/user.service";
 import {InfoDialogComponent} from "../../shared/dialog/info-dialog.component";
+import {elements} from "chart.js";
 
 @Component({
   selector: 'app-administrator',
@@ -27,12 +28,12 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
 
   constructor(private infoService:UserInfoService,
               private userService:UserService,
-              private auth:AuthService,
+              public auth:AuthService,
               private dialog:MatDialog){
   }
 
   ngOnInit(): void {
-    this.infoService.getAdmins().subscribe(res=>{
+    this.infoService.getAdmins("admin").subscribe(res=>{
       if (res.success) {
         this.admins = res.data;
         console.log(this.admins);
@@ -49,6 +50,7 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
     if (this.dataSource) {
       this.setDataSourceAttributes();
     }
+
   }
 
   setDataSourceAttributes() {
@@ -62,7 +64,7 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
         item.user.status = status;
       }
     })
-    this.userService.updateUser(id,status).subscribe(res=>{
+    this.userService.updateUser(id,status,"admin").subscribe(res=>{
       if (res.success) {
         this.setDataSourceAttributes();
       } else {
@@ -81,7 +83,7 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
       });
       return;
     }
-    this.userService.deleteAdmin(user.id).subscribe(res=>{
+    this.userService.deleteAdmin(user.id,"admin").subscribe(res=>{
       if (res.success) {
         this.admins = this.admins.filter(item=>item.user.id!=user.id);
         this.dataSource.data = this.admins;
@@ -104,7 +106,7 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
   }
 
   updateRole(newRole: string, id: number) {
-    this.userService.updateRole(id, newRole).subscribe(res => {
+    this.userService.updateRole(id, newRole,"admin").subscribe(res => {
       if (res.success) {
         this.admins.forEach(item => {
           if (item.user.id == id) {
@@ -126,7 +128,7 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        this.userService.addAdmin(result).subscribe(res=>{
+        this.userService.addAdmin(result,"admin").subscribe(res=>{
           if (res.success) {
             this.admins.push(res.data);
             this.dataSource.data = this.admins;
@@ -138,4 +140,5 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
       }
     });
   }
+
 }

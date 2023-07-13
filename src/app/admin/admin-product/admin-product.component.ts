@@ -23,12 +23,13 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
   statuses: string[] = Object.values(ProductStatus);
   statusToFilter!: string;
 
+
   constructor(private productService:ProductService,
               public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(res=>{
+    this.productService.getProducts("admin").subscribe(res=>{
       if (res.success) {
         this.products = res.data;
         this.dataSource = new MatTableDataSource<Product>(this.products);
@@ -62,7 +63,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.productService.deleteProduct(id).subscribe(res=>{
+        this.productService.deleteProduct(id,"admin").subscribe(res=>{
           if (res.success) {
             this.products = this.products.filter(product => product.id !== id);
             this.dataSource = new MatTableDataSource<Product>(this.products);
@@ -98,7 +99,7 @@ export class AdminProductComponent implements OnInit, AfterViewInit{
 
   updateStatus(product: Product, newStatus: String) {
     console.log(typeof newStatus);
-    this.productService.updateStatus(product.id, newStatus).subscribe(res=>{
+    this.productService.updateStatus(product.id, newStatus,"admin").subscribe(res=>{
       if (res.success) {
         // find the corresponding product in the products array and update its status
         this.products.forEach((p, i) => {

@@ -12,7 +12,14 @@
           <input type="number" min="1"[(ngModel)]="qty" placeholder="1">
       </div>
       <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product,$event)">Add to Cart</button>
-      <button class="col-1" mat-mini-fab color="primary"><mat-icon>favorite</mat-icon></button>
+      <button *ngIf="ifLike(product$|async)" class="col-1 love-btn"
+              mat-icon-button color="primary"
+              (click)="removeFromFavorite(product$.value,$event)"><mat-icon>favorite</mat-icon>
+      </button>
+      <button *ngIf="!ifLike(product$|async)" class="col-1 love-btn"
+              mat-icon-button color="primary"
+              (click)="addToFavorite(product$.value,$event)"><mat-icon>favorite_outline</mat-icon>
+      </button>
     </section>
     <section class="description-container mb-4">
       <h3 class="pt-3"> Product Description</h3>
@@ -32,16 +39,16 @@
           <div class="col-2">Wine Type</div>
           <div class="col-5">{{(product$|async)?.category}}</div>
           <div class="col-1">Style</div>
-<!--          <div class="col">{{(product$|async)?.style}}</div>-->
-          <div class="col">Elegant</div>
+          <div class="col">{{(product$|async)?.style}}</div>
+<!--          <div class="col">Elegant</div>-->
         </div>
         <div class="row">
           <div class="col-2">Taste</div>
-<!--          <div class="col">{{(product$|async)?.taste}}</div>-->
-          <div class="col-5">Blackberry, Cherry</div>
+          <div class="col-5">{{(product$|async)?.taste}}</div>
+<!--          <div class="col-5">Blackberry, Cherry</div>-->
           <div class="col-1">ABV</div>
-          <div class="col">14.6%</div>
-<!--          <div class="col">{{(product$|async)?.abv}}</div>-->
+<!--          <div class="col">14.6%</div>-->
+          <div class="col">{{(product$|async)?.abv}}</div>
         </div>
       </div>
 

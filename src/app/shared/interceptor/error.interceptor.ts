@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log(error);
-        if (error.error.message.startsWith("JWT expired")) {
+        if (error.error.message && error.error.message.startsWith("JWT expired")) {
           // remove expired token
           localStorage.removeItem('customerToken');
 

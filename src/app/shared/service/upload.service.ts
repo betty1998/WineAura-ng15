@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../environments/environment.development";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DataResponse} from "../httpResponse/dataResponse";
 
 @Injectable({
@@ -11,12 +11,12 @@ export class UploadService {
 
   constructor(private http:HttpClient) { }
 
-  uploadFile(formData: FormData) {
+  uploadFile(formData: FormData, module: string = "user") {
     return this.http.post(`${environment.api}/file`, formData, {
       reportProgress: true,
-      observe: 'events'
+      observe: 'events',
+      headers: new HttpHeaders({ 'module': module })
     });
   }
 }
-
 

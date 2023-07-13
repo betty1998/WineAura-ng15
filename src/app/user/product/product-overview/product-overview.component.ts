@@ -6,6 +6,7 @@ import {UserInfoService} from "../../../shared/service/user-info.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {Dialog} from "@angular/cdk/dialog";
+import {ConfirmDialogComponent} from "../../../shared/dialog/confirm-dialog.component";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ProductOverviewComponent {
               public dialog:MatDialog) {
   }
 
+
   addToCart(product: Product, event: Event) {
     event.stopPropagation();
     // check user first
@@ -39,15 +41,23 @@ export class ProductOverviewComponent {
       this.userInfoService.addToCart(this.userInfoService.userInfo?.id,cartProduct).subscribe(res =>{
         if (res.success) {
           this.userInfoService.userInfo = res.data;
+          this.userInfoService.userInfo$.next(res.data);
         } else {
           console.log(res);
         }
       });
     }else{
-      // if not login
-      // TODO: open a dialog
-      // navigate to login page
-      this.router.navigate(["/login"]).catch();
+      const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+        data:{
+          title:"Please login first",
+          message:"You need to login to add to cart. Do you want to login now?"
+        }
+      });
+      dialogRef.afterClosed().subscribe(res =>{
+        if (res) {
+          this.router.navigate(["/login"]).catch();
+        }
+      });
     }
   }
 

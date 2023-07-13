@@ -48,14 +48,14 @@ export class AdminProductDetailComponent implements OnInit{
               private dialog: MatDialog) {
 
   }
-
+  //TODO: add reviews
   ngOnInit(): void {
     this.createGroup();
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.title = "Edit Product";
       this.id = id;
-      this.productService.getProduct(id).subscribe(res => {
+      this.productService.getProduct(id,"admin").subscribe(res => {
         if (res.success) {
           this.product = res.data;
           console.log(res.data);
@@ -153,8 +153,13 @@ export class AdminProductDetailComponent implements OnInit{
         const res = event.body as DataResponse<Product>;
         if (res.success) {
           console.log(res.data);
-          alert("Add product successfully");
-          this.router.navigate(['/admin/product']).catch();
+          this.dialog.open(InfoDialogComponent, {
+            data: {
+              title: "Success",
+              message: "Product added successfully!"
+            }
+          });
+          this.router.navigate(['/admin/product-list']).catch();
         } else {
           console.log(res);
           alert(res.message);
@@ -195,7 +200,7 @@ export class AdminProductDetailComponent implements OnInit{
       return;
     }
     product.id = this.product.id;
-    this.productService.updateProduct(product).subscribe(res => {
+    this.productService.updateProduct(product,"admin").subscribe(res => {
       if (res.success) {
         console.log(res.data);
         this.dialog.open(InfoDialogComponent, {
@@ -239,7 +244,7 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.categories.push(result);
           this.productForm.get('category')?.setValue(result);
-          this.productService.addCategory(result).subscribe(res => {
+          this.productService.addCategory(result,"admin").subscribe(res => {
             if (res.success) {
               console.log(res.data);
             } else {
@@ -269,7 +274,7 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.brands.push(result);
           this.productForm.get('brand')?.setValue(result);
-          this.productService.addBrand(result).subscribe(res => {
+          this.productService.addBrand(result,"admin").subscribe(res => {
             if (res.success) {
               console.log(res.data);
             } else {
@@ -296,7 +301,7 @@ export class AdminProductDetailComponent implements OnInit{
         if (result) {
           this.regions.push(result);
           this.productForm.get('region')?.setValue(result);
-          this.productService.addRegion(result).subscribe(res => {
+          this.productService.addRegion(result,"admin").subscribe(res => {
             if (res.success) {
               console.log(res.data);
             } else {

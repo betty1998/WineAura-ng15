@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 import {User} from "../model/User";
 import {DataResponse} from "../httpResponse/dataResponse";
@@ -15,38 +15,46 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
-  getUser(id: number) {
-    return this.http.get<DataResponse<User>>(`${environment.api}/users/${id}`);
+  getUser(id: number,module:string="user") {
+    return this.http.get<DataResponse<User>>(`${environment.api}/users/${id}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getUsers() {
-    return this.http.get<DataResponse<User[]>>(`${environment.api}/users`);
+  getUsers(module:string="user") {
+    return this.http.get<DataResponse<User[]>>(`${environment.api}/users`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  addAdmin(newAdmin:AdminData) {
-    return this.http.post<DataResponse<UserInfo>>(`${environment.api}/users/addAdmin`,newAdmin);
-
-  }
-
-  deleteAdmin(userId: number | undefined) {
-    return this.http.delete<DataResponse<UserInfo>>(`${environment.api}/users/deleteAdmin/${userId}`);
-  }
-
-  checkUnactivatedUsername(username:string) {
-    return this.http.get<DataResponse<User>>(`${environment.api}/users/checkUnactivatedUsername/${username}`);
+  addAdmin(newAdmin:AdminData,module:string="user") {
+    return this.http.post<DataResponse<UserInfo>>(`${environment.api}/users/addAdmin`,newAdmin,
+      { headers: new HttpHeaders({ 'module': module }) });
 
   }
 
-  updateUser(id:number|undefined,status:string){
-    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateStatus/${status}`, null);
+  deleteAdmin(userId: number | undefined,module:string="user") {
+    return this.http.delete<DataResponse<UserInfo>>(`${environment.api}/users/deleteAdmin/${userId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateRole(id: number, role: string) {
-    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateRole/${role}`, null);
+  checkUnactivatedUsername(username:string,module:string="user") {
+    return this.http.get<DataResponse<User>>(`${environment.api}/users/checkUnactivatedUsername/${username}`,
+      { headers: new HttpHeaders({ 'module': module }) });
 
   }
 
-  deleteUser(userId: number) {
-    return this.http.delete<DataResponse<User>>(`${environment.api}/users/${userId}`);
+  updateUser(id:number|undefined,status:string, module:string="user"){
+    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateStatus/${status}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
+
+  updateRole(id: number, role: string, module:string="user") {
+    return this.http.put<DataResponse<User>>(`${environment.api}/users/${id}/updateRole/${role}`, null,
+      { headers: new HttpHeaders({ 'module': module }) });
+
+  }
+
+  deleteUser(userId: number,module:string="user") {
+    return this.http.delete<DataResponse<User>>(`${environment.api}/users/${userId}`,
+      { headers: new HttpHeaders({ 'module': module }) });
   }
 }

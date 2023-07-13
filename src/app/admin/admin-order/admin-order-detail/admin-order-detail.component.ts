@@ -31,7 +31,7 @@ export class AdminOrderDetailComponent implements OnInit{
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.params['id']);
-    this.orderService.getOrder(id).pipe(switchMap(res=>{
+    this.orderService.getOrder(id,"admin").pipe(switchMap(res=>{
       if (res.success) {
         this.order$.next(this.calculateTotal(res.data));
         res.data.purchases.forEach(purchase=>purchase['isEdit']=false);
@@ -57,7 +57,7 @@ export class AdminOrderDetailComponent implements OnInit{
       if (result && order) {
         order.trackingNumber = result;
         order.status = OrderStatus.SHIPPED;
-        this.orderService.updateStatus(order.id, order).subscribe(res => {
+        this.orderService.updateStatus(order.id, order,"admin").subscribe(res => {
           if (res.success) {
             this.order$.next(this.calculateTotal(res.data));
           } else {
@@ -84,7 +84,7 @@ export class AdminOrderDetailComponent implements OnInit{
       });
     }
     console.log(order);
-    this.orderService.updateStatus(order.id, order).subscribe(res => {
+    this.orderService.updateStatus(order.id, order,"admin").subscribe(res => {
       if (res.success) {
         this.order$.next(this.calculateTotal(res.data));
       } else {
@@ -125,7 +125,7 @@ export class AdminOrderDetailComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.orderService.deletePurchase(orderId, purchase.id, purchase).subscribe(res => {
+        this.orderService.deletePurchase(orderId, purchase.id, purchase,"admin").subscribe(res => {
           if (res.success) {
             this.order$.next(this.calculateTotal(res.data));
             res.data.purchases.forEach(purchase => purchase['isEdit'] = false);

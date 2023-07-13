@@ -58,8 +58,11 @@ export class AddressDialogComponent implements OnInit{
       this.userInfoService.addAddress(this.userInfoId, addressBook).subscribe(res=>{
         if (res.success) {
           this.userInfoService.userInfo = res.data;
+          this.userInfoService.userInfo$.next(res.data);
+          this.dialogRef.close();
         } else {
           console.log(res);
+          alert(res.message);
         }
       });
     }else if (this.title == "Edit Address") {
@@ -69,11 +72,13 @@ export class AddressDialogComponent implements OnInit{
       this.userInfoService.editAddress(this.userInfoId, addressBook).subscribe(res=>{
         if (res.success) {
           this.userInfoService.userInfo = res.data;
+          this.userInfoService.userInfo$.next(res.data);
+          this.dialogRef.close();
         } else {
           console.log(res);
+          alert(res.message);
         }
       });
     }
-    this.dialogRef.close();
   }
 }

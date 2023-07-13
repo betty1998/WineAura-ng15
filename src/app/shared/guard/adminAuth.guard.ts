@@ -28,10 +28,10 @@ export class AdminAuthGuard implements CanActivate, CanLoad {
     if (this.auth.admin){
       return !!this.auth.admin;
     }else {
-      return this.auth.adminCheckLogin().pipe(
+      return this.auth.adminCheckLogin("admin").pipe(
         switchMap(res => {
           console.log("authGuard: checkLogin response: ", res);
-          if (res.success&&res.data.role.type==='Admin') {
+          if (res.success&&(res.data.role.type==='Admin'||res.data.role.type==='Manager')) {
             this.auth.admin = res.data;
             this.auth.admin$.next(res.data);
             return of(true); // Emit true to allow navigation

@@ -7,6 +7,9 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {AuthService} from "../shared/service/auth.service";
+import {User} from "../shared/model/User";
+import {UserInfo} from "../shared/model/UserInfo";
+import {UserInfoService} from "../shared/service/user-info.service";
 
 
 @Component({
@@ -21,16 +24,16 @@ export class AdminComponent implements AfterViewInit, OnInit{
   @ViewChild('myrouter') routerRef!: ElementRef;
 
   constructor(private renderer: Renderer2, private el: ElementRef,
-              private router:Router, public auth:AuthService) {
+              private router:Router, public auth:AuthService,
+              private infoService:UserInfoService) {
     // this.showSide = auth.admin ? true : false;
   }
 
   ngAfterViewInit(): void {
-
+    this.routerRef.nativeElement.style.marginLeft = this.showSide ? "330px" : "0";
   }
 
   ngOnInit(): void {
-    this.routerRef.nativeElement.style.marginLeft = this.showSide ? "330px" : "0";
   }
 
 
@@ -38,12 +41,11 @@ export class AdminComponent implements AfterViewInit, OnInit{
   logout() {
     this.auth.adminLogout();
     // Get current URL.
-    let currentUrl = this.router.url;
+    this.showSide = false;
+    this.ngOnInit();
 
     // Navigate away and then back to trigger route guards.
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate([currentUrl]);
-    });
+    this.router.navigate(["/admin/login"]).catch();
 
   }
 

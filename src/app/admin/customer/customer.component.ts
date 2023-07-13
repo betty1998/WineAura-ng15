@@ -29,7 +29,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit(): void {
-    this.infoService.getCustomers().subscribe(res=>{
+    this.infoService.getCustomers("admin").subscribe(res=>{
       if (res.success) {
         this.customerInfos = res.data;
         console.log(this.customerInfos);
@@ -78,7 +78,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
   }
 
   deleteCustomer(userId:number) {
-    this.userService.deleteUser(userId).subscribe(res=>{
+    this.userService.deleteUser(userId,"admin").subscribe(res=>{
       if (res.success) {
         this.customerInfos = this.customerInfos.filter(item=>item.user.id!=userId);
         this.dataSource.data = this.customerInfos;
@@ -95,7 +95,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
         item.user.status = status;
       }
     })
-    this.userService.updateUser(id,status).subscribe(res=>{
+    this.userService.updateUser(id,status,"admin").subscribe(res=>{
       if (res.success) {
         this.setDataSourceAttributes();
       } else {

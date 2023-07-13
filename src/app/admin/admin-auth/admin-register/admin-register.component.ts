@@ -7,6 +7,8 @@ import {UserInfo} from "../../../shared/model/UserInfo";
 import {filter, switchMap, tap, throwError} from "rxjs";
 import {UserService} from "../../../shared/service/user.service";
 import {User} from "../../../shared/model/User";
+import {MatDialog} from "@angular/material/dialog";
+import {InfoDialogComponent} from "../../../shared/dialog/info-dialog.component";
 
 @Component({
   selector: 'app-admin-register',
@@ -22,7 +24,8 @@ export class AdminRegisterComponent {
     public auth: AuthService,
     private router: Router,
     private infoService:UserInfoService,
-    private userService:UserService) {
+    private userService:UserService,
+    private dialog: MatDialog) {
   }
   ngOnInit(): void {
     this.registerFormGroup = this.fb.group({
@@ -50,7 +53,7 @@ export class AdminRegisterComponent {
     console.log(this.registerFormGroup.value);
     const formValue = this.registerFormGroup.value;
     // check username
-    this.userService.checkUnactivatedUsername(formValue.username).pipe(
+    this.userService.checkUnactivatedUsername(formValue.username,"admin").pipe(
       tap(res=>{
         if(!res.success){
           this.registerFormGroup.get("username")?.setErrors({usernameNotAvailable:true});
@@ -67,7 +70,7 @@ export class AdminRegisterComponent {
           this.showMessage = true;
           console.log(res);
           this.auth.user = res.data;
-          return this.infoService.updateAdminProfile(res.data.id, formValue.infoGroup);
+          return this.infoService.updateAdminProfile(res.data.id, formValue.infoGroup,"admin");
         } else {
           console.log(res);
           return throwError(res.message);
@@ -75,8 +78,13 @@ export class AdminRegisterComponent {
       })).subscribe(res=>{
       if (res.success) {
         console.log(res);
-        // this.router.navigate(["/admin/dashboard"]).catch();
-        // this.infoService.userInfo = res.data;
+        this.dialog.open(InfoDialogComponent, {
+          data: {
+            title: "Register successfully",
+            message: "Please sign in to your admin account",
+          }
+        });
+        this.router.navigate(["/admin/login"]).catch();
       } else {
         console.log(res);
       }

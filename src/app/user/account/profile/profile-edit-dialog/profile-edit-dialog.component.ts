@@ -16,6 +16,7 @@ export class ProfileEditDialogComponent implements OnInit{
   profileForm!: FormGroup;
   userInfo!: UserInfo;
   user!: User;
+  role!: string;
 
   constructor(private infoService:UserInfoService,
               private auth:AuthService,
@@ -28,7 +29,7 @@ export class ProfileEditDialogComponent implements OnInit{
 
   ngOnInit(): void {
     this.profileForm = this.fb.group({
-      username: [this.auth.user?.username, Validators.required],
+      username: [this.user?.username, Validators.required],
       userInfoForm: this.fb.group({
         firstName: [this.userInfo.firstName, Validators.required],
         lastName: [this.userInfo.lastName, Validators.required],
@@ -43,25 +44,6 @@ export class ProfileEditDialogComponent implements OnInit{
   save() {
     this.user.username = this.profileForm.value.username;
     this.userInfo = {...this.userInfo, ...this.profileForm.get("userInfoForm")?.value};
-    console.log(this.userInfo);
-    this.auth.updateUsername(this.user).pipe(switchMap(res =>{
-      if (res.success) {
-        this.auth.user = res.user;
-        localStorage.setItem("token", res.token);
-        return this.infoService.updateProfile(this.userInfo.id, this.userInfo);
-      }else {
-        console.log(res);
-        return throwError("Update Username failed");
-      }
-    }))
-      .subscribe(res=>{
-        if (res.success) {
-          this.infoService.userInfo = res.data;
-        } else {
-          console.log(res);
-        }
-        this.dialogRef.close();
-      });
-
+    this.dialogRef.close({user:this.user, userInfo:this.userInfo});
   }
 }

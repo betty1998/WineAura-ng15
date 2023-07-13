@@ -45,7 +45,7 @@ export class CustomerDetailComponent implements OnInit{
     this.userInfoId = this.route.snapshot.params['id'];
     this.isAdmin=this.route.snapshot.toString().includes('admin');
 
-    this.infoService.getUserInfoById(this.userInfoId).subscribe(res=>{
+    this.infoService.getUserInfoById(this.userInfoId,"admin").subscribe(res=>{
       if(res.success){
         this.userInfo = res.data;
         this.user = this.userInfo.user;
@@ -69,9 +69,9 @@ export class CustomerDetailComponent implements OnInit{
     this.userInfo.email = formValue.email;
     this.userInfo.phone = formValue.phone;
     // update status then update user info, then open dialog
-    this.userService.updateUser(this.user?.id,formValue.status).pipe(mergeMap(res=>{
+    this.userService.updateUser(this.user?.id,formValue.status,"admin").pipe(mergeMap(res=>{
       if(res.success){
-        return this.infoService.updateProfile(this.userInfo.id,this.userInfo);
+        return this.infoService.updateProfile(this.userInfo.id,this.userInfo,"admin");
       } else {
         alert(res.message);
         return [];

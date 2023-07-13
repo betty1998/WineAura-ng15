@@ -22,6 +22,19 @@
       margin-right: 30px;
     }
   }
+  .love-btn{
+    height: max-content;
+    width: max-content;
+    mat-icon{
+      font-size: 30px;
+      height:max-content;
+      width:fit-content;
+    }
+  }
+  div,button{
+    margin-top: auto;
+    margin-bottom:auto;
+  }
 }
 
 
