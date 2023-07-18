@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 import {User} from "../model/User";
 import {DataResponse} from "../httpResponse/dataResponse";
-import {environment} from "../../../environments/environment.development";
+import {environment} from "../../../environments/environment";
 import {UserInfo} from "../model/UserInfo";
 import {AdminData} from "../../admin/administrator/add-admin-dialog/add-admin-dialog.component";
 

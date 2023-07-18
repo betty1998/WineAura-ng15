@@ -49,7 +49,7 @@
         <th mat-header-cell *matHeaderCellDef> Action </th>
         <td mat-cell *matCellDef="let element">
           <div class="d-flex align-items-center"
-               *ngIf="!(element.user.role.type==='Admin'&&(auth.admin$|async)?.role?.type=='Manager')">
+               *ngIf="!(element.user.role.type==='Admin'&&(auth.admin$|async)?.role?.type=='Manager') && element.user.id !== (auth.admin$|async)?.id">
             <button mat-icon-button color="primary" [routerLink]="['edit-admin',element.id]" [disabled]="!element.user.password">
               <mat-icon>edit</mat-icon>
             </button>

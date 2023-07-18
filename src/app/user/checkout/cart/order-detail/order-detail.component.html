@@ -215,6 +215,7 @@
 </form>
 
 <div class="place-btn mt-3">
+  <button mat-stroked-button color="accent" (click)="cancel()">Cancel</button>
   <button mat-raised-button color="accent" (click)="placeOrder($event)" [disabled]="checkoutForm.invalid || step<3">
     Place Order
   </button>

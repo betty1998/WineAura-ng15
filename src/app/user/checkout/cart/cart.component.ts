@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {CartProduct} from "../../../shared/model/CartProduct";
 import {UserInfoService} from "../../../shared/service/user-info.service";
 import {UserInfo} from "../../../shared/model/UserInfo";
@@ -18,9 +18,10 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit{
+export class CartComponent implements OnInit,OnChanges{
   userInfo!: UserInfo;
   userId: number | null | undefined;
+  @Input()
   showCart=true;
   cart$ = new BehaviorSubject<CartProduct[]>([]);
 
@@ -29,6 +30,9 @@ export class CartComponent implements OnInit{
               private route:ActivatedRoute,
               private auth: AuthService,
               private dialog: MatDialog){
+  }
+  ngOnChanges() {
+    this.showCart = true;
   }
 
   ngOnInit(): void {

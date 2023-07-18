@@ -5,7 +5,7 @@ import {Product} from "../../../shared/model/Product";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject, finalize, map, Subscription} from "rxjs";
 import {HttpClient, HttpEvent, HttpEventType} from "@angular/common/http";
-import {environment} from "../../../../environments/environment.development";
+import {environment} from "../../../../environments/environment";
 import {ProductStatus} from "../../../shared/model/ProductStatus";
 import {UploadService} from "../../../shared/service/upload.service";
 import {DataResponse} from "../../../shared/httpResponse/dataResponse";
@@ -36,6 +36,7 @@ export class AdminProductDetailComponent implements OnInit{
   file!: File|null;
   imageUrl$ = new BehaviorSubject<string | ArrayBuffer | null>("");
   title!:string;
+  stars = [1, 2, 3, 4, 5];
 
   constructor(private route:ActivatedRoute,
               private productService:ProductService,
@@ -315,5 +316,15 @@ export class AdminProductDetailComponent implements OnInit{
         };
       });
     }
+  }
+
+    protected readonly Math = Math;
+
+  thumbUp(id: number | undefined) {
+    
+  }
+
+  thumbDown(id: number | undefined) {
+    
   }
 }

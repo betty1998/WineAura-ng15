@@ -1,6 +1,6 @@
 
-<main class="product-container" fxFlex fxLayout="row" fxLayout.xs="column">
-  <section id="filter-section" fxHide.xs="true" fxFlex="200px" fxFlex.xs="auto" fxLayout="column">
+<main class="product-container" fxFlex fxLayout="row">
+  <section id="filter-section" fxFlex.xs="180px" fxFlex="200px" fxLayout="column">
     <div class="result-found text-center">
       {{productService.total$|async}} Results Found
     </div>
@@ -51,8 +51,8 @@
   </section>
   <section class="products-list-section" fxFlex fxLayout="column" fxFlexAlign="end center">
     <div class="sort-container">
-      <span fxFlex="62"></span>
-      <mat-form-field appearance="outline" fxFlex="18%">
+      <span fxFlex></span>
+      <mat-form-field appearance="outline" fxFlex.xs="120px" class="me-2">
         <mat-label>Items per Page</mat-label>
         <mat-select [(ngModel)]="itemPerPage">
           <mat-option value="12">12 Items</mat-option>
@@ -60,7 +60,7 @@
           <mat-option value="36">36 Items</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="18%">
+      <mat-form-field appearance="outline" fxFlex.xs="120px">
         <mat-label>Sort by</mat-label>
         <mat-select (selectionChange)="sort($event.value)" value="default" placeholder="default">
           <mat-option value="default">Default</mat-option>

@@ -30,6 +30,8 @@ import {AuthInterceptor} from "../shared/interceptor/auth.interceptor";
 import {ErrorInterceptor} from "../shared/interceptor/error.interceptor";
 import {AuthService} from "../shared/service/auth.service";
 import {NbLayoutModule} from "@nebular/theme";
+import {MatMenuModule} from "@angular/material/menu";
+import {ProductReviewComponent} from "./product/product-detail/product-review/product-review.component";
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import {NbLayoutModule} from "@nebular/theme";
     ProductOverviewComponent,
     ProductDetailComponent,
     CheckoutSuccessComponent,
+    ProductReviewComponent,
     ReviewComponent,
     ReturnComponent,
     SearchPipe,
@@ -58,9 +61,14 @@ import {NbLayoutModule} from "@nebular/theme";
     CheckoutModule,
     NgxPaginationModule,
     AccountModule,
-    NbLayoutModule
+    NbLayoutModule,
+    MatMenuModule
   ],
-  providers:[
+  exports: [
+    ProductOverviewComponent,
+    ProductReviewComponent
+  ],
+  providers: [
     SearchPipe,
   ]
 

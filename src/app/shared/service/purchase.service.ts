@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataResponse} from "../httpResponse/dataResponse";
 import {Purchase} from "../model/Purchase";
-import {environment} from "../../../environments/environment.development";
+import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Product} from "../model/Product";
 import {Observable} from "rxjs";

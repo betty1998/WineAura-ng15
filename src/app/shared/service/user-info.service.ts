@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {UserInfo} from "../model/UserInfo";
 import {AuthService} from "./auth.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../environments/environment.development";
+import {environment} from "../../../environments/environment";
 import {DataResponse} from "../httpResponse/dataResponse";
 import {CartProduct} from "../model/CartProduct";
 import {BehaviorSubject, Observable} from "rxjs";

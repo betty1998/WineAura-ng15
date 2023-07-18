@@ -9,7 +9,7 @@
     <section class="quantity-cart row mb-4">
       <div class="quantity-container col-3">
           <span class="">Quantity</span>
-          <input type="number" min="1"[(ngModel)]="qty" placeholder="1">
+          <input type="number" min="1"[(ngModel)]="qty" value="1" required (ngModelChange)="checkStock(product$.value?.id)">
       </div>
       <button class="col-5 me-5" mat-raised-button color="primary" (click)="addToCart(product,$event)">Add to Cart</button>
       <button *ngIf="ifLike(product$|async)" class="col-1 love-btn"
@@ -21,7 +21,10 @@
               (click)="addToFavorite(product$.value,$event)"><mat-icon>favorite_outline</mat-icon>
       </button>
     </section>
-    <section class="description-container mb-4">
+    <ng-container *ngIf="showError">
+      <div class="text-danger small p-0">We have only {{qty}} available at this time.</div>
+    </ng-container>
+    <section class="description-container mt-2 mb-4">
       <h3 class="pt-3"> Product Description</h3>
       <p>{{(product$|async)?.description}}</p>
     </section>
@@ -58,40 +61,7 @@
   </div>
 </section>
 <section class="product-review">
-  <div class="product-review ms-1 me-1">
-    <h2 class="pt-3">REVIEWS</h2>
-    <div *ngFor="let review of (product$|async)?.reviews">
-      <div class="review-row row align-items-start">
-        <div class="col-2">
-          <h4 class="text-capitalize">{{review.nickname}}</h4>
-          <p>{{review.reviewDate}}</p>
-          <!--TODO
-             can add location or profile image here
-          -->
-        </div>
-        <div class="col-8">
-          <div class="stars">
-            <mat-icon color="accent" *ngFor="let star of stars">{{star <= review.rating ? 'star' : 'star_border'}}</mat-icon>
-            <mat-icon color="accent" *ngIf="review.rating % 1 > 0 && review.rating === Math.floor(review.rating)">star_half</mat-icon>
-            <div class="review-title">{{review.title}}</div>
-            <div class="mt-2">{{review.comment}}</div>
-          </div>
-          <div class="helpful d-flex justify-content-end align-items-center">
-            <span>Helpful?</span>
-            <button mat-icon-button (click)="thumbUp(review.id)">
-              <mat-icon>thumb_up</mat-icon>
-            </button>
-            <button mat-icon-button (click)="thumbDown(review.id)">
-              <mat-icon>thumb_down</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
-    </div>
-
-  </div>
-
+<app-product-review [product]="product$|async"></app-product-review>
 </section>
 
 

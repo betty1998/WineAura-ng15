@@ -175,4 +175,7 @@ export class OrderDetailComponent implements OnInit{
   }
 
 
+  cancel() {
+    this.router.navigate(['checkout',this.userInfo?.id,'cart']).catch();
+  }
 }

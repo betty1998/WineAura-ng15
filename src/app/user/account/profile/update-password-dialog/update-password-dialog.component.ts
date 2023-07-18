@@ -32,12 +32,28 @@ export class UpdatePasswordDialogComponent implements OnInit{
     })
   }
 
-  passwordValidator({value: {password, confirmPassword}}: FormGroup):null|{passwordNotMatch: string} {
-    return password === confirmPassword ? null
+  passwordValidator({value: {newPassword, confirmPassword}}: FormGroup):null|{passwordNotMatch: string} {
+    return newPassword === confirmPassword ? null
       : {passwordNotMatch:"Password and confirm password must be the same"};
   }
 
   save() {
     //TODO: update password
+
+    // check old password
+    if (this.passwordForm.get("oldPassword")?.value !== this.data.password){
+      this.passwordForm.get("oldPassword")?.setErrors({incorrect:true});
+      return;
+    }
+    const module = this.data.role.type==="Admin"?"Admin":"User";
+    const user = this.data;
+    user.password = this.passwordForm.get("passwordGroup.newPassword")?.value;
+    this.auth.updatePassword(user,module).subscribe(res=>{
+      if (res.success){
+        this.dialogRef.close(res.data);
+      }else{
+        console.log(res);
+      }
+    })
   }
 }

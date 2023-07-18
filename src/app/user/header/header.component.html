@@ -1,15 +1,23 @@
 <mat-toolbar class="pt-2">
   <mat-toolbar-row>
-    <button fxHide.gt-sm="true" mat-icon-button class="example-icon">
+    <button fxHide.gt-sm="true" [matMenuTriggerFor]="menu" mat-icon-button class="example-icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="title"><img src="/assets/Wine%20Aura-1.png" class="logo"></span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/products" routerLinkActive="my-active">
+        Wine
+      </button>
+      <button mat-menu-item routerLink="/accessory" routerLinkActive="my-active">
+        Accessory
+      </button>
+    </mat-menu>
+    <span class="title"><img src="/assets/Wine%20Aura-1.png" class="logo me-3"></span>
 
     <div fxHide.lt-sm="true" class="subtitle">
-      <a mat-button routerLink="/home" routerLinkActive="my-active">Home</a>
+<!--      <a mat-button routerLink="/home" routerLinkActive="my-active">Home</a>-->
       <a mat-button routerLink="/products" routerLinkActive="my-active">Wine</a>
-      <a mat-button routerLink="/red-wine" routerLinkActive="my-active">Red Wine</a>
-      <a mat-button routerLink="/white-wine" routerLinkActive="my-active">White Wine</a>
+<!--      <a mat-button routerLink="/red-wine" routerLinkActive="my-active">Red Wine</a>-->
+<!--      <a mat-button routerLink="/white-wine" routerLinkActive="my-active">White Wine</a>-->
       <a mat-button routerLink="/accessory" routerLinkActive="my-active">Accessories</a>
     </div>
     <span class="example-spacer"></span>
@@ -29,7 +37,7 @@
     <input class="search-input" type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
     <span class="example-spacer"></span>
     <div>
-      <button *ngIf="!!auth.admin" mat-raised-button routerLink="/admin" class="me-2">Admin</button>
+      <button *ngIf="!!auth.admin" mat-raised-button routerLink="/admin/dashboard" class="me-2">Admin</button>
       <button *ngIf="!auth.user" mat-stroked-button routerLink="/login">Sign In</button>
       <button *ngIf="!!auth.user" mat-stroked-button (click)="logout()">Sign Out</button>
       <button *ngIf="!auth.user" mat-button routerLink="/register">Create Account </button>

@@ -18,9 +18,8 @@ export class ProductDetailComponent implements OnInit{
   product!: Product;
   product$ = new BehaviorSubject<Product | undefined>(undefined);
   id: number | null | undefined;
-  qty: number | undefined;
-  stars = [1, 2, 3, 4, 5];
-  Math = Math;
+  qty=1;
+  showError=false;
   constructor(private productService: ProductService,
               private auth:AuthService,
               private userInfoService:UserInfoService,
@@ -46,13 +45,26 @@ export class ProductDetailComponent implements OnInit{
       })
   }
 
+  checkStock(productId:number|undefined) {
+    console.log("checkStock");
+    this.productService.checkStock(productId).subscribe(res=>{
+      if (res.success) {
+        console.log("onchange: ", res.data);
+        this.showError = this.qty>res.data?true:false;
+        this.qty = Math.min(this.qty, res.data);
+      } else {
+        console.log(res);
+      }
+    });
+  }
+
 
   addToCart(product: Product, event: Event) {
     event.stopPropagation();
     if (this.auth.user){
       const cartProduct:CartProduct = {
         product: product,
-        qty: 1,
+        qty: this.qty,
         userInfo:this.userInfoService.userInfo};
       this.userInfoService.addToCart(this.userInfoService.userInfo?.id,cartProduct).subscribe(res =>{
         if (res.success) {
