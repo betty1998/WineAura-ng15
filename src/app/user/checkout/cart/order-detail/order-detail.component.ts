@@ -9,6 +9,7 @@ import {Purchase} from "../../../../shared/model/Purchase";
 import {OrderService} from "../../../../shared/service/order.service";
 import {Router} from "@angular/router";
 import {mergeMap, throwError} from "rxjs";
+import {AddressBook} from "../../../../shared/model/AddressBook";
 
 @Component({
   selector: 'app-order-detail',
@@ -177,5 +178,24 @@ export class OrderDetailComponent implements OnInit{
 
   cancel() {
     this.router.navigate(['checkout',this.userInfo?.id,'cart']).catch();
+  }
+
+  format(addr: AddressBook) {
+    return addr.firstName + ' ' + addr.lastName+ ', '+ addr.address1 + ' ' + addr.address2 + ', ' + addr.city + ', ' + addr.state + ', ' + addr.country + ', ' + addr.zipcode;
+  }
+
+  fillAddress(addr: AddressBook) {
+    console.log('select',addr);
+    // fill in shipping address
+    this.checkoutForm.get('shippingDetails.shippingAddress.firstName')?.setValue(addr.firstName);
+    this.checkoutForm.get('shippingDetails.shippingAddress.lastName')?.setValue(addr.lastName);
+    this.checkoutForm.get('shippingDetails.shippingAddress.address1')?.setValue(addr.address1);
+    this.checkoutForm.get('shippingDetails.shippingAddress.address2')?.setValue(addr.address2);
+    this.checkoutForm.get('shippingDetails.shippingAddress.city')?.setValue(addr.city);
+    this.checkoutForm.get('shippingDetails.shippingAddress.state')?.setValue(addr.state);
+    this.checkoutForm.get('shippingDetails.shippingAddress.country')?.setValue(addr.country);
+    this.checkoutForm.get('shippingDetails.shippingAddress.zipcode')?.setValue(addr.zipcode);
+
+
   }
 }

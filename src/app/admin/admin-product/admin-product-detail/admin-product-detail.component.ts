@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../../shared/service/product.service";
 import {Product} from "../../../shared/model/Product";
@@ -23,9 +23,12 @@ export class AdminProductDetailComponent implements OnInit{
   id!: number;
   product!:Product;
   productForm!:FormGroup;
-  categories: string[] = ['Beer', 'Wine', 'Spirits', 'Cider', 'Non-Alcoholic','Red Wine','White Wine','Rose Wine','Sparkling Wine','Dessert Wine','Fortified Wine','Champagne','Cabernet Sauvignon','Pinot Noir','Merlot','Pinot Grigio','Riesling','test1','test2','test3'];
-  brands: string[] = ['Veuve Clicquot','Austin Hope','test1','test2','test3'];
-  regions: string[] = ['France','Italy','California','test1','test2','test3'];
+  // categories: string[] = ['Beer', 'Wine', 'Spirits', 'Cider', 'Non-Alcoholic','Red Wine','White Wine','Rose Wine','Sparkling Wine','Dessert Wine','Fortified Wine','Champagne','Cabernet Sauvignon','Pinot Noir','Merlot','Pinot Grigio','Riesling','test1','test2','test3'];
+  // brands: string[] = ['Veuve Clicquot','Austin Hope','test1','test2','test3'];
+  // regions: string[] = ['France','Italy','California','test1','test2','test3'];
+  categories:string[] =[];
+  brands:string[] =[];
+  regions:string[] =[];
   fileName!: string|null;
   requiredFileType: string = '.png, .jpg, .jpeg';
   uploadProgress!:number|null;
@@ -36,7 +39,7 @@ export class AdminProductDetailComponent implements OnInit{
   file!: File|null;
   imageUrl$ = new BehaviorSubject<string | ArrayBuffer | null>("");
   title!:string;
-  stars = [1, 2, 3, 4, 5];
+  @ViewChild('fileUpload') fileUpload!: ElementRef;
 
   constructor(private route:ActivatedRoute,
               private productService:ProductService,
@@ -49,9 +52,12 @@ export class AdminProductDetailComponent implements OnInit{
               private dialog: MatDialog) {
 
   }
-  //TODO: add reviews
+
   ngOnInit(): void {
     this.createGroup();
+    this.getAllCategories();
+    this.getAllBrands();
+    this.getAllRegions();
     const id = this.route.snapshot.params['id'];
     if (id) {
       this.title = "Edit Product";
@@ -169,7 +175,7 @@ export class AdminProductDetailComponent implements OnInit{
     });
   }
 
-  addProduct() {
+  onAddProduct() {
     console.log(this.productForm);
     this.totalProgress = 0;
     const formData = new FormData();
@@ -193,14 +199,34 @@ export class AdminProductDetailComponent implements OnInit{
   }
 
 
-  updateProduct() {
+
+  onUpdateProduct() {
     const product:Product = this.productForm.value;
+    product.id = this.product.id;
     console.log(product);
     if(this.util.checkSame(product, this.product)){
       alert("No change");
       return;
     }
-    product.id = this.product.id;
+    if (this.file) {
+      const formData = new FormData();
+      formData.append("file", this.file||new Blob());
+      this.uploadService.uploadFile(formData).subscribe(event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          this.totalProgress = Math.round(50 * (event.loaded / (event.total || 1)));
+          console.log("upload:", this.totalProgress);
+        } else if (event.type === HttpEventType.Response) {
+          const res = event.body as DataResponse<string>;
+          this.updateProduct({...product, image: res.data});
+        }
+      });
+    }else {
+      this.updateProduct(product);
+    }
+
+  }
+
+  updateProduct(product:Product) {
     this.productService.updateProduct(product,"admin").subscribe(res => {
       if (res.success) {
         console.log(res.data);
@@ -217,21 +243,22 @@ export class AdminProductDetailComponent implements OnInit{
       }
     });
   }
-
   deleteImage() {
     console.log("cancel image");
     if(this.product && this.product.image) {
-
+      this.product.image = "";
+      this.fileName = null;
+      this.file = null;
     }
-    this.imageUrl$.next("");
-    this.fileName = null;
-    this.file = null;
-    this.cdr.detectChanges();
 
     // change the value of fileUpload input tag
     this.productForm.get('image')?.setValue( null);
     console.log(this.productForm.get('image')?.value);
     this.reset();
+
+    this.imageUrl$.next(null);
+    this.fileUpload.nativeElement.value = '';
+    this.cdr.detectChanges();
   }
 
   addNewCategory(event:Event) {
@@ -248,6 +275,7 @@ export class AdminProductDetailComponent implements OnInit{
           this.productService.addCategory(result,"admin").subscribe(res => {
             if (res.success) {
               console.log(res.data);
+              this.cdr.detectChanges();
             } else {
               console.log(res);
               alert(res.message);
@@ -274,6 +302,7 @@ export class AdminProductDetailComponent implements OnInit{
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.brands.push(result);
+          this.cdr.detectChanges();
           this.productForm.get('brand')?.setValue(result);
           this.productService.addBrand(result,"admin").subscribe(res => {
             if (res.success) {
@@ -301,6 +330,7 @@ export class AdminProductDetailComponent implements OnInit{
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.regions.push(result);
+          this.cdr.detectChanges();
           this.productForm.get('region')?.setValue(result);
           this.productService.addRegion(result,"admin").subscribe(res => {
             if (res.success) {
@@ -321,10 +351,47 @@ export class AdminProductDetailComponent implements OnInit{
     protected readonly Math = Math;
 
   thumbUp(id: number | undefined) {
-    
+
   }
 
   thumbDown(id: number | undefined) {
-    
+
+  }
+
+  getAllCategories() {
+    this.productService.getAllCategories().subscribe(res => {
+      if (res.success) {
+        this.categories = res.data.map(category => category.name);
+        console.log(this.categories)
+        this.cdr.detectChanges();
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+  }
+
+  getAllBrands() {
+    this.productService.getAllBrands().subscribe(res => {
+      if (res.success) {
+        this.brands = res.data.map(brand => brand.name);
+        this.cdr.detectChanges();
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+  }
+
+  getAllRegions() {
+    this.productService.getAllRegions().subscribe(res => {
+      if (res.success) {
+        this.regions=res.data.map(region => region.name);
+        this.cdr.detectChanges();
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
   }
 }

@@ -59,6 +59,8 @@ import {AdminInterceptor} from "../shared/interceptor/admin.interceptor";
 import {ErrorInterceptor} from "../shared/interceptor/error.interceptor";
 import {AdminErrorInterceptor} from "../shared/interceptor/admin-error.interceptor";
 import {AdminAuthGuard} from "../shared/guard/adminAuth.guard";
+import {SharedModule} from "../shared/modules/shared-module/shared.module";
+
 
 const routes:Routes =[
   {
@@ -139,8 +141,9 @@ const routes:Routes =[
         canActivate:[AdminAuthGuard]
       },
       {
-        path:"**",
-        redirectTo:"dashboard"
+        path:"",
+        redirectTo:"/admin/dashboard",
+        pathMatch:"full"
       }
     ]
   }
@@ -175,34 +178,36 @@ const routes:Routes =[
     TrackingNumberDialogComponent,
     CustomerDetailComponent,
     RoleDirective,
-    AddAdminDialogComponent
+    AddAdminDialogComponent,
 
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    NgChartsModule,
-    NbSidebarModule.forRoot(),
-    AsyncPipe,
-    FormsModule,
-    FlexModule,
-    DatePipe,
-    CurrencyPipe,
-    MatGridListModule,
-    CustomStyleModule,
-    MatSortModule,
-    MatPaginatorModule,
-    NgForOf,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatMenuModule,
-    MatTooltipModule,
-    AccountModule,
+    imports: [
+        RouterModule.forChild(routes),
+        NgChartsModule,
+        NbSidebarModule.forRoot(),
+        AsyncPipe,
+        FormsModule,
+        FlexModule,
+        DatePipe,
+        CurrencyPipe,
+        MatGridListModule,
+        CustomStyleModule,
+        MatSortModule,
+        MatPaginatorModule,
+        NgForOf,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        CommonModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatMenuModule,
+        MatTooltipModule,
+        AccountModule,
+        SharedModule
 
 
-  ],
+
+    ],
   exports: [
     AdminTabTitleDirective
   ],

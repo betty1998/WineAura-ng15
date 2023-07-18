@@ -2,10 +2,10 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryLi
 import {Product} from "../../shared/model/Product";
 import {ProductService} from "../../shared/service/product.service";
 import {SearchPipe} from "../../shared/pipe/search.pipe";
-import {BehaviorSubject, filter} from "rxjs";
 import {Filter} from "../../shared/model/Filter";
 import {FilterService} from "../../shared/service/filter.service";
 import {ProductOverviewComponent} from "./product-overview/product-overview.component";
+import {ProductStatus} from "../../shared/model/ProductStatus";
 
 @Component({
   selector: 'app-product',
@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit,AfterViewInit{
   ngOnInit(): void {
     this.productService.getProducts().subscribe(res=>{
       if (res.success){
-        this.products = res.data;
+        this.products = res.data.filter((product:Product)=>product.productStatus !== ProductStatus.UNAVAILABLE);
         this.rawProducts = res.data;
         this.productService.products = res.data;
         this.categories = this.productService.getCategories(this.products);

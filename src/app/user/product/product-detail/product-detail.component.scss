@@ -8,6 +8,12 @@
 }
 .product-detail-image{
   flex: 40%;
+  height: 560px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 .product-detail-text{
   flex: 60%;

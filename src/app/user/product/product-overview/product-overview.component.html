@@ -1,8 +1,8 @@
 <mat-card *ngIf="product" [routerLink]="['/product-detail', product.id]">
   <div class="product-overview-info">
     <a>
-      <div class="text-center">
-        <img class="product-overview-image" src={{product.image}} width="220" height="220" alt="{{product.name}}">
+      <div class="text-center img-container">
+        <img class="product-overview-image" src={{product.image}}  alt="{{product.name}}">
       </div>
       <mat-card-header class="mb-1">
         <mat-card-title>{{product.name}}</mat-card-title>

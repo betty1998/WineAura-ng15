@@ -21,6 +21,10 @@ const routes: Routes = [
     component: UserComponent,
     children:[
       {
+        path:"",
+        component:ProductComponent
+      },
+      {
         path: "login",
         component: LoginComponent
       },

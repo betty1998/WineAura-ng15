@@ -88,5 +88,19 @@ export class ProductService {
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
+  getAllCategories(module:string="admin") {
+    return this.httpClient.get<DataResponse<any[]>>(`${environment.api}/categories`,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
+
+  getAllBrands(module:string="admin") {
+    return this.httpClient.get<DataResponse<any[]>>(`${environment.api}/brands`,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
+
+  getAllRegions(module:string="admin") {
+    return this.httpClient.get<DataResponse<any[]>>(`${environment.api}/regions`,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
 }
 

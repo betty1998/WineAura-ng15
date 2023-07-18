@@ -7,6 +7,16 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div formGroupName="shippingAddress">
+      <div class="form-row mb-2">
+        <mat-form-field appearance="outline" class="form-field-2 mb-3">
+          <mat-label>My Address Book</mat-label>
+          <mat-select>
+            <mat-option value="new">Use New Address</mat-option>
+            <mat-option [value]="addr" *ngFor="let addr of userInfo?.addresses" (click)="fillAddress(addr)">{{format(addr)}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div class="form-row">
         <mat-form-field appearance="outline" class="form-field-2">
           <mat-label>First Name</mat-label>
@@ -179,7 +189,7 @@
     </div>
   </mat-expansion-panel>
   <!------------------------------------------------------------------------->
-  <mat-expansion-panel formGroupName="orderReview" [expanded]="step >= 2" (opened)="setStep(3)" >
+  <mat-expansion-panel [expanded]="step >= 2" (opened)="setStep(3)" >
     <mat-expansion-panel-header>
       <mat-panel-title>
         Review Order
@@ -215,7 +225,7 @@
 </form>
 
 <div class="place-btn mt-3">
-  <button mat-stroked-button color="accent" (click)="cancel()">Cancel</button>
+  <button mat-stroked-button (click)="cancel()" class="me-3">Cancel</button>
   <button mat-raised-button color="accent" (click)="placeOrder($event)" [disabled]="checkoutForm.invalid || step<3">
     Place Order
   </button>

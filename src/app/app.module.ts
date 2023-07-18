@@ -25,6 +25,7 @@ import { RoleDirective } from './shared/directive/role.directive';
 import { AdminLoginComponent } from './admin/admin-auth/admin-login/admin-login.component';
 import { AdminRegisterComponent } from './admin/admin-auth/admin-register/admin-register.component';
 import {AdminModule} from "./admin/admin.module";
+import {ProductReviewComponent} from "./user/product/product-detail/product-review/product-review.component";
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import {AdminModule} from "./admin/admin.module";
         InfoDialogComponent,
         AddOptionDialogComponent,
         AdminLoginComponent,
-        AdminRegisterComponent,
+        AdminRegisterComponent
 
     ],
   imports: [
@@ -53,7 +54,6 @@ import {AdminModule} from "./admin/admin.module";
     NgxPaginationModule,
     NgChartsModule,
     MatNativeDateModule,
-    AdminModule,
   ],
     providers: [
         {

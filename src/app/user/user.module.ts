@@ -32,6 +32,7 @@ import {AuthService} from "../shared/service/auth.service";
 import {NbLayoutModule} from "@nebular/theme";
 import {MatMenuModule} from "@angular/material/menu";
 import {ProductReviewComponent} from "./product/product-detail/product-review/product-review.component";
+import {SharedModule} from "../shared/modules/shared-module/shared.module";
 
 
 @NgModule({
@@ -43,7 +44,6 @@ import {ProductReviewComponent} from "./product/product-detail/product-review/pr
     ProductOverviewComponent,
     ProductDetailComponent,
     CheckoutSuccessComponent,
-    ProductReviewComponent,
     ReviewComponent,
     ReturnComponent,
     SearchPipe,
@@ -62,11 +62,10 @@ import {ProductReviewComponent} from "./product/product-detail/product-review/pr
     NgxPaginationModule,
     AccountModule,
     NbLayoutModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ],
   exports: [
-    ProductOverviewComponent,
-    ProductReviewComponent
   ],
   providers: [
     SearchPipe,
