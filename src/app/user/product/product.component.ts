@@ -6,6 +6,8 @@ import {Filter} from "../../shared/model/Filter";
 import {FilterService} from "../../shared/service/filter.service";
 import {ProductOverviewComponent} from "./product-overview/product-overview.component";
 import {ProductStatus} from "../../shared/model/ProductStatus";
+import {ActivatedRoute} from "@angular/router";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-product',
@@ -29,19 +31,27 @@ export class ProductComponent implements OnInit,AfterViewInit{
   @ViewChildren(ProductOverviewComponent)
   pipedProducts!: QueryList<ProductOverviewComponent>;
   total!: number;
+  title="";
 
   constructor(public productService: ProductService,
               private searchPipe:SearchPipe,
               public filterService:FilterService,
-              private cdr:ChangeDetectorRef) {
+              private cdr:ChangeDetectorRef,
+              private route:ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(res=>{
+    this.route.paramMap.pipe(switchMap(params=>{
+      this.title = params.get("title")!;
+      return this.productService.getProducts();
+    })
+    ).subscribe(res=>{
       if (res.success){
         this.products = res.data.filter((product:Product)=>product.productStatus !== ProductStatus.UNAVAILABLE);
-        this.rawProducts = res.data;
-        this.productService.products = res.data;
+        this.products = this.filterByTitle(this.products);
+        console.log(this.products);
+        this.rawProducts = this.products;
+        this.productService.products = this.products;
         this.categories = this.productService.getCategories(this.products);
         this.regions = this.productService.getRegions(this.products);
         this.brands = this.productService.getBrands(this.products);
@@ -56,7 +66,16 @@ export class ProductComponent implements OnInit,AfterViewInit{
       this.regions = this.productService.getRegions(searched);
       this.brands = this.productService.getBrands(searched);
     });
+  }
 
+  filterByTitle(products:Product[]) {
+    if(this.title=="wine"){
+      return products.filter(product=>product.category!=="Accessories");
+    }else if(this.title=="accessory"){
+      return products.filter(product=>product.category=="Accessories");
+    }else {
+      return products;
+    }
   }
 
   ngAfterViewInit(): void {

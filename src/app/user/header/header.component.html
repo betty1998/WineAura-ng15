@@ -4,27 +4,25 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/products" routerLinkActive="my-active">
+      <button mat-menu-item routerLink="/products/wine" routerLinkActive="my-active">
         Wine
       </button>
-      <button mat-menu-item routerLink="/accessory" routerLinkActive="my-active">
+      <button mat-menu-item routerLink="/accessory/accessory" routerLinkActive="my-active">
         Accessory
       </button>
     </mat-menu>
-    <span class="title"><img src="/assets/Wine%20Aura-1.png" class="logo me-3"></span>
+    <span class="title" routerLink="/products"><img src="/assets/Wine%20Aura-1.png" class="logo me-3"></span>
 
     <div fxHide.lt-sm="true" class="subtitle">
-<!--      <a mat-button routerLink="/home" routerLinkActive="my-active">Home</a>-->
-      <a mat-button routerLink="/products" routerLinkActive="my-active">Wine</a>
-<!--      <a mat-button routerLink="/red-wine" routerLinkActive="my-active">Red Wine</a>-->
-<!--      <a mat-button routerLink="/white-wine" routerLinkActive="my-active">White Wine</a>-->
-      <a mat-button routerLink="/accessory" routerLinkActive="my-active">Accessories</a>
+<!--      <a mat-button routerLink="/products" routerLinkActive="my-active">Home</a>-->
+      <a mat-button routerLink="/products/wine" routerLinkActive="my-active">Wine</a>
+      <a mat-button routerLink="/products/accessory" routerLinkActive="my-active">Accessories</a>
     </div>
     <span class="example-spacer"></span>
     <button mat-icon-button [routerLink]="['/account',auth.user?.id,'favorite']" >
       <mat-icon>favorite</mat-icon>
     </button>
-    <button mat-icon-button [routerLink]="['/checkout',auth.user?.id,'cart']">
+    <button mat-icon-button [routerLink]="['/checkout',auth.user?.id,'cart-overview']">
       <mat-icon [matBadge]="getCartAmount(infoService.userInfo)" matBadgeOverlap="false">shopping_cart</mat-icon>
     </button>
     <button mat-icon-button [routerLink]="['/account',auth.user?.id,'profile']" >

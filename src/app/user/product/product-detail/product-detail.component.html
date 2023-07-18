@@ -4,7 +4,10 @@
   </div>
   <div class="product-detail-text me-5">
     <h1>{{(product$|async)?.name}}</h1>
-    <p>{{(product$|async)?.capacity}}</p>
+    <ng-container *ngIf="!((product$|async)?.category == 'Accessories')">
+      <p >{{(product$|async)?.capacity}}</p>
+    </ng-container>
+
     <h2 class="mt-4 mb-3">{{(product$|async)?.price | currency}}</h2>
     <section class="quantity-cart row mb-4">
       <div class="quantity-container col-3">
@@ -41,18 +44,19 @@
         <div class="row mb-2">
           <div class="col-2">Wine Type</div>
           <div class="col-5">{{(product$|async)?.category}}</div>
-          <div class="col-1">Style</div>
-          <div class="col">{{(product$|async)?.style}}</div>
-<!--          <div class="col">Elegant</div>-->
+          <ng-container *ngIf="!((product$|async)?.category == 'Accessories')">
+            <div class="col-1">Style</div>
+            <div class="col">{{(product$|async)?.style}}</div>
+          </ng-container>
         </div>
-        <div class="row">
-          <div class="col-2">Taste</div>
-          <div class="col-5">{{(product$|async)?.taste}}</div>
-<!--          <div class="col-5">Blackberry, Cherry</div>-->
-          <div class="col-1">ABV</div>
-<!--          <div class="col">14.6%</div>-->
-          <div class="col">{{(product$|async)?.abv}}</div>
-        </div>
+        <ng-container *ngIf="!((product$|async)?.category == 'Accessories')">
+          <div class="row">
+            <div class="col-2">Taste</div>
+            <div class="col-5">{{(product$|async)?.taste}}</div>
+            <div class="col-1">ABV</div>
+            <div class="col">{{(product$|async)?.abv}}</div>
+          </div>
+        </ng-container>
       </div>
 
     </section>

@@ -23,9 +23,6 @@ export class AdminProductDetailComponent implements OnInit{
   id!: number;
   product!:Product;
   productForm!:FormGroup;
-  // categories: string[] = ['Beer', 'Wine', 'Spirits', 'Cider', 'Non-Alcoholic','Red Wine','White Wine','Rose Wine','Sparkling Wine','Dessert Wine','Fortified Wine','Champagne','Cabernet Sauvignon','Pinot Noir','Merlot','Pinot Grigio','Riesling','test1','test2','test3'];
-  // brands: string[] = ['Veuve Clicquot','Austin Hope','test1','test2','test3'];
-  // regions: string[] = ['France','Italy','California','test1','test2','test3'];
   categories:string[] =[];
   brands:string[] =[];
   regions:string[] =[];
@@ -87,10 +84,10 @@ export class AdminProductDetailComponent implements OnInit{
       // pattern end with percent sign
       abv: ['',[Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?%$/)]],
       // pattern end ml or L
-      capacity: ['750ml',[Validators.required, Validators.pattern(/^[0-9]+(ml|L)$/)]],
-      brand: ['brand1',[Validators.required]],
-      region: ['region1',[Validators.required]],
-      category: ['Wine',[Validators.required]],
+      capacity: ['',[Validators.pattern(/^[0-9]+(ml|L)$/)]],
+      brand: ['',[Validators.required]],
+      region: ['',[Validators.required]],
+      category: ['Red Wine',[Validators.required]],
       price: ['',[Validators.required, Validators.min(0)]],
       stockQty: ['',[Validators.required, Validators.min(0)]],
       image: ['',[Validators.required]],
@@ -263,7 +260,7 @@ export class AdminProductDetailComponent implements OnInit{
 
   addNewCategory(event:Event) {
     const selected = (event.target as HTMLSelectElement).value;
-    if (!selected) {
+    if (selected=="add") {
       console.log("add new category");
       const dialogRef = this.dialog.open(AddOptionDialogComponent, {
         data:  "Category"
@@ -286,15 +283,13 @@ export class AdminProductDetailComponent implements OnInit{
           this.productForm.get('category')?.setValue(null);
         };
       });
-    } else {
-      console.log("selected category:",selected);
     }
 
   }
 
   addNewBrand(event: Event) {
     const selected = (event.target as HTMLSelectElement).value;
-    if (!selected) {
+    if (selected=="add") {
       console.log("add new brand");
       const dialogRef = this.dialog.open(AddOptionDialogComponent, {
         data:  "Brand"
@@ -322,7 +317,7 @@ export class AdminProductDetailComponent implements OnInit{
 
   addNewRegion(event: Event) {
     const selected = (event.target as HTMLSelectElement).value;
-    if (!selected) {
+    if (selected=="add") {
       console.log("add new region");
       const dialogRef = this.dialog.open(AddOptionDialogComponent, {
         data: "Region",
@@ -361,7 +356,7 @@ export class AdminProductDetailComponent implements OnInit{
   getAllCategories() {
     this.productService.getAllCategories().subscribe(res => {
       if (res.success) {
-        this.categories = res.data.map(category => category.name);
+        this.categories = res.data.map(category => category.name).sort((a,b)=>a.localeCompare(b));
         console.log(this.categories)
         this.cdr.detectChanges();
       } else {
@@ -374,7 +369,7 @@ export class AdminProductDetailComponent implements OnInit{
   getAllBrands() {
     this.productService.getAllBrands().subscribe(res => {
       if (res.success) {
-        this.brands = res.data.map(brand => brand.name);
+        this.brands = res.data.map(brand => brand.name).sort((a,b)=>a.localeCompare(b));
         this.cdr.detectChanges();
       } else {
         console.log(res);
@@ -386,7 +381,7 @@ export class AdminProductDetailComponent implements OnInit{
   getAllRegions() {
     this.productService.getAllRegions().subscribe(res => {
       if (res.success) {
-        this.regions=res.data.map(region => region.name);
+        this.regions=res.data.map(region => region.name).sort((a,b)=>a.localeCompare(b));
         this.cdr.detectChanges();
       } else {
         console.log(res);

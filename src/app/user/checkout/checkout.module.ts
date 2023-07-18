@@ -10,19 +10,25 @@ import {AppRoutingModule} from "../../app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { CheckoutSuccessComponent } from '../checkout-success/checkout-success.component';
+import { CartOverviewComponent } from './cart/cart-overview/cart-overview.component';
 
 
 const routes:Routes =[
   {
-    path:"cart",
+    path:"",
     component:CartComponent,
     children:[
+      {
+        path:"cart-overview",
+        component:CartOverviewComponent
+      },
       {
         path:"order-detail",
         component:OrderDetailComponent
       }
     ]
   },
+
 ]
 
 @NgModule({
@@ -30,6 +36,7 @@ const routes:Routes =[
     OrderDetailComponent,
     OrderSummaryComponent,
     CartComponent,
+    CartOverviewComponent,
 
   ],
   imports: [

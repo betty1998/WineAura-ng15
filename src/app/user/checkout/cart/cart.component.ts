@@ -77,75 +77,7 @@ export class CartComponent implements OnInit,OnChanges{
     });
   }
 
-  addOne(cartProduct: CartProduct, event: Event) {
-    event.stopPropagation();
-    cartProduct.qty ++;
-    this.checkStock(cartProduct);
-  }
 
-  minusOne(cartProduct: CartProduct, event: Event) {
-    event.stopPropagation();
-    if (cartProduct.qty>1){
-      cartProduct.qty --;
-      this.checkStock(cartProduct);
-    }
-  }
-
-  // check if the product is in the favorite set of userInfo
-  ifLike(product:Product) {
-    return this.userInfo.favorites.some(p => p.id === product.id);
-  }
-
-  addToFavorite(product: Product, event: Event) {
-    event.stopPropagation();
-    this.userInfoService.addToFavorite(this.userInfo.id, product?.id).subscribe(res=>{
-      if (res.success) {
-        this.userInfo = res.data;
-        this.userInfoService.userInfo = res.data;
-        this.cart$.next(this.userInfo.cart);
-      } else {
-        console.log(res);
-      }
-    });
-  }
-
-  removeFromFavorite(product: Product, event: Event) {
-    event.stopPropagation();
-    this.userInfoService.removeFromFavorite(this.userInfo.id, product?.id).subscribe(res=>{
-      if (res.success) {
-        this.userInfo = res.data;
-        this.userInfoService.userInfo = res.data;
-        this.cart$.next(this.userInfo.cart);
-      } else {
-        console.log(res);
-      }
-    });
-  }
-
-  delete(cartProduct: CartProduct, event: Event) {
-    event.stopPropagation();
-    // TODO: open a dialog to confirm deletion
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: 'Confirm Deletion',
-        message: 'Are you sure you want to delete this product from your cart?'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.userInfoService.deleteCartProduct(this.userInfo.id, cartProduct.id).subscribe(res=>{
-          if (res.success) {
-            this.userInfo = res.data;
-            this.userInfoService.userInfo = res.data;
-            this.cart$.next(this.userInfo.cart);
-          } else {
-            console.log(res);
-          }
-        });
-      }
-    });
-
-  }
 
   // @ViewChild('childRef')
   // childRef!: any;

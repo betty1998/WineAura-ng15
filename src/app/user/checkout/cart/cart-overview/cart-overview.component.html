@@ -1,0 +1,46 @@
+<div class="cart-product-list">
+  <h2>Your Shopping Cart</h2>
+  <div class="d-flex justify-content-between">
+    <span class="ms-3">Item</span>
+    <span class="me-4">Item Total</span>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="list-container">
+    <div *ngFor="let cp of (cart$|async)" class="row">
+      <div class="image col-2" [routerLink]="['/product-detail',cp.product.id]">
+        <img [src]="cp.product.image" width="90" height="90">
+      </div>
+      <div class="info col-5">
+        <div>{{cp.product.name}}</div>
+        <p class="small">{{cp.product.capacity}}</p>
+        <p class="small">{{cp.product.price | currency}} / each</p>
+      </div>
+      <div class="mat-btns col">
+        <button *ngIf="ifLike(cp.product)" mat-icon-button (click)="removeFromFavorite(cp.product,$event)">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button *ngIf="!ifLike(cp.product)" mat-icon-button (click)="addToFavorite(cp.product,$event)">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="delete(cp,$event)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+      <div class="price col-3 text-center">
+        <p class="mt-1">{{cp.product.price * cp.qty | currency}}</p>
+        <div class="quantity-container d-flex justify-content-between m-auto">
+          <button (click)="minusOne(cp,$event)">－</button>
+          <input type="number" min="1"[(ngModel)]="cp.qty" (ngModelChange)="checkStock(cp)">
+          <button (click)="addOne(cp,$event)">﹢</button>
+        </div>
+        <ng-template [ngIf]="cp.qty>=cp.product.stockQty">
+          <div class="text-danger small p-0">We have only {{cp.product.stockQty}} available at this time.</div>
+        </ng-template>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+  </div>
+
+</div>
