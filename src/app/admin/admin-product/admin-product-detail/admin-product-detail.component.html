@@ -130,7 +130,7 @@
               </div>
             </div>
             <div class="add mt-2">
-              <button *ngIf="!this.id; else updateTemplate" mat-raised-button color="primary" (click)="onAddProduct()" [disabled]="!productForm.valid">Add Product</button>
+              <button *ngIf="!this.id; else updateTemplate" mat-raised-button color="primary" (click)="onSaveProduct()" [disabled]="!productForm.valid">Add Product</button>
               <ng-template #updateTemplate>
                 <button mat-raised-button color="primary" type="submit" [disabled]="!productForm.valid" (click)="onUpdateProduct()">Update Product</button>
               </ng-template>

@@ -48,8 +48,8 @@ export class ProductService {
 
   }
 
-  addProduct(product: Product,module:string="admin"):Observable<DataResponse<Product>> {
-    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, product,
+  addProduct(formData:FormData,module:string="admin"):Observable<DataResponse<Product>> {
+    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products`, formData,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 

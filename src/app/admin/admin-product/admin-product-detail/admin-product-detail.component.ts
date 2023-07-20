@@ -138,6 +138,44 @@ export class AdminProductDetailComponent implements OnInit{
     }
   }
 
+  onSaveProduct() {
+    console.log(this.productForm);
+    // create formData
+    const formData = new FormData();
+    // add file to formData
+    formData.append("file", this.file||new Blob());
+    // add product to formData
+    const product:Product = this.productForm.value;
+    product.discount = 1;
+    product.productStatus = ProductStatus.AVAILABLE;
+    product.reviews = [];
+    formData.append('product', JSON.stringify(product));
+    this.productService.addProduct(formData).subscribe(res => {
+      if (res.success) {
+        console.log(res.data);
+        this.dialog.open(InfoDialogComponent, {
+          data: {
+            title: "Success",
+            message: "Product added successfully!"
+          }
+        });
+        this.router.navigate(['/admin/product-list']).catch();
+      } else {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+    // this.uploadSub = this.uploadService.uploadFile(formData).subscribe(event => {
+    //   if (event.type == HttpEventType.UploadProgress) {
+    //     this.totalProgress = Math.round(50 * (event.loaded / (event.total || 1)));
+    //     console.log("upload:",this.totalProgress);
+    //   } else if (event.type === HttpEventType.Response) {
+    //     const res = event.body as DataResponse<string>;
+    //     this.saveProduct(res.data);
+    //   }
+    // });
+  }
+
   saveProduct(imageUrl:string) {
     const product:Product = this.productForm.value;
     product.image = imageUrl;
@@ -174,24 +212,11 @@ export class AdminProductDetailComponent implements OnInit{
         }
       }
     });
+
+
   }
 
-  onAddProduct() {
-    console.log(this.productForm);
-    this.totalProgress = 0;
-    const formData = new FormData();
-    formData.append("file", this.file||new Blob());
 
-    this.uploadSub = this.uploadService.uploadFile(formData).subscribe(event => {
-      if (event.type == HttpEventType.UploadProgress) {
-        this.totalProgress = Math.round(50 * (event.loaded / (event.total || 1)));
-        console.log("upload:",this.totalProgress);
-      } else if (event.type === HttpEventType.Response) {
-        const res = event.body as DataResponse<string>;
-        this.saveProduct(res.data);
-      }
-    });
-  }
 
 
   reset() {
