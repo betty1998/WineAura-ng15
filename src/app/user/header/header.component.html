@@ -32,7 +32,7 @@
 
   <mat-toolbar-row>
     <mat-icon class="search-icon">search</mat-icon>
-    <input class="search-input" type="search" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
+    <input class="search-input" [(ngModel)]="searchText" (keyup)="search($event)" placeholder="Search by product name">
     <span class="example-spacer"></span>
     <div>
       <button *ngIf="!!auth.admin" mat-raised-button routerLink="/admin/dashboard" class="me-2">Admin</button>

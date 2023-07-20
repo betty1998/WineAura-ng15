@@ -8,6 +8,7 @@ import {ProductOverviewComponent} from "./product-overview/product-overview.comp
 import {ProductStatus} from "../../shared/model/ProductStatus";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
+import {DataResponse} from "../../shared/httpResponse/dataResponse";
 
 @Component({
   selector: 'app-product',
@@ -41,30 +42,34 @@ export class ProductComponent implements OnInit,AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(switchMap(params=>{
+    console.log("ngOnInit");
+    this.route.paramMap.pipe(
+      switchMap(params=>{
       this.title = params.get("title")!;
       return this.productService.getProducts();
-    })
-    ).subscribe(res=>{
+    }),
+      switchMap((res:DataResponse<Product[]>)=>{
       if (res.success){
         this.products = res.data.filter((product:Product)=>product.productStatus !== ProductStatus.UNAVAILABLE);
         this.products = this.filterByTitle(this.products);
+        this.products = this.products.sort(
+          (a, b) => a.name.localeCompare(b.name));
         console.log(this.products);
-        this.rawProducts = this.products;
-        this.productService.products = this.products;
-        this.categories = this.productService.getCategories(this.products);
-        this.regions = this.productService.getRegions(this.products);
-        this.brands = this.productService.getBrands(this.products);
+        return this.productService.search;
       }else{
         alert(res.message);
+        throw new Error(res.message);
       }
-      })
-    this.productService.search.subscribe(res=>{
+      })).subscribe(res=>{
       this.searchKey = res;
+      console.log(this.searchKey);
+      this.productService.products = this.products;
       const searched = this.searchPipe.transform(this.products, this.searchKey);
+      this.rawProducts = searched;
       this.categories = this.productService.getCategories(searched);
       this.regions = this.productService.getRegions(searched);
       this.brands = this.productService.getBrands(searched);
+      this.cdr.detectChanges();
     });
   }
 
@@ -109,8 +114,16 @@ export class ProductComponent implements OnInit,AfterViewInit{
   }
 
   sort(selected: string) {
-    if (selected == "default"){
-      this.products = [...this.rawProducts];
+    if (selected == "A-Z"){
+      // sort from a-z
+      const tmp = this.products.sort(
+        (a, b) => a.name.localeCompare(b.name));
+      this.products = [...tmp];
+    }else if (selected == "Z-A") {
+      // sort from z-a
+      const tmp = this.products.sort(
+        (a, b) => b.name.localeCompare(a.name));
+      this.products = [...tmp];
     }else if (selected == "price1") {
       const tmp = this.products.sort(
         (a, b) => a.price - b.price);

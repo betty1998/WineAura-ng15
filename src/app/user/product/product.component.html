@@ -62,8 +62,9 @@
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex.xs="120px">
         <mat-label>Sort by</mat-label>
-        <mat-select (selectionChange)="sort($event.value)" value="default" placeholder="default">
-          <mat-option value="default">Default</mat-option>
+        <mat-select (selectionChange)="sort($event.value)" value="A-Z" placeholder="default">
+          <mat-option value="A-Z">A-Z (Default)</mat-option>
+          <mat-option value="Z-A">Z-A</mat-option>
           <mat-option value="price1">Price Low to High</mat-option>
           <mat-option value="price2">Price High to Low</mat-option>
         </mat-select>
