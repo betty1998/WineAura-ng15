@@ -17,7 +17,7 @@ export class OrderService {
   taxRate = 0.08;
   freeDelivery= 99;
   statusMap: Map<string, number> = new Map([
-    ["Pending",0],["Shipped",1],["Delivered",2],["Returned",3],["Refunded",4],["Reviewed",5],["Complete",6]]);
+    ["Pending",0],["Shipped",1],["Delivered",2],["Returned",3],["Refunded",4],["Reviewed",5],["Completed",6],["Cancelled",7]]);
   statusColors = {
     Pending: '#f1d245',     // Yellow
     Shipped: '#4CAF50',     // Green
@@ -25,7 +25,8 @@ export class OrderService {
     Returned: 'rgba(238,59,44,0.85)',    // Red
     Refunded: 'rgba(175,44,199,0.81)',    // Purple
     Reviewed: 'rgba(234,111,152,0.84)',    // Pink
-    Complete: '#6f4d41'     // Brown
+    Completed: '#6f4d41',     // Brown
+    Cancelled: 'rgba(182,194,203,0.58)'     // Brown
   };
   subTotal: number = 0;
   constructor(private http:HttpClient,

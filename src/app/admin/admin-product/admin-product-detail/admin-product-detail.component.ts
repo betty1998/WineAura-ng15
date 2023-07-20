@@ -37,6 +37,8 @@ export class AdminProductDetailComponent implements OnInit{
   imageUrl$ = new BehaviorSubject<string | ArrayBuffer | null>("");
   title!:string;
   @ViewChild('fileUpload') fileUpload!: ElementRef;
+  fileSizeLimit = 5 * 1024 * 1024;
+  fileError: boolean=false;
 
   constructor(private route:ActivatedRoute,
               private productService:ProductService,
@@ -117,7 +119,7 @@ export class AdminProductDetailComponent implements OnInit{
   onFileSelected(event: Event) {
     console.log("onFileSelected")
     const file:File = (event.target as HTMLInputElement).files![0];
-    if (file) {
+    if (file && file.size <= this.fileSizeLimit) {
       this.isLoading = true;
       this.fileName = file.name;
       this.file = file;
@@ -131,6 +133,8 @@ export class AdminProductDetailComponent implements OnInit{
         this.cdr.detectChanges();
         console.log(this.fileName);
       }
+    }else{
+      this.fileError=true;
     }
   }
 

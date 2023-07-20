@@ -18,13 +18,13 @@
   <div class="body d-flex">
     <div class="side-bar shadow" *ngIf="showSide">
       <a class="menu-item" routerLinkActive="my-active" routerLink="/admin/dashboard"><div class="item">Dashboard</div></a>
-      <a class="menu-item" routerLinkActive="my-active" (click)="toggle()"><div class="item">Product</div></a>
-      <a class="menu-item" *ngIf="show">
-        <div class="item subItem" routerLinkActive="my-active" routerLink="/admin/product-list">&nbsp;&nbsp;&nbsp;&nbsp;Product List</div>
-      </a>
-      <a class="menu-item" *ngIf="show">
-        <div class="item subItem" routerLinkActive="my-active" routerLink="/admin/category">&nbsp;&nbsp;&nbsp;&nbsp;Category</div>
-      </a>
+      <a class="menu-item" routerLinkActive="my-active" (click)="toggle()" routerLinkActive="my-active" routerLink="/admin/product-list"><div class="item">Product</div></a>
+<!--      <a class="menu-item" *ngIf="show">-->
+<!--        <div class="item subItem" routerLinkActive="my-active" routerLink="/admin/product-list">&nbsp;&nbsp;&nbsp;&nbsp;Product List</div>-->
+<!--      </a>-->
+<!--      <a class="menu-item" *ngIf="show">-->
+<!--        <div class="item subItem" routerLinkActive="my-active" routerLink="/admin/category">&nbsp;&nbsp;&nbsp;&nbsp;Category</div>-->
+<!--      </a>-->
 <!--      <a class="menu-item">-->
 <!--        <div class="item subItem" routerLinkActive="my-active" routerLink="/admin/brand">&nbsp;&nbsp;&nbsp;&nbsp;Brand</div>-->
 <!--      </a>-->

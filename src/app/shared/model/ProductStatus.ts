@@ -1,5 +1,4 @@
 export enum ProductStatus {
-  ON_SALE = 'ON_SALE',
   AVAILABLE = 'AVAILABLE',
   UNAVAILABLE = 'UNAVAILABLE',
   OUT_OF_STOCK = 'OUT_OF_STOCK'

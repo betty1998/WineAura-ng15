@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CartProduct} from "../../../../shared/model/CartProduct";
 import {Product} from "../../../../shared/model/Product";
 import {ConfirmDialogComponent} from "../../../../shared/dialog/confirm-dialog.component";
@@ -15,16 +15,25 @@ import {BehaviorSubject} from "rxjs";
   templateUrl: './cart-overview.component.html',
   styleUrls: ['./cart-overview.component.scss']
 })
-export class CartOverviewComponent {
+export class CartOverviewComponent implements OnInit{
 
-  @Input() cart$!: BehaviorSubject<CartProduct[]>;
-  @Input() userInfo!: UserInfo;
+  cart$= new BehaviorSubject<CartProduct[]>([]);
+  userInfo!: UserInfo | undefined;
 
   constructor(public userInfoService:UserInfoService,
               private productService:ProductService,
               private route:ActivatedRoute,
               private auth: AuthService,
               private dialog: MatDialog){
+  }
+
+  ngOnInit() {
+    this.userInfoService.userInfo$.subscribe(res=>{
+      if(res){
+        this.userInfo = res;
+        this.cart$.next(this.userInfo?.cart||[]);
+      }
+    });
   }
 
 
@@ -58,12 +67,12 @@ export class CartOverviewComponent {
 
   // check if the product is in the favorite set of userInfo
   ifLike(product:Product) {
-    return this.userInfo.favorites.some(p => p.id === product.id);
+    return this.userInfo?.favorites.some(p => p.id === product.id);
   }
 
   addToFavorite(product: Product, event: Event) {
     event.stopPropagation();
-    this.userInfoService.addToFavorite(this.userInfo.id, product?.id).subscribe(res=>{
+    this.userInfoService.addToFavorite(this.userInfo?.id, product?.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
@@ -76,7 +85,7 @@ export class CartOverviewComponent {
 
   removeFromFavorite(product: Product, event: Event) {
     event.stopPropagation();
-    this.userInfoService.removeFromFavorite(this.userInfo.id, product?.id).subscribe(res=>{
+    this.userInfoService.removeFromFavorite(this.userInfo?.id, product?.id).subscribe(res=>{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
@@ -98,10 +107,11 @@ export class CartOverviewComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userInfoService.deleteCartProduct(this.userInfo.id, cartProduct.id).subscribe(res=>{
+        this.userInfoService.deleteCartProduct(this.userInfo?.id, cartProduct.id).subscribe(res=>{
           if (res.success) {
             this.userInfo = res.data;
             this.userInfoService.userInfo = res.data;
+            this.userInfoService.userInfo$.next(res.data);
             this.cart$.next(this.userInfo.cart);
           } else {
             console.log(res);
@@ -113,10 +123,12 @@ export class CartOverviewComponent {
   }
 
   updateCart(): void {
-    this.userInfoService.updateCart(this.userInfo.id,this.userInfo.cart).subscribe(res =>{
+    console.log("updateCart")
+    this.userInfoService.updateCart(this.userInfo?.id,this.userInfo?.cart).subscribe(res =>{
       if(res.success){
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.userInfoService.userInfo$.next(res.data);
         this.cart$.next(this.userInfo.cart);
         console.log(res.data);
       }else {

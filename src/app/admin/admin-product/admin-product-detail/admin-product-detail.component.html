@@ -110,7 +110,8 @@
             <div class="image-subtitle d-flex justify-content-between">
               <div class="small mb-3">
                 <div>File types: .jpg, .jpeg, .png </div>
-                <div>Max size: 1MB</div>
+                <div>Max size: 5MB</div>
+                <div *ngIf="fileError" class="text-danger">File size is large than 5 MB</div>
               </div>
               <div *ngIf="imageUrl$|async" class="d-flex flex-column">
                 <button (click)="deleteImage()" mat-icon-button class="delete-image">

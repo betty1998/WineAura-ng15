@@ -1,0 +1,42 @@
+section{
+  //border: 2px solid rebeccapurple;
+  font-size: 16px;
+}
+
+.quantity-container{
+  width: 90px;
+  border-radius: 25px;
+  border: 1px solid dimgrey;
+  button{
+    border: 0px;
+    background-color: transparent;
+  }
+  input{
+    background-color: transparent;
+    border: 0px;
+    width: 34px;
+    text-align: center;
+  }
+}
+
+.row > div {
+  padding: 10px 0px;
+}
+.row{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.mat-btns{
+  margin-top: auto;
+  margin-bottom: auto;
+
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

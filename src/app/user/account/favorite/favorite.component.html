@@ -17,7 +17,10 @@
       <button mat-raised-button color="primary" (click)="addToCart(product)">Add to Cart</button>
       <a mat-button (click)="remove(product)">remove</a>
     </div>
-
   </div>
-
+  <ng-container>
+    <div *ngIf="userInfo?.favorites?.length==0" class="mt-2">
+      <p>You have no favorites yet.</p>
+    </div>
+  </ng-container>
 </div>

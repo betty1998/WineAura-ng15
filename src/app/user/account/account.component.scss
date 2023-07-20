@@ -1,12 +1,13 @@
 .account-container{
   margin-top: 40px;
+  margin-left: 20px;
 
 }
 .header-list{
   flex-direction: column;
   flex-shrink: 0;
-  margin-left: 30px;
-  margin-right: 50px;
+  margin-left: 40px;
+  margin-right: 80px;
   width: 260px;
   height: 50vh;
   padding: 20px 20px;
@@ -22,8 +23,9 @@
 }
 
 .content{
-  width:70%;
+  width:78%;
   min-width: 700px;
+  font-size:16px;
 }
 mat-list-item.my-active, mat-list-item:hover{
   a{

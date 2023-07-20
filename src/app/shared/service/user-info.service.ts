@@ -69,13 +69,13 @@ export class UserInfoService {
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  public updateCart(userInfoId:number, cart:CartProduct[], module:string="user"):Observable<DataResponse<UserInfo>>{
+  public updateCart(userInfoId: number | undefined, cart: CartProduct[] | undefined, module: string = "user"):Observable<DataResponse<UserInfo>>{
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/updateCart/${userInfoId}`,cart,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteCartProduct(userInfoId: number, cartProductId: number | undefined, module:string="user"):Observable<DataResponse<UserInfo>> {
+  deleteCartProduct(userInfoId: number | undefined, cartProductId: number | undefined, module: string = "user"):Observable<DataResponse<UserInfo>> {
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/deleteCartProduct/${userInfoId}/cartProduct/${cartProductId}`,null,
       { headers: new HttpHeaders({ 'module': module }) });
@@ -129,20 +129,20 @@ export class UserInfoService {
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getAdmins(module:string="user") {
+  getAdmins(module:string="admin") {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
       `${environment.api}/userinfos/admins`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getCustomers(module:string="user") {
+  getCustomers(module:string="admin") {
     return this.httpClient.get<DataResponse<UserInfo[]>>(
       `${environment.api}/userinfos/customers`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
 
-  updateAdminProfile(userId:number|undefined, userInfo: UserInfo, module:string="user") {
+  updateAdminProfile(userId:number|undefined, userInfo: UserInfo, module:string="admin") {
     return this.httpClient.put<DataResponse<UserInfo>>(
       `${environment.api}/userinfos/updateAdminProfile/${userId}`, userInfo,
       { headers: new HttpHeaders({ 'module': module }) });

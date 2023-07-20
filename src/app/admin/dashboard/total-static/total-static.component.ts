@@ -87,9 +87,6 @@ export class TotalStaticComponent implements OnInit{
       }
     } );
   }
-
-
-
   // get recent two month orders
 
 }
