@@ -29,7 +29,8 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
   constructor(private infoService:UserInfoService,
               private userService:UserService,
               public auth:AuthService,
-              private dialog:MatDialog){
+              private dialog:MatDialog,
+              private cdr:ChangeDetectorRef){
   }
 
   ngOnInit(): void {
@@ -113,7 +114,9 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
             item.user = res.data;
           }
         });
+        this.dataSource.data = this.admins;
         this.setDataSourceAttributes();
+        this.cdr.detectChanges();
       }else {
         console.log(res);
         alert(res.message);

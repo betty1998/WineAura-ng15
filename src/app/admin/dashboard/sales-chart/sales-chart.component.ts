@@ -61,7 +61,7 @@ export class SalesChartComponent implements OnInit, OnChanges{
 
     // assign chartData: calculate sales for each day
     this.calculateSales("Pending");
-    this.calculateSales("Completed");
+    this.calculateSales("Delivered");
     this.calculateSales("Cancelled");
 
   }

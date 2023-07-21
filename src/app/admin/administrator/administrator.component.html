@@ -77,7 +77,7 @@
             </button>
             <button mat-raised-button color="warn" matTooltip="Downgrade Customer"
                     *ngIf="element.user.role.type === 'Admin'"
-                    (click)="updateRole('Customer',element.user.id)"
+                    (click)="updateRole('Manager',element.user.id)"
                     [disabled]="element.user.id==1">
               Downgrade
             </button>

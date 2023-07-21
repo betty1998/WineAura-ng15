@@ -26,30 +26,28 @@ export class OrderHistoryComponent implements OnInit{
     console.log("id:",this.route.parent?.snapshot.paramMap.get('id'))
     // if orderList in orderService is undefined
     // then send request to get orderList
-    if (!orderService.orderList) {
-      route.parent?.paramMap.pipe(switchMap(params => {
-        this.id = Number(params.get("id"));
-        // console.log(params);
-        return orderService.getOrderByUserId(this.id);
-      })).subscribe(res => {
-        if (res.success) {
-          this.orderList = res.data;
-          this.orderList$.next(this.orderList);
-          this.orderList.forEach(order => this.calculate(order));
-          console.log(res);
-        } else {
-          console.log(res);
-        }
-      });
-    } else {
-      this.orderList$.next(orderService.orderList);
-    }
+    route.parent?.paramMap.pipe(switchMap(params => {
+      this.id = Number(params.get("id"));
+      // console.log(params);
+      return orderService.getOrderByUserId(this.id);
+    })).subscribe(res => {
+      if (res.success) {
+        this.orderList = res.data;
+        this.orderList.forEach(order => this.calculate(order));
+        this.orderList$.next(this.orderList);
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    });
+
   }
 
   ngOnInit(): void {
   }
 
   openOrder(order: Order) {
+
     this.dialog.open(OrderDialogComponent, {
       data:{order: order,userId:this.id},
     });
@@ -57,10 +55,10 @@ export class OrderHistoryComponent implements OnInit{
 
 
   calculate(order: Order) {
-    order.itemAmount = order.purchases.reduce((acc, purchase) =>
-      acc + purchase.qty, 0);
-    order.subTotal = order.purchases.reduce((acc, purchase) =>
-      acc + purchase.qty * purchase.product.price, 0);
+    // order.itemAmount = order.purchases.reduce((acc, purchase) =>
+    //   acc + purchase.qty, 0);
+    // order.subTotal = order.purchases.reduce((acc, purchase) =>
+    //   acc + purchase.qty * purchase.product.price, 0);
     order.tax = +(order.subTotal * this.orderService.taxRate).toFixed(2);
     if (order.subTotal < this.orderService.freeDelivery) {
       order.shipping = 8;
@@ -68,6 +66,7 @@ export class OrderHistoryComponent implements OnInit{
       order.shipping = 0;
     }
     order.total = +(order.subTotal + order.shipping + order.tax).toFixed(2);
+    return order;
   }
 
 

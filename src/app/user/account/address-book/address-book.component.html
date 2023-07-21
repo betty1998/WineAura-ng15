@@ -2,7 +2,7 @@
   <mat-icon>library_books</mat-icon>&nbsp;Address Book
 </h1>
 <div class="address-container">
-  <div class="address row shadow" *ngFor="let addr of (userInfo$|async)?.addresses">
+  <div class="address row shadow mb-4 me-4" *ngFor="let addr of (userInfo$|async)?.addresses">
     <div class="info col-6">
       <div>{{addr.firstName}}, {{addr.lastName}}</div>
       <div>{{addr.address1}}, {{addr.address2}}</div>

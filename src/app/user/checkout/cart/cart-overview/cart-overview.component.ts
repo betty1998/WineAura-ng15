@@ -40,6 +40,11 @@ export class CartOverviewComponent implements OnInit{
   // ngOnChange on cartProduct.qty
   checkStock(cartProduct: CartProduct) {
     console.log("checkStock");
+    if (cartProduct.qty <=0){
+      cartProduct.qty = 1;
+      this.updateCart();
+      return;
+    }
     this.productService.checkStock(cartProduct.product.id).subscribe(res=>{
       if (res.success) {
         console.log("onchange: ", res.data);
@@ -76,6 +81,7 @@ export class CartOverviewComponent implements OnInit{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.userInfoService.userInfo$.next(res.data);
         this.cart$.next(this.userInfo.cart);
       } else {
         console.log(res);
@@ -89,6 +95,7 @@ export class CartOverviewComponent implements OnInit{
       if (res.success) {
         this.userInfo = res.data;
         this.userInfoService.userInfo = res.data;
+        this.userInfoService.userInfo$.next(res.data);
         this.cart$.next(this.userInfo.cart);
       } else {
         console.log(res);

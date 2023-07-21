@@ -31,7 +31,7 @@
         <p class="mt-1">{{cp.product.price * cp.qty | currency}}</p>
         <div class="quantity-container d-flex justify-content-between m-auto">
           <button (click)="minusOne(cp,$event)">－</button>
-          <input type="number" min="1"[(ngModel)]="cp.qty" (ngModelChange)="checkStock(cp)">
+          <input type="number" min="1" [(ngModel)]="cp.qty" (blur)="checkStock(cp)">
           <button (click)="addOne(cp,$event)">﹢</button>
         </div>
         <ng-template [ngIf]="cp.qty>=cp.product.stockQty">

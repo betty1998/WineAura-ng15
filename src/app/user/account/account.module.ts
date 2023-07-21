@@ -17,6 +17,7 @@ import {ProfileEditDialogComponent} from "./profile/profile-edit-dialog/profile-
 import { AccountComponent } from './account.component';
 import {OrderSortPipe} from "../../shared/pipe/order-sort.pipe";
 import {OrderFilterPipe} from "../../shared/pipe/order-filter.pipe";
+import {SharedModule} from "../../shared/modules/shared-module/shared.module";
 
 
 
@@ -40,7 +41,8 @@ import {OrderFilterPipe} from "../../shared/pipe/order-filter.pipe";
         MatDividerModule,
         MatListModule,
         RouterModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SharedModule
     ],
     exports: [
         ProfileComponent

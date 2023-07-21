@@ -29,13 +29,12 @@ export class LoginComponent {
       if (res.success) {
         this.auth.user = res.user;
         localStorage.setItem("customerToken", res.token); // store token in local storage
-        this.userInfoService.getUserInfo(this.auth.user.id);
-
+        this.userInfoService.updateUserInfo(res.user.id);
         this.router.navigate(["/products"]).catch();
 
       } else {
         // If login is not successful, an empty observable is returned
-        this.errorMessage = res.message;
+        this.errorMessage = res.message+" Please try again.";
         this.cdr.detectChanges();
         console.log(res);
       }

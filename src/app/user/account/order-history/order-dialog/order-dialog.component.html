@@ -3,7 +3,7 @@
     <div class="order-summary">
       <div class="d-flex justify-content-between">
         <h2>Order Summary</h2>
-        <button *ngIf="checkReturn(order.purchases)" mat-flat-button color="accent"
+        <button *ngIf="order.status=='Delivered'" mat-flat-button color="accent"
                 (click)="close()" [routerLink]="['/return',order.id]">Start a Return </button>
       </div>
 
@@ -53,8 +53,8 @@
       <h2>Order Detail</h2>
       <mat-divider></mat-divider>
       <div>
-        <div class="subtitle">Status</div>
-        <div>{{order.status}}</div>
+        <div class="subtitle mb-2">Status</div>
+        <div><button mat-stroked-button [appStatus]="order.status">{{order.status}}</button></div>
       </div>
       <div *ngIf="order.trackingNumber">
         <div class="subtitle">Tracking Number</div>

@@ -56,7 +56,7 @@ export class AuthService {
     return this.httpClient.post<LoginResponse>(`${environment.api}/auth/login`,user,
       { headers: new HttpHeaders({ 'module': module }) });
   }
-  adminLogin(user: User, module:string = "user"):Observable<LoginResponse> {
+  adminLogin(user: User, module:string = "admin"):Observable<LoginResponse> {
     console.log("login admin: ", user);
     return this.httpClient.post<LoginResponse>(`${environment.api}/auth/admin/login`,user,
       { headers: new HttpHeaders({ 'module': module }) });
@@ -66,7 +66,7 @@ export class AuthService {
     return this.httpClient.post<DataResponse<User>>(`${environment.api}/auth/register`,user);
   }
 
-  adminRegister(user: User, module:string = "user") {
+  adminRegister(user: User, module:string = "admin") {
     return this.httpClient.put<DataResponse<User>>(`${environment.api}/auth/admin/register`, user,
       { headers: new HttpHeaders({ 'module': module }) });
   }
@@ -75,7 +75,7 @@ export class AuthService {
     return this.httpClient.get<DataResponse<User>>(`${environment.api}/auth/checklogin`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
-  adminCheckLogin(module:string = "user"):Observable<DataResponse<User>> {
+  adminCheckLogin(module:string = "admin"):Observable<DataResponse<User>> {
     return this.httpClient.get<DataResponse<User>>(`${environment.api}/auth/admin/checklogin`,
       { headers: new HttpHeaders({ 'module': module }) });
   }

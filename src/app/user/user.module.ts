@@ -33,6 +33,7 @@ import {NbLayoutModule} from "@nebular/theme";
 import {MatMenuModule} from "@angular/material/menu";
 import {ProductReviewComponent} from "./product/product-detail/product-review/product-review.component";
 import {SharedModule} from "../shared/modules/shared-module/shared.module";
+import {StatusDirective} from "../shared/directive/status.directive";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {SharedModule} from "../shared/modules/shared-module/shared.module";
     ReturnComponent,
     SearchPipe,
     PriceRangePipe,
-    FilterPipe
+    FilterPipe,
+
   ],
   imports: [
     CommonModule,

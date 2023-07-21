@@ -26,6 +26,7 @@ import { AdminLoginComponent } from './admin/admin-auth/admin-login/admin-login.
 import { AdminRegisterComponent } from './admin/admin-auth/admin-register/admin-register.component';
 import {AdminModule} from "./admin/admin.module";
 import {ProductReviewComponent} from "./user/product/product-detail/product-review/product-review.component";
+import {StatusDirective} from "./shared/directive/status.directive";
 
 
 @NgModule({
@@ -36,9 +37,7 @@ import {ProductReviewComponent} from "./user/product/product-detail/product-revi
         TotalSalesComponent,
         ConfirmDialogComponent,
         InfoDialogComponent,
-        AddOptionDialogComponent,
-        AdminLoginComponent,
-        AdminRegisterComponent
+        AddOptionDialogComponent
 
     ],
   imports: [

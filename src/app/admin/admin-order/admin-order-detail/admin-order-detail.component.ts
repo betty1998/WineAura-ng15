@@ -109,9 +109,20 @@ export class AdminOrderDetailComponent implements OnInit{
   }
 
 
-  save(purchase:Purchase) {
+  save(orderId: number | undefined, purchase:Purchase) {
     console.log(purchase);
     purchase.isEdit = false;
+    // calculate subtotal and itemAmount
+
+    this.orderService.updatePurchase(orderId, purchase.id, purchase,"admin").subscribe(res => {
+      if (res.success) {
+        this.order$.next(this.calculateTotal(res.data));
+        res.data.purchases.forEach(purchase => purchase['isEdit'] = false);
+        this.datasource = new MatTableDataSource<Purchase>(res.data.purchases);
+      } else {
+        alert(res.message);
+      }
+    });
 
   }
 

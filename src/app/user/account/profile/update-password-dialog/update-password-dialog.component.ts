@@ -5,6 +5,7 @@ import {DialogRef} from "@angular/cdk/dialog";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {User} from "../../../../shared/model/User";
 import {RegisterComponent} from "../../../../auth/register/register.component";
+import {Observable, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-update-password-dialog',
@@ -14,11 +15,12 @@ import {RegisterComponent} from "../../../../auth/register/register.component";
 export class UpdatePasswordDialogComponent implements OnInit{
   passwordForm!: FormGroup;
   passwordPattern = '^(?=.*[0-9])(?=.*[a-z])[a-z0-9]{6,20}$';
+  successMessage: string="";
 
   constructor(private auth:AuthService,
               private fb:FormBuilder,
               public dialogRef:MatDialogRef<UpdatePasswordDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data:User) {
+              @Inject(MAT_DIALOG_DATA) private user:User) {
   }
 
   ngOnInit(): void {
@@ -39,18 +41,31 @@ export class UpdatePasswordDialogComponent implements OnInit{
 
   save() {
     //TODO: update password
-
+    const module = this.user.role.type==="admin"?"admin":"user";
+    const user = this.user;
+    user.password = this.passwordForm.get("oldPassword")?.value;
     // check old password
-    if (this.passwordForm.get("oldPassword")?.value !== this.data.password){
-      this.passwordForm.get("oldPassword")?.setErrors({incorrect:true});
-      return;
+    let loginSubscription:Observable<any> = new Observable<any>();
+    if (module=="user"){
+      loginSubscription = this.auth.login(user);
+    }else if(module=="admin"){
+      loginSubscription = this.auth.adminLogin(user);
     }
-    const module = this.data.role.type==="Admin"?"Admin":"User";
-    const user = this.data;
-    user.password = this.passwordForm.get("passwordGroup.newPassword")?.value;
-    this.auth.updatePassword(user,module).subscribe(res=>{
+
+    loginSubscription.pipe(switchMap(res=>{
+      if(res.success){
+        console.log("old password correct");
+
+        user.password = this.passwordForm.get("passwordGroup.newPassword")?.value;
+        return this.auth.updatePassword(user,module);
+      }else{
+        this.passwordForm.get("oldPassword")?.setErrors({incorrect:true});
+        throw new Error("old password incorrect");
+      }
+    })).subscribe(res=>{
       if (res.success){
-        this.dialogRef.close(res.data);
+        this.successMessage = "Password updated successfully";
+        setTimeout(()=>{this.dialogRef.close(res.data)}, 1500);
       }else{
         console.log(res);
       }

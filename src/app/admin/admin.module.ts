@@ -54,10 +54,6 @@ import {LoginComponent} from "../auth/login/login.component";
 import {RegisterComponent} from "../auth/register/register.component";
 import {AdminRegisterComponent} from "./admin-auth/admin-register/admin-register.component";
 import {AdminLoginComponent} from "./admin-auth/admin-login/admin-login.component";
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {AdminInterceptor} from "../shared/interceptor/admin.interceptor";
-import {ErrorInterceptor} from "../shared/interceptor/error.interceptor";
-import {AdminErrorInterceptor} from "../shared/interceptor/admin-error.interceptor";
 import {AdminAuthGuard} from "../shared/guard/adminAuth.guard";
 import {SharedModule} from "../shared/modules/shared-module/shared.module";
 
@@ -166,7 +162,6 @@ const routes:Routes =[
     CategoryChartComponent,
     SalesChartHeaderComponent,
     TopSellingComponent,
-    StatusDirective,
     AdminTabTitleDirective,
     AdminProductDetailComponent,
     TotalStaticComponent,
@@ -179,6 +174,8 @@ const routes:Routes =[
     CustomerDetailComponent,
     RoleDirective,
     AddAdminDialogComponent,
+    AdminLoginComponent,
+    AdminRegisterComponent
 
   ],
     imports: [

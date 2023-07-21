@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {ChangeDetectorRef, Component, Input, OnChanges} from "@angular/core";
 import {Product} from "../../../../shared/model/Product";
 import {Review} from "../../../../shared/model/Review";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,7 +14,7 @@ import {ConfirmDialogComponent} from "../../../../shared/dialog/confirm-dialog.c
         <mat-divider></mat-divider>
         <div *ngFor="let review of product?.reviews;let i=index">
           <mat-divider *ngIf="i>0"></mat-divider>
-          <div class="review-row row align-items-start pt-2">
+          <div class="review-row row align-items-start pt-3 mb-4">
             <div class="col-2">
               <h4 class="text-capitalize">{{review.nickname}}</h4>
               <p>{{review.reviewDate}}</p>
@@ -29,7 +29,7 @@ import {ConfirmDialogComponent} from "../../../../shared/dialog/confirm-dialog.c
                 <mat-icon color="accent" *ngIf="review.rating % 1 > 0 && review.rating === Math.floor(review.rating)">
                   star_half
                 </mat-icon>
-                <div class="review-title">{{review.title}}</div>
+                <h2 class="review-title">{{review.title}}</h2>
                 <div class="mt-2">{{review.comment}}</div>
               </div>
               <div *ngIf="!deletable" class="helpful d-flex justify-content-end align-items-center">
@@ -55,14 +55,15 @@ import {ConfirmDialogComponent} from "../../../../shared/dialog/confirm-dialog.c
     `
   }
 )
-export class ProductReviewComponent{
+export class ProductReviewComponent implements OnChanges{
   @Input()
   product: Product | null | undefined;
   @Input()
   deletable: boolean = false;
 
   constructor(private productService: ProductService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private cdr: ChangeDetectorRef) {
   }
 
   stars = [1, 2, 3, 4, 5];
@@ -88,11 +89,18 @@ export class ProductReviewComponent{
         this.productService.deleteReview(id, review).subscribe(res => {
           if (res.success) {
             this.product = res.data;
+            this.cdr.detectChanges();
           } else {
             console.log(res);
           }
         });
       }
+    });
+  }
+
+  ngOnChanges(): void {
+    this.product?.reviews.sort((a, b) => {
+      return new Date(b.reviewDate!).getTime() - new Date(a.reviewDate!).getTime();
     });
   }
 }

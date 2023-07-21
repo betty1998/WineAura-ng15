@@ -97,7 +97,7 @@
               <button *ngIf="!element.isEdit" mat-icon-button color="primary" (click)="edit(element)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button *ngIf="element.isEdit" mat-icon-button color="primary" (click)="save(element)">
+              <button *ngIf="element.isEdit" mat-icon-button color="primary" (click)="save(order$.value?.id,element)">
                 <mat-icon>save</mat-icon>
               </button>
             </td>

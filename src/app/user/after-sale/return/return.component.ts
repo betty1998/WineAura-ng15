@@ -9,6 +9,8 @@ import {PurchaseService} from "../../../shared/service/purchase.service";
 import {AuthService} from "../../../shared/service/auth.service";
 import {Return} from "../../../shared/model/Return";
 import {Location} from "@angular/common";
+import {MatDialog} from "@angular/material/dialog";
+import {InfoDialogComponent} from "../../../shared/dialog/info-dialog.component";
 
 @Component({
   selector: 'app-return',
@@ -27,7 +29,8 @@ export class ReturnComponent implements OnInit {
               private fb: FormBuilder,
               private route:ActivatedRoute,
               private auth:AuthService,
-              private location:Location) { }
+              private location:Location,
+              private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.returnForm = this.fb.group({
@@ -78,6 +81,15 @@ export class ReturnComponent implements OnInit {
     form = form.filter((re: { reason: any; })=>re.reason);
     form.forEach((val: { purchase: any; reason: any; comment: any; })=>this.returnList.push({purchase:val.purchase, reason:val.reason, comment: val.comment}))
     console.log(this.returnList);
+    if (this.returnList.length === 0) {
+      this.dialog.open(InfoDialogComponent, {
+        data: {
+          title: "Error",
+          content: "Please select at least one item to return."
+        }
+      });
+      return;
+    }
     this.orderService.returnItems(this.orderId, this.returnList).subscribe(res=>{
       if (res.success) {
         this.order = res.data;

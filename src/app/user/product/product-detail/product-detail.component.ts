@@ -118,7 +118,7 @@ export class ProductDetailComponent implements OnInit{
   }
 
   ifLike(product: Product | undefined | null) {
-    console.log(this.userInfoService.userInfo?.favorites);
+    // console.log(this.userInfoService.userInfo?.favorites);
     return this.userInfoService.userInfo?.favorites
       .some(p => p.id === product?.id);
   }

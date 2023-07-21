@@ -78,12 +78,12 @@ export class OrderService {
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getOrderByPeriod(period: string,module:string="user") {
+  getOrderByPeriod(period: string,module:string="admin") {
     return this.http.get<DataResponse<{[key:string]:Order[]}>>(`${environment.api}/orders/period/${period}`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  getRecentOrders(amount: number,module:string="user") {
+  getRecentOrders(amount: number,module:string="admin") {
     return this.http.get<DataResponse<Order[]>>(`${environment.api}/orders/recent/${amount}`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
@@ -93,18 +93,23 @@ export class OrderService {
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deleteOrder(id: number,module:string="user") {
+  deleteOrder(id: number,module:string="admin") {
     return this.http.delete<DataResponse<Order>>(`${environment.api}/orders/${id}`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  deletePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase,module:string="user") {
+  deletePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase,module:string="admin") {
     return this.http.put<DataResponse<Order>>(`${environment.api}/orders/${orderId}/deletePurchase/${purchaseId}`,purchase,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 
-  updateStatus(id: number | undefined, order:Order,module:string="user") {
+  updateStatus(id: number | undefined, order:Order,module:string="admin") {
     return this.http.put<DataResponse<Order>>(`${environment.api}/orders/updateStatus/${id}`,order,
+      { headers: new HttpHeaders({ 'module': module }) });
+  }
+
+  updatePurchase(orderId: number | undefined, purchaseId: number | undefined, purchase: Purchase, module:string="admin") {
+    return this.http.put<DataResponse<Order>>(`${environment.api}/orders/${orderId}/updatePurchase/${purchaseId}`,purchase,
       { headers: new HttpHeaders({ 'module': module }) });
   }
 }
