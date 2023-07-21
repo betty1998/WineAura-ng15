@@ -102,5 +102,14 @@ export class ProductService {
     return this.httpClient.get<DataResponse<any[]>>(`${environment.api}/regions`,
       { headers: new HttpHeaders({ 'module': module }) });
   }
+
+  addProductWithImage(formData: FormData,module:string="admin") {
+    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products/addWithImage`, formData);
+  }
+
+  updateProductWithImage(formData: FormData,module:string="admin") {
+    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products/updateWithImage`, formData);
+  }
 }
+
 

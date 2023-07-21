@@ -150,7 +150,7 @@ export class AdminProductDetailComponent implements OnInit{
     product.productStatus = ProductStatus.AVAILABLE;
     product.reviews = [];
     formData.append('product', JSON.stringify(product));
-    this.productService.addProduct(formData).subscribe(res => {
+    this.productService.addProductWithImage(formData).subscribe(res => {
       if (res.success) {
         console.log(res.data);
         this.dialog.open(InfoDialogComponent, {
@@ -165,15 +165,6 @@ export class AdminProductDetailComponent implements OnInit{
         alert(res.message);
       }
     });
-    // this.uploadSub = this.uploadService.uploadFile(formData).subscribe(event => {
-    //   if (event.type == HttpEventType.UploadProgress) {
-    //     this.totalProgress = Math.round(50 * (event.loaded / (event.total || 1)));
-    //     console.log("upload:",this.totalProgress);
-    //   } else if (event.type === HttpEventType.Response) {
-    //     const res = event.body as DataResponse<string>;
-    //     this.saveProduct(res.data);
-    //   }
-    // });
   }
 
   saveProduct(imageUrl:string) {
@@ -234,26 +225,12 @@ export class AdminProductDetailComponent implements OnInit{
       alert("No change");
       return;
     }
+    const formData = new FormData();
     if (this.file) {
-      const formData = new FormData();
       formData.append("file", this.file||new Blob());
-      this.uploadService.uploadFile(formData).subscribe(event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          this.totalProgress = Math.round(50 * (event.loaded / (event.total || 1)));
-          console.log("upload:", this.totalProgress);
-        } else if (event.type === HttpEventType.Response) {
-          const res = event.body as DataResponse<string>;
-          this.updateProduct({...product, image: res.data});
-        }
-      });
-    }else {
-      this.updateProduct(product);
     }
-
-  }
-
-  updateProduct(product:Product) {
-    this.productService.updateProduct(product,"admin").subscribe(res => {
+    formData.append('product', JSON.stringify(product));
+    this.productService.updateProductWithImage(formData,"admin").subscribe(res => {
       if (res.success) {
         console.log(res.data);
         this.dialog.open(InfoDialogComponent, {
@@ -268,7 +245,26 @@ export class AdminProductDetailComponent implements OnInit{
         alert(res.message);
       }
     });
+
   }
+
+  // updateProduct(product:Product) {
+  //   this.productService.updateProduct(product,"admin").subscribe(res => {
+  //     if (res.success) {
+  //       console.log(res.data);
+  //       this.dialog.open(InfoDialogComponent, {
+  //         data: {
+  //           title: "Update Product",
+  //           message: "Update product successfully"
+  //         }
+  //       })
+  //       this.router.navigate(['/admin/product-list']).catch();
+  //     } else {
+  //       console.log(res);
+  //       alert(res.message);
+  //     }
+  //   });
+  // }
   deleteImage() {
     console.log("cancel image");
     if(this.product && this.product.image) {
