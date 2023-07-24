@@ -19,6 +19,7 @@ export class AdminRegisterComponent {
   registerFormGroup!: FormGroup;
   passwordPattern = '^(?=.*[0-9])(?=.*[a-z])[a-z0-9]{6,20}$';
   showMessage= false;
+  errorMessage: string = "";
   constructor(
     private fb: FormBuilder,
     public auth: AuthService,
@@ -73,6 +74,7 @@ export class AdminRegisterComponent {
           return this.infoService.updateAdminProfile(res.data.id, formValue.infoGroup,"admin");
         } else {
           console.log(res);
+          this.errorMessage = res.message;
           return throwError(res.message);
         }
       })).subscribe(res=>{

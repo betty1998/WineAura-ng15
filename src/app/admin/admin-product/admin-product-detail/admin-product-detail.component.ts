@@ -54,6 +54,14 @@ export class AdminProductDetailComponent implements OnInit{
 
   ngOnInit(): void {
     this.createGroup();
+    this.productForm.get('category')?.valueChanges.subscribe(value => {
+      if (value === "Accessory") {
+        this.productForm.get('capacity')?.setValidators([Validators.pattern(/^[0-9]+(ml|L)$/)]);
+      }else {
+        this.productForm.get('capacity')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(ml|L)$/)]);
+      }
+      this.productForm.get('capacity')?.updateValueAndValidity();
+    });
     this.getAllCategories();
     this.getAllBrands();
     this.getAllRegions();
@@ -128,7 +136,7 @@ export class AdminProductDetailComponent implements OnInit{
       reader.onload = (_event) => {
         console.log(reader.result)
         this.imageUrl$.next(reader.result);
-        this.productForm.get('image')?.setValue(reader.result);
+        this.productForm.get('image')?.setValue("image");
         this.isLoading = false;
         this.cdr.detectChanges();
         console.log(this.fileName);
@@ -149,6 +157,7 @@ export class AdminProductDetailComponent implements OnInit{
     product.discount = 1;
     product.productStatus = ProductStatus.AVAILABLE;
     product.reviews = [];
+    product.image = "";
     formData.append('product', JSON.stringify(product));
     this.productService.addProductWithImage(formData).subscribe(res => {
       if (res.success) {
@@ -226,8 +235,10 @@ export class AdminProductDetailComponent implements OnInit{
       return;
     }
     const formData = new FormData();
-    if (this.file) {
-      formData.append("file", this.file||new Blob());
+    if(this.file){
+      formData.append("file", this.file);
+      product.image = "";
+    }else{
     }
     formData.append('product', JSON.stringify(product));
     this.productService.updateProductWithImage(formData,"admin").subscribe(res => {

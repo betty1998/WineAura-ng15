@@ -108,7 +108,7 @@ export class ProductService {
   }
 
   updateProductWithImage(formData: FormData,module:string="admin") {
-    return this.httpClient.post<DataResponse<Product>>(`${environment.api}/products/updateWithImage`, formData);
+    return this.httpClient.put<DataResponse<Product>>(`${environment.api}/products/updateWithImage`, formData);
   }
 }
 

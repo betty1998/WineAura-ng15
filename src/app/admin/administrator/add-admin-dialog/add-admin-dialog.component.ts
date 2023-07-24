@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserInfo} from "../../../shared/model/UserInfo";
+import {AuthService} from "../../../shared/service/auth.service";
 
 @Component({
   selector: 'app-add-admin-dialog',
@@ -34,7 +35,8 @@ export class AddAdminDialogComponent {
 
   constructor(private fb:FormBuilder,
               public dialogRef: MatDialogRef<AddAdminDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public admins: UserInfo[]) {
+              @Inject(MAT_DIALOG_DATA) public admins: UserInfo[],
+              public auth: AuthService) {
   }
 
   ngOnInit(): void {

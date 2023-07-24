@@ -1,12 +1,12 @@
 
 <main class="product-container" fxFlex fxLayout="row">
-  <section id="filter-section" fxFlex.xs="180px" fxFlex="200px" fxLayout="column">
+  <section id="filter-section" fxFlex.xs="150px" fxFlex="200px" fxLayout="column">
     <div class="result-found text-center">
       {{productService.total$|async}} Results Found
     </div>
     <div id="price-range"  fxLayout="column">
         <h3>Price Range</h3>
-        <div id="min-max" fxFlex fxFlexAlign="center center">
+        <div id="min-max" fxFlex fxFlexAlign="center center" fxLayout.xs="row wrap">
           <label>
             <input class="filter-input" #input1 placeholder="$0">
           </label>
@@ -72,7 +72,7 @@
 
     </div>
     <div class="products-list" fxLayout="row wrap" fxFlexAlign="start start">
-      <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="350px"
+      <app-product-overview fxFlex.gt-xs="50%" fxFlex.gt-md="25%" fxFlex.gt-sm="33%" fxFlex.xs="300px"
                             [product]="p" [amount] = "l" *ngFor="let p of products
                           | search: searchKey
                           | priceRange:min:max

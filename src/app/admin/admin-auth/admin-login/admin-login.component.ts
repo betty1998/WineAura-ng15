@@ -34,7 +34,7 @@ export class AdminLoginComponent {
           this.router.navigate(["/admin/dashboard"]).catch();
         } else {
           console.log(res);
-          this.errorMessage = res.message;
+          this.errorMessage = res.message+". Please try again.";
           this.cdr.detectChanges();
         }
       });

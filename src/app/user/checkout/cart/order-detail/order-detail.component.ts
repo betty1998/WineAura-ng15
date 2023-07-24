@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {UserInfoService} from "../../../../shared/service/user-info.service";
@@ -61,7 +61,7 @@ export class OrderDetailComponent implements OnInit{
         paymentMethod: ['', Validators.required],
         paymentCardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
         cardHolderName: ['', Validators.required],
-        expirationDate: ['', Validators.required],
+        expirationDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$')]],
         cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3}$')]],
         billingAddress: this.fb.group({
           address1: ['', Validators.required],
@@ -94,11 +94,11 @@ export class OrderDetailComponent implements OnInit{
         }
       },
       paymentDetails: {
-        paymentMethod: 'Credit Card',
-        paymentCardNumber: '1111111122222233',
-        cardHolderName: 'Beibei Zhang',
-        expirationDate: '05/28',
-        cvv: '253',
+        paymentMethod: '',
+        paymentCardNumber: '',
+        cardHolderName: '',
+        expirationDate: '',
+        cvv: '',
       }
     })
 
@@ -175,9 +175,13 @@ export class OrderDetailComponent implements OnInit{
 
   }
 
+  @Output()
+  cancelCheckout = new EventEmitter<void>();
+
 
   cancel() {
     this.router.navigate(['checkout',this.userInfo?.id,'cart-overview']).catch();
+    this.cancelCheckout.emit();
   }
 
   format(addr: AddressBook) {

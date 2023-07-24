@@ -71,6 +71,9 @@ export class ProductComponent implements OnInit,AfterViewInit{
       this.brands = this.productService.getBrands(searched);
       this.cdr.detectChanges();
     });
+    this.productService.search.subscribe(res=>{
+      this.page = 1;
+    });
   }
 
   filterByTitle(products:Product[]) {
@@ -94,6 +97,8 @@ export class ProductComponent implements OnInit,AfterViewInit{
     this.priceCheckboxes.forEach((checkbox) => {
       checkbox.nativeElement.checked = false;
     });
+    this.filterService.removeAllPriceFilters();
+    this.page = 1;
   }
 
   toggleFilter(event:Event,filter:Filter) {
@@ -104,6 +109,7 @@ export class ProductComponent implements OnInit,AfterViewInit{
       // If checkbox is unchecked, remove the filter
       this.filterService.removeFilter(filter);
     }
+    this.page = 1;
   }
 
   clearInput(input1: HTMLInputElement, input2: HTMLInputElement) {

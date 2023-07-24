@@ -34,7 +34,7 @@ export class LoginComponent {
 
       } else {
         // If login is not successful, an empty observable is returned
-        this.errorMessage = res.message+" Please try again.";
+        this.errorMessage = res.message+". Please try again.";
         this.cdr.detectChanges();
         console.log(res);
       }

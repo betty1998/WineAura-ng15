@@ -32,6 +32,7 @@ export class CustomerComponent implements AfterViewInit, OnInit{
     this.infoService.getCustomers("admin").subscribe(res=>{
       if (res.success) {
         this.customerInfos = res.data;
+        this.customerInfos.sort((a,b)=>a.user.id!-b.user.id!);
         console.log(this.customerInfos);
         this.dataSource = new MatTableDataSource<UserInfo>(this.customerInfos);
         this.customizeSort();

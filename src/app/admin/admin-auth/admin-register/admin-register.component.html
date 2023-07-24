@@ -57,6 +57,7 @@
             {{registerFormGroup.get("passwordGroup")?.getError('passwordNotMatch')}}
           </mat-error>
         </div>
+        <div class="text-danger">{{errorMessage}}</div>
         <p style="margin-top: 10px">
           <button type="submit" mat-raised-button color="primary" [disabled]="registerFormGroup.invalid">Register</button>
         </p>

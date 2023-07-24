@@ -26,4 +26,9 @@ export class FilterService {
   clearFilters() {
     this.filters.next([]);
   }
+
+  removeAllPriceFilters() {
+    const currentFilters = this.filters.value;
+    this.filters.next(currentFilters.filter(f => f.type !== 'price'));
+  }
 }

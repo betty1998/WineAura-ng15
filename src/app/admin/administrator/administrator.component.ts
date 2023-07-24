@@ -21,7 +21,7 @@ import {elements} from "chart.js";
 export class AdministratorComponent implements OnInit,AfterViewInit{
   admins:UserInfo[] = [];
   dataSource= new MatTableDataSource<UserInfo>();
-  displayedColumns: string[] = ["username", "name","email","phone","status","role","action"];
+  displayedColumns: string[] = ["username", "name","email","phone","status","role"];
   @ViewChild('paginator') paginator!:MatPaginator;
   @ViewChild('sort') sort!: MatSort;
   searchText:any;
@@ -37,12 +37,18 @@ export class AdministratorComponent implements OnInit,AfterViewInit{
     this.infoService.getAdmins("admin").subscribe(res=>{
       if (res.success) {
         this.admins = res.data;
+        this.admins.sort((a,b)=>a.user.id!-b.user.id!);
         console.log(this.admins);
         this.dataSource.data = this.admins;
         this.setDataSourceAttributes();
       } else {
         console.log(res);
         alert(res.message);
+      }
+    });
+    this.auth.admin$.subscribe(res=>{
+      if (res && res.role.type === "Admin") {
+        this.displayedColumns.push("action");
       }
     });
   }

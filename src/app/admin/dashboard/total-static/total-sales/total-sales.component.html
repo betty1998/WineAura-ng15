@@ -18,7 +18,10 @@
         {{total}}
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
-        <mat-icon>{{change<0?'arrow_downward':'arrow_upward'}}</mat-icon> {{change||0|percent}}
+        <ng-container *ngIf="title!='users'">
+          <mat-icon>{{change<0?'arrow_downward':'arrow_upward'}}</mat-icon> {{change||0|percent}}
+        </ng-container>
+
       </mat-grid-tile>
     </mat-grid-list>
   </mat-card-content>

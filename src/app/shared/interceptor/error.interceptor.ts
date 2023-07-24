@@ -3,9 +3,9 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpErrorResponse
+  HttpInterceptor, HttpErrorResponse, HttpResponse
 } from '@angular/common/http';
-import {catchError, Observable, retry, throwError} from 'rxjs';
+import {catchError, Observable, retry, tap, throwError} from 'rxjs';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -18,8 +18,12 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log(error);
         if (error.error.message && error.error.message.startsWith("JWT expired")) {
           // remove expired token
-          localStorage.removeItem('customerToken');
-
+          console.log(request.url)
+          if (request.url.includes("admin")) {
+            localStorage.removeItem('adminToken');
+          }else {
+            localStorage.removeItem('customerToken');
+          }
           // remove authentication header
           const cloneReq = request.clone({
             headers: request.headers.delete('Authorization')
@@ -30,5 +34,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         return throwError(() => error);
       })
     );
+
   }
 }
