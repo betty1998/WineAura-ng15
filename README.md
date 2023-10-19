@@ -1,6 +1,10 @@
 # WineAura E-Commerce Platform
 
-This project was built with Angular 15, Material UI and Bootstrap.
+## Frontend
+Angular 15, Material UI and Bootstrap.
+
+## Backend
+Spring Boot, Spring Security, Microservice, Spring Cloud, Kafka
 
 ## Shopping Platform
 ### Products Page
